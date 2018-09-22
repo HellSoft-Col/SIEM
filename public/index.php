@@ -9,6 +9,7 @@
 
 define('LARAVEL_START', microtime(true));
 
+die($_SERVER['REQUEST_URI']);
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader
