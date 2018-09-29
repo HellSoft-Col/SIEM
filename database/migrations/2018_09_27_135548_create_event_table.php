@@ -20,8 +20,8 @@ class CreateEventTable extends Migration
             $table->string('description');
             $table->string('place')->nullable();
             $table->string('name');
-            $table->integer('users_id')->unsigned();
-            $table->foreign('users_id')->references('id')->on('users');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
 

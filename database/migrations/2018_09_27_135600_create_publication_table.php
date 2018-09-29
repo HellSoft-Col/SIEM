@@ -18,8 +18,8 @@ class CreatePublicationTable extends Migration
             $table->string('header');
             $table->timestamp('date_time');
             $table->string('description');
-            $table->integer('users_id')->unsigned();
-            $table->foreign('users_id')->references('id')->on('users');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
