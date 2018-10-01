@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Penalty;
 
 class PenaltySeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class PenaltySeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(Penalty::class)->create();
     }
 }

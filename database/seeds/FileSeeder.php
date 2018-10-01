@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\File;
 
 class FileSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class FileSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(File::class, 4)->create();
     }
 }
