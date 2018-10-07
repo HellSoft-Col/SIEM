@@ -1,7 +1,7 @@
 # SIEM
 Sistema integrado de gestion de salas.
 
-#INSTALACION 
+## INSTALACION 
 
 1. npm install
 2. composer install
