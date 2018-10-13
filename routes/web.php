@@ -18,3 +18,9 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('layout_user');
 });
+
+Route::get('/user', function () {
+    return 'Usuarios';
+});
+
+Route::get('/user/create', 'RegisterController');
