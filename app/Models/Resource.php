@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Resource extends Model
 {
     //
+    protected $table = 'resource';
     function classroom_type(){
         return $this->belongsTo(Classroom_type::class);
     }
