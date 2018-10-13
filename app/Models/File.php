@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class File extends Model
 {
     //
+    protected $table = 'file';
     function event(){
         return $this->belongsTo(Event::class);
     }

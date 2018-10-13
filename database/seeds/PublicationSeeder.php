@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Publication;
 
 class PublicationSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class PublicationSeeder extends Seeder
      */
     public function run()
     {
-        //
+       factory(Publication::class,5)->create();
     }
 }

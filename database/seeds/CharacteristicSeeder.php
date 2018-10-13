@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Characteristic;
 
 class CharacteristicSeeder extends Seeder
 {
@@ -11,6 +12,6 @@ class CharacteristicSeeder extends Seeder
      */
     public function run()
     {
-        //
+        factory(Characteristic::class,4)->create();
     }
 }

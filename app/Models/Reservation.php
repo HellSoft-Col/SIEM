@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     //
+    protected $table = 'reservation';
     function user(){
         return $this->belongsTo(User::class);
     }
