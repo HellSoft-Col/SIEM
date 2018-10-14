@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 use App\Models\Classroom_type;
 use Illuminate\Database\Seeder;

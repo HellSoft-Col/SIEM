@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\User;
+use App\Models\User;
 
 $factory->define(App\Models\Event::class, function (Faker $faker) {
     $usersIds = User::all()->pluck('id')->toArray();

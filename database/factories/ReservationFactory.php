@@ -1,7 +1,7 @@
 <?php
 
 use App\Models\Resource;
-use App\User;
+use App\Models\User;
 use Faker\Generator as Faker;
 use Illuminate\Support\Carbon;
 

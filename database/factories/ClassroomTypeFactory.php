@@ -7,3 +7,4 @@ $factory->define(App\Models\Classroom_type::class, function (Faker $faker) {
         'name' => $faker->word,
     ];
 });
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            

@@ -1,7 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
-use App\User;
+use App\Models\User;
 
 $factory->define(App\Models\Publication::class, function (Faker $faker) {
     $header = $faker->sentence($nbWords = 2, $variableNbWords = true);

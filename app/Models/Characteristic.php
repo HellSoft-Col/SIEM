@@ -9,6 +9,8 @@ class Characteristic extends Model
     protected $table = 'characteristic';
     function resources(){
         return $this->belongsToMany(Resource::class)
+                    ->using(CharacteristicResource::class)
+                    ->as('CharacteristicResource')
                     ->withPivot(['quantity']);
     }
 }
