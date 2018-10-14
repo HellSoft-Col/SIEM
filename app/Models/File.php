@@ -15,4 +15,8 @@ class File extends Model
     function publication(){
         return $this->belongsTo(Publication::class);
     }
+
+    function resource(){
+        return $this->belongsTo(Resource::class);
+    }
 }
