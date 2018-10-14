@@ -12,6 +12,6 @@ class CharacteristicSeeder extends Seeder
      */
     public function run()
     {
-        factory(Characteristic::class,40)->create();
+        factory(Characteristic::class,20)->create();
     }
 }

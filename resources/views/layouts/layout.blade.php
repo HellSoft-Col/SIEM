@@ -7,12 +7,13 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @yield('includes')
     <link rel="stylesheet" href="{{ asset('/css/mystyle.css') }}">
 </head>
 
 <body id="page-top">
 
-<nav class="navbar nav-masthead navbar-dark fixed-top navbar-expand-lg text-center" style="background-color: #000000;" id="mainNav">
+<nav class="navbar nav-masthead navbar-dark sticky-top navbar-expand-lg text-center" style="background-color: #000000;" id="mainNav">
     <button class="navbar-toggler collapsed navbar-toggler-right text-center" type="button" data-toggle="collapse" data-target="#navbarTogglerSIEM" aria-controls="navbarTogglerSIEM" aria-halflings-expandes="false" aria-label="Toggle navigation">
         <span class="icon-bar top-bar"></span>
         <span class="icon-bar middle-bar"></span>
@@ -31,7 +32,7 @@
             <a class="nav-item nav-link js-scroll-trigger" href="#">Publicaciones</a>
         </div>
         <div class="d-flex flex-row justify-content-center">
-            <a class="mr-2 btn btn-outline-light text-light js-scroll-trigger" href="#">Login</a>
+            <a class="mr-2 btn btn-outline-light text-light js-scroll-trigger" href="{{ url('/login') }}">Login</a>
         </div>
     </div>
 </nav>
@@ -155,6 +156,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+@yield('scripts')
 <script src="{{ asset('/js/script.min.js') }}" type="text/javascript"></script>
 
 </body>
