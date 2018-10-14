@@ -19,9 +19,11 @@ class CreateFileTable extends Migration
             $table->string('description')->nullable();
             $table->unsignedInteger('event_id')->nullable();
             $table->unsignedInteger('publication_id')->nullable();
+            $table->unsignedInteger('resource_id')->nullable();
             $table->enum('type',['EVENT','PUBLICATION']);
             $table->foreign('event_id')->references('id')->on('event');
             $table->foreign('publication_id')->references('id')->on('publication');
+            $table->foreign('resource_id')->references('id')->on('resource');
             $table->timestamps();
         });
     }

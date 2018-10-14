@@ -14,7 +14,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        return view('test_views.crear_reserva');
     }
 
     /**
@@ -24,7 +24,7 @@ class ReservationController extends Controller
      */
     public function create()
     {
-        //
+        return view('test_views.crear_reserva');
     }
 
     /**
@@ -35,7 +35,8 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+
     }
 
     /**

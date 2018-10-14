@@ -46,7 +46,7 @@ class ResourceController extends Controller
      */
     public function show(Resource $resource)
     {
-        //
+        return view('test_views.recurso_detail', compact('resource'));
     }
 
     /**
@@ -81,5 +81,30 @@ class ResourceController extends Controller
     public function destroy(Resource $resource)
     {
         //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Resource  $resource
+     * @return \Illuminate\Http\Response
+     */
+    public function gosearch()
+    {
+        $categories = Resource::distinct()->get(['type']);
+        return view('test_views.buscar_recurso', compact('categories'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Resource  $resource
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+
+    {
+        $resources = Resource::all();
+        return view('test_views.resultados_buscar_recurso', compact('resources'));
     }
 }

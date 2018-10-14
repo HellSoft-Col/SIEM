@@ -20,4 +20,8 @@ class Resource extends Model
         return $this->belongsToMany(Characteristic::class)
                     ->withPivot(['quantity']);
     }
+
+    function files(){
+        return $this->hasMany(File::class);
+    }
 }
