@@ -14,7 +14,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        return view('test_views.eventos')
+            ->with('events', $this->getSomeEvents(20));
     }
 
     /**
@@ -46,7 +47,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        return view('test_views.evento_detail', compact('event'));
     }
 
     /**
@@ -81,5 +82,17 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+    }
+
+    /**
+     * Nombre: getSomeEvents
+     * Parametros:
+     *  - limit: el numero maximo de eventos a retornar
+     * Retorno;
+     *  - coleccion de eventos en orden de fecha descendente
+     */
+    private function getSomeEvents($limit)
+    {
+        return Event::all()->sortByDesc('date_time')->take($limit);
     }
 }

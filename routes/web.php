@@ -18,3 +18,7 @@ Route::get('/', function () {
 Route::get('/home', function () {
     return view('layout_user');
 });
+
+Route::get('/events ', 'EventController@index');
+Route::get('/events/{event}', 'EventController@show')->where('id', '[0-9]+');
+Route::get('/feed ', 'PublicationController@index');

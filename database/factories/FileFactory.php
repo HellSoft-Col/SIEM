@@ -11,8 +11,8 @@ $factory->define(File::class, function (Faker $faker) {
     return [
         'path' => 'files\uploads',
         'description' => $faker ->realText($maxNbChars = 100, $indexSize = 2),
-        'event_id' => $faker -> randomElement($eventsIds),
         'publication_id' => $faker ->randomElement($publicationsIds),
+        'event_id' => $faker->randomElement($eventsIds),
         'type' => $faker ->randomElement(['EVENT','PUBLICATION']),
 
     ];
