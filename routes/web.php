@@ -23,4 +23,12 @@ Route::get('/user', function () {
     return 'Usuarios';
 });
 
-Route::get('/user/create', 'RegisterController');
+Route::get('/user/create','RegisterController@registro')->name('user.create');
+
+Route::put('/user/create/store','RegisterController@store')->name('user.store');
+
+Route::get('/user/update','RegisterController@update')->name('user.update');
+
+Route::post('/user/update/profile/{user}','RegisterController@profile')->name('user.profile');
+
+Route::get('/user/main','RegisterController@menuPrincipal')->name('user.main');

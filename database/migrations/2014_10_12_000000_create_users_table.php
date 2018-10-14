@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->integer('semester');
             $table->string('identification')->unique();
             $table->string('email')->unique();
-            $table->unsignedInteger('carreer_id');
+            $table->unsignedInteger('carreer_id')->nullable();
             $table->foreign('carreer_id')->references('id')->on('carreer');
             $table->enum('role',['ADMIN','USER','MODERATOR'])->default('USER');
             $table->enum('type',['STUDENT','TEACHER'])->default('STUDENT');
