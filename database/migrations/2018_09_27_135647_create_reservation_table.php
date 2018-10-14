@@ -20,9 +20,9 @@ class CreateReservationTable extends Migration
             $table->timestamp('end_time');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('resource_id');
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('resource_id')->references('id')->on('resource');
             $table->boolean('moulted')->default(false);
+            $table->foreign('resource_id')->references('id')->on('resource');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
