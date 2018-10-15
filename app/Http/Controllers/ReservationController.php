@@ -56,8 +56,27 @@ class ReservationController extends Controller
                 'moulted' => '0',
             ]);
             $message .= "Reserva exitosa" ;
+            $this->sendEmailReminder($request, $user->id, $message);
         }
         return redirect()->route('reservation.create')->with('message', [$message]);
+    }
+
+    /**
+     * Send an e-mail reminder to the user.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function sendEmailReminder(Request $request, $id, $message)
+    {
+        $user = User::findOrFail($id);
+
+        Mail::send('test_views.crear_reserva', ['user' => $user, 'message' => $message], function ($m) use ($user) {
+            $m->from('anfecoquin123@gmail.com', $message );
+
+            $m->to($user->email)->subject('Your Reminder!');
+        });
     }
 
     /**
