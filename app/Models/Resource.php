@@ -18,6 +18,8 @@ class Resource extends Model
 
     function characteristics(){
         return $this->belongsToMany(Characteristic::class)
+                    ->using(CharacteristicResource::class)
+                    ->as('CharacteristicResource')
                     ->withPivot(['quantity']);
     }
 

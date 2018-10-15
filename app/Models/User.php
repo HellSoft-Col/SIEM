@@ -1,11 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use App\Models\Event;
-use App\Models\Penalty;
-use App\Models\Publication;
-use App\Models\Reservation;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,5 +43,9 @@ class User extends Authenticatable
 
     function penalties(){
         return $this->hasManyThrough(Penalty::class,Reservation::class);
+    }
+
+    function carreer(){
+        return $this->belongsTo(Carreer::class);
     }
 }
