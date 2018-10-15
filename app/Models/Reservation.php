@@ -13,7 +13,6 @@ class Reservation extends Model
         'state', 'start_time', 'end_time', 'user_id', 'resource_id', 'moulted'
     ];
 
-
     function user(){
         return $this->belongsTo(User::class);
     }
