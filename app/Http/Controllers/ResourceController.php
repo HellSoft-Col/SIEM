@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom_type;
 use App\Models\Resource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ResourceController extends Controller
 {
@@ -91,7 +93,13 @@ class ResourceController extends Controller
     public function gosearch()
     {
         $categories = Resource::distinct()->get(['type']);
-        return view('test_views.buscar_recurso', compact('categories'));
+        $rtypes =  DB::table('resource')
+            ->join('classroom_type', 'resource.classroom_type_id', '=', 'classroom_type.id')->distinct()->get(['classroom_type.name']);
+        $rcaracteristics = DB::table('resource')
+            ->join('characteristic_resource', 'characteristic_resource.resource_id', '=', 'resource.id')
+            ->join('characteristic', 'characteristic_resource.characteristic_id', '=', 'characteristic.id')
+            ->distinct()->get(['characteristic.name']);
+        return view('test_views.buscar_recurso', compact('categories','rtypes', 'rcaracteristics'));
     }
 
     /**

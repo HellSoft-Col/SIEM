@@ -14,6 +14,7 @@ class EventController extends Controller
      */
     public function index()
     {
+
         return view('test_views.eventos')
             ->with('events', $this->getSomeEvents(20));
     }
@@ -85,11 +86,10 @@ class EventController extends Controller
     }
 
     /**
-     * Nombre: getSomeEvents
-     * Parametros:
-     *  - limit: el numero maximo de eventos a retornar
-     * Retorno;
-     *  - coleccion de eventos en orden de fecha descendente
+     * Retorna cierto numero de elementos
+     *
+     * @param
+     * @return
      */
     private function getSomeEvents($limit)
     {

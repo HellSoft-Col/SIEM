@@ -9,15 +9,21 @@
             <option>{{$category->type}}</option>
         @endforeach
     </select> <br>
-    <!--<select name="rtype">
-        @foreach($categories as $category)
-            <option>{{$category->name}}</option>
+    <select name="rtype">
+        @foreach($rtypes as $rtype)
+            <option>{{$rtype->name}}</option>
         @endforeach
-    </select>
+    </select><br>
     <select name="rcaracteristic">
-        @foreach($categories as $category)
-            <option>{{$category->name}}</option>
+        @foreach($rcaracteristics as $rcaracteristic)
+            <option>{{$rcaracteristic->name}}</option>
         @endforeach
-    </select> -->
+    </select><br>
+    AND
+    <select name="rcaracteristic2">
+        @foreach($rcaracteristics as $rcaracteristic)
+            <option>{{$rcaracteristic->name}}</option>
+        @endforeach
+    </select><br>
     <button type="submit">Buscar</button>
 </form>

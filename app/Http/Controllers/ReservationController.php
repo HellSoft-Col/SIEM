@@ -111,7 +111,7 @@ class ReservationController extends Controller
      * @param
      * @return
      */
-    public function canReserve($user, $resource, $start_time, $end_time)
+    private function canReserve($user, $resource, $start_time, $end_time)
     {
         $max_hours = 0;
         $min_hours = 1;
@@ -169,6 +169,4 @@ class ReservationController extends Controller
         }
         return $error_message;
     }
-
-
 }
