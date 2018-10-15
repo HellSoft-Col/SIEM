@@ -18,7 +18,7 @@
         <input name="uploadedfile" type="file" />
         <input type="submit" value="Subir archivo" />
     </form>
-    <form method="POST" action="{{url("user/update/profile/{$user->id}")}}">
+    <form method="POST" action="{{url("user/update/profile")}}">
         {{csrf_field()}}
         <label>Nombres</label>
         <br>
