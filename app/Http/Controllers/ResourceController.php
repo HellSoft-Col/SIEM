@@ -84,9 +84,8 @@ class ResourceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Go to resources search.
      *
-     * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
     public function gosearch()
@@ -96,13 +95,12 @@ class ResourceController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Search resources.
      *
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
     public function search()
-
     {
         $resources = Resource::all();
         return view('test_views.resultados_buscar_recurso', compact('resources'));

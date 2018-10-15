@@ -26,4 +26,14 @@ class Resource extends Model
     function files(){
         return $this->hasMany(File::class);
     }
+
+    function isAvailableBetween($start_time, $end_time){
+         if($this->reservations()
+            ->where('start_time', '>=',$start_time)->where('start_time', '<=', $end_time)
+            ->where('end_time', '>=',$start_time)->where('end_time', '<=', $end_time)
+                 ->where('state','ACTIVE')->count()>0){
+             return false;
+         }
+         return true;
+    }
 }
