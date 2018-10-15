@@ -1,0 +1,25 @@
+.title-margin{
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 40px
+}
+.container-list {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    height: 513px;
+    overflow-x: hidden;
+    padding: 15px;
+}
+.container {
+    width: 1170px;
+    margin-top: 150px;
+}
+label{
+    font-size: 20px;
+}
+li{
+    margin-bottom: 20px;
+}
+.btn{
+    margin-top: 15px;
+}
