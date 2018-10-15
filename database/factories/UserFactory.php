@@ -22,6 +22,7 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => $faker->name,
         'identification' => $faker->unique()->randomNumber($nbDigits = NULL, $strict = false),
         'email' => $faker->unique()->safeEmail,
+        'username' => $faker->unique()->userName,
         'role' => $faker->randomElement(['ADMIN','USER','MODERATOR']),
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),

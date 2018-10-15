@@ -2,6 +2,9 @@
     <meta charset="utf-8">
     <title>SIEM</title>
 
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 
     <!-- Latest compiled and minified CSS -->

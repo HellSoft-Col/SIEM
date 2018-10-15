@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Carreer;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Validation\Rule;
 
+/**
+ * @property array carreers
+ */
 class RegisterController extends Controller
 {
     /*
@@ -38,6 +44,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->carreers = Carreer::all()->pluck('id')->toArray();
     }
 
     /**
@@ -52,6 +59,9 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'carreer_id' => ['required',
+                                Rule::in($this->carreers)
+                            ],
         ]);
     }
 
@@ -66,6 +76,8 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'username' => explode("@", $data['email'], 2)[0],
+            'carreer_id' => $data['carreer_id'],
             'password' => Hash::make($data['password']),
         ]);
     }
