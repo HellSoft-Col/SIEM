@@ -16,7 +16,7 @@ $factory->define(File::class, function (Faker $faker) {
         'event_id' => $faker ->randomElement($eventsIds),
         'resource_id' => $faker->randomElement($resourcesIds),
         'publication_id' => $faker ->randomElement($publicationsIds),
-        'type' => $faker ->randomElement(['EVENT','PUBLICATION']),
+        'type' => $faker ->randomElement(['EVENT','PUBLICATION','USER']),
 
     ];
 });

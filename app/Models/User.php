@@ -47,4 +47,8 @@ class User extends Authenticatable
     function carreer(){
         return $this->belongsTo(Carreer::class);
     }
+
+    function file(){
+        return $this->belongsTo(File::class , 'file_id');
+    }
 }

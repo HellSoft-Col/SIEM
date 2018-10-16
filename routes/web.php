@@ -12,12 +12,21 @@
 */
 
 Route::get('/', function () {
-    return view('layout');
-});
+    return view('GeneralViews.guest');
+})->name('principal')
+    ->middleware('guest');
 
 Route::get('/home', function () {
     return view('layout_user');
 });
+
+Route::get('/user/update',function () {
+    return view('SpecificViews.Person.update');
+})->name('user.update')
+    ->middleware('auth');
+Route::post('/user/update', 'UserController@update')
+    ->name('user.update')
+    ->middleware('auth');
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -42,11 +51,12 @@ Route::get('/user', function () {
     return 'Usuarios';
 });
 
+/* -----------------------------------------------------------------*/
+
 Route::get('/user/create','RegisterController@registro')->name('user.create');
 
 Route::put('/user/create/store','RegisterController@store')->name('user.store');
 
-Route::get('/user/update','RegisterController@update')->name('user.update');
 
 Route::post('/user/update/profile','RegisterController@profile')->name('user.profile');
 

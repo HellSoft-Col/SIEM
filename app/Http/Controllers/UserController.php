@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -83,11 +87,24 @@ class UserController extends Controller
                 ->withInput();
         }
         $finald = $request->all();
-        $user->update([
-            'identification' => $finald['cedula'],
-            'university_id' => $finald['identification'],
-            'type' => $finald['role'],
-        ]);
+
+        $user = Auth::user();
+        $user->semester = $finald['semester'] ;
+        $user->university_id = $finald['identification'] ;
+        $user->identification = $finald['cedula'] ;
+        $user->type = $finald['role'] ;
+
+        if ( $request->hasFile('img')){
+            $url = Storage::disk('public')->put(Auth::user()->username . 'Folder', $request->file('img'));
+            $file = File::create([
+                'path' => $url,
+                'description' => Auth::user()->username . " Profile photo",
+                'type' => 'USER',
+            ]);
+            $user->file_id = $file->id ;
+        }
+
+        $user->save();
         return redirect('/home');
     }
 

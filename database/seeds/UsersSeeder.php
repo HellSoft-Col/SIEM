@@ -14,6 +14,12 @@ class UsersSeeder extends Seeder
      */
     public function run()
     {
+        $file_data = [
+            'path' => 'boy.svg',
+            'description' => 'generic icon',
+            'type' => 'USER',
+        ];
+        \App\Models\File::create($file_data);
         factory(User::Class,30)->create();
     }
 }
