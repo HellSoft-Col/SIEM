@@ -23,12 +23,12 @@
 					</span>
 
                     @php ($msj = "")
-                    @if ($errors->has('email'))
-                        @php ($msj = $errors->first('email'))
+                    @if ($errors->has('username'))
+                        @php ($msj = $errors->first('username'))
                     @endif
 
-                    <div class="wrap-input100 validate-input m-b-10{{ $errors->has('email') ? ' alert-validate' : '' }}" data-validate="{{$msj}}">
-                        <input class="input100" name="email" placeholder="Nombre de usuario" type="email" value="{{ old('email') }}">
+                    <div class="wrap-input100 validate-input m-b-10{{ $errors->has('username') ? ' alert-validate' : '' }}" data-validate="{{$msj}}">
+                        <input class="input100" name="username" placeholder="Nombre de usuario" type="text" value="{{ old('username') }}">
                         <span class="focus-input100"></span>
                         <span class="symbol-input100">
 							<i class="fa fa-user"></i>
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="text-center w-full">
-                    <a class="txt1" href="{{ url('/login') }}">
+                    <a class="txt1" href="{{ url('/register') }}">
                         Registrarse
                         <i class="fa fa-long-arrow-right"></i>
                     </a>

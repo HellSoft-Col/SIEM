@@ -14,39 +14,26 @@
 Route::get('/', function () {
     return view('layouts/layout');
 });
-Route::get('/home', 'HomeController@home' )->middleware;
 
-Route::get('/events', function () {
-    return view('GeneralViews/Events/events');
+Route::get('/home', function () {
+    return view('layout_user');
 });
-Route::get('/feed', function () {
-    return view('GeneralViews/Feeds/feed');
-});
-Auth::routes();
+
+// Authentication Routes...
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('login', 'Auth\LoginController@login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+
+Route::get('register', function (){
+    $carreers = \App\Models\Carreer::all();
+    return view('auth.register',["carreers" => $carreers]);
+})->name('register');
+Route::post('register', 'Auth\RegisterController@register');
+
+// Password Reset Routes...
+Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/moderator/home' , function () {
-    return view('SpecificViews/Moderator/home');
-});
-Route::get('/admin/home' , function () {
-    return view('SpecificViews/Admin/home');
-});
-Route::get('/person/home' , function () {
-    return view('SpecificViews/Person/home');
-});
-Route::get('/person/reservation/history' , function () {
-    return view('GeneralViews/Reserves/history');
-});
-Route::get('/person/reservation/active' , function () {
-    return view('GeneralViews/Reserves/active');
-});
-Route::get('/person/reservation/create' , function () {
-    return view('GeneralViews/Reserves/create');
-});
-Route::get('/person/resource/search' , function () {
-    return view('GeneralViews/ResourcesViews/search');
-});
-Route::get('/person/resource/view' , function () {
-    return view('GeneralViews/ResourcesViews/view');
-});
