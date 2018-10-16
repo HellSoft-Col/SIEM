@@ -4,44 +4,51 @@
     margin-top: 150px;
     text-align: center;
 }
-.space{
+
+.space {
     margin-top: 30px;
     margin-bottom: 30px;
 
 }
-.row{
+
+.row {
     box-sizing: border-box;
     margin-right: -15px;
     margin-left: -15px;
 }
-.div-table{
+
+.div-table {
     display: table;
     width: 100%;
     margin-bottom: 15px;
 }
-.div-table-row{
-    display:table-row;
-    width:auto;
-    clear:both;
+
+.div-table-row {
+    display: table-row;
+    width: auto;
+    clear: both;
 }
-.div-table-col{
+
+.div-table-col {
     display: inline-block;
     vertical-align: middle;
 }
-.div-table-col-top{
+
+.div-table-col-top {
     display: table-cell;
     vertical-align: top;
 }
 
-.media-body{
+.media-body {
     padding-left: 10px;
 }
-.media-body h4{
+
+.media-body h4 {
     font-weight: bold;
     font-size: 17px;
 }
 
-.media-body h5{
+.media-body h5 {
     font-size: 17px;
 }
 
@@ -59,34 +66,36 @@
     color: #000000;
 }
 
-.media-body a:hover, .media-body a:active{
+.media-body a:hover, .media-body a:active {
     color: #666666;
     text-decoration: none;
 }
+
 .media-heading {
 
     margin-top: 0;
     margin-bottom: 5px;
     margin-left: 50px;
 
-
 }
+
 /** pantallas pequenas */
 @media (max-width: 540px) {
-    .hide540{
+    .hide540 {
         display: none;
     }
 }
+
 /* Responsive Styles */
 
-@media(max-width:991px) {
+@media (max-width: 991px) {
     .customer-img,
     .img-related {
         margin-bottom: 30px;
     }
 }
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
     .img-portfolio {
         margin-bottom: 15px;
     }

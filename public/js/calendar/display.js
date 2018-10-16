@@ -1,8 +1,8 @@
-$(function(){
+$(function () {
     $('#calendar').fullCalendar({
         themeSystem: 'bootstrap4',
         header: {
-            left:'prev, nex today',
+            left: 'prev, nex today',
             center: 'title',
             rigth: 'month,agendaWeek,agendaDay,listMonth'
         },

@@ -23,10 +23,12 @@
             -webkit-transition: all .4s;
             transition: all .4s;
         }
+
         #carousel3d .carousel-3d-slide.current {
             background-color: #333;
             color: #fff;
         }
+
         #carousel3d .carousel-3d-slide.current span {
             font-size: 20px;
             font-weight: 500;
@@ -36,10 +38,12 @@
 @section('content')
     <h1 class=" title-margin text-center my-3">Eventos</h1>
     <!--  -->
-    <div class="container " >
+    <div class="container ">
 
         <div id="carousel3d" class="crouselpro">
-            <carousel-3d :width="300" :height="400" :perspective="0" :space="200" :display="5" :controls-visible="true" :controls-prev-html="'❬'" :controls-next-html="'❭'" :controls-width="30" :controls-height="60" :clickable="true" :autoplay="true" :autoplay-timeout="5000">
+            <carousel-3d :width="300" :height="400" :perspective="0" :space="200" :display="5" :controls-visible="true"
+                         :controls-prev-html="'❬'" :controls-next-html="'❭'" :controls-width="30" :controls-height="60"
+                         :clickable="true" :autoplay="true" :autoplay-timeout="5000">
                 <slide :index="0">
                     <a href="#" class="pop">
                         <img src="{{asset('/img/event_oboe_fagot.jpg')}}" style="width:100%;max-width:300px">
@@ -79,10 +83,11 @@
 
         </div>
 
-        <script src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
+        <script
+            src='//production-assets.codepen.io/assets/common/stopExecutionOnTimeout-b2a7b3fe212eaa732349046d8416e00a9dec26eb7fd347590fbced3ab38af52e.js'></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.7/vue.js'></script>
         <script src='https://rawgit.com/Wlada/vue-carousel-3d/master/dist/vue-carousel-3d.min.js'></script>
-        <script >new Vue({
+        <script>new Vue({
                 el: '#carousel3d',
                 data: {
                     slides: 7
@@ -104,10 +109,12 @@
                     <h3 class="text-uppercase"><strong>Ice Cream Social</strong></h3>
                     <ul class="list-inline">
                         <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Monday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 12:30 PM - 2:00 PM</li>
+                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 12:30 PM - 2:00 PM
+                        </li>
                         <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Cafe</li>
                     </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
                 </div>
             </div>
             <div class="row row-striped">
@@ -119,19 +126,24 @@
                     <h3 class="text-uppercase"><strong>Operations Meeting</strong></h3>
                     <ul class="list-inline">
                         <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM</li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019</li>
+                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM
+                        </li>
+                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019
+                        </li>
                     </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <img src="" class="imagepreview" style="width: 100%;" >
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                                class="sr-only">Close</span></button>
+                        <img src="" class="imagepreview" style="width: 100%;">
                     </div>
                 </div>
             </div>

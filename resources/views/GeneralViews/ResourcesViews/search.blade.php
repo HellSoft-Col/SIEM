@@ -1,7 +1,9 @@
 @extends('layouts.layout_user')
 @section('includes')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css" />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ asset('/css/resourceStyle/content.css') }}">
 @endsection
 @section('options')
@@ -14,13 +16,14 @@
             <div class="card-header">
                 <h3 class="mb-0">Búsqueda de recursos</h3>
             </div>
-            <div class="card-body" >
+            <div class="card-body">
                 <form class="form" role="form" autocomplete="off">
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label form-control-label" for="keyWord">Palabra clave</label>
                         <div class="col-lg-9">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Colocar palabra clave" id="keyWord" name="keyWord">
+                                <input type="text" class="form-control" placeholder="Colocar palabra clave" id="keyWord"
+                                       name="keyWord">
                                 <div class="input-group-append">
                                     <button class="btn btn-secondary" type="button">
                                         <i class="fa fa-search"></i>
@@ -39,7 +42,8 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-lg-2 col-form-label form-control-label" for="typeResource">Tipo de recurso</label>
+                        <label class="col-lg-2 col-form-label form-control-label" for="typeResource">Tipo de
+                            recurso</label>
                         <div class="col-lg-9">
                             <select id="typeResource" class="form-control" size="0" name="selectTypeResource">
                                 <option value="studio">Estudio individual</option>
@@ -71,7 +75,8 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <select id="additionalCharacteristic" class="form-control" size="0" name="additionalCharacteristic">
+                                <select id="additionalCharacteristic" class="form-control" size="0"
+                                        name="additionalCharacteristic">
                                     <option value="c1">Característica 1</option>
                                     <option value="c2">Característica 2</option>
                                     <option value="c3">Característica 3</option>
@@ -83,7 +88,8 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <div class="d-flex align-items-center mx-auto">
-                                    <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger" href="#">Añadir</a>
+                                    <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
+                                       href="#">Añadir</a>
                                 </div>
                             </div>
 
@@ -103,6 +109,7 @@
 @endsection
 @section('scripts')
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="{{ asset('/js/date/date.js') }}" type="text/javascript"></script>
 @endsection

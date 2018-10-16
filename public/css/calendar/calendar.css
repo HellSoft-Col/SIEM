@@ -4,20 +4,25 @@
     max-width: 100px;
     height: 80px;
 }
+
 .calendar-table {
     margin: 0 auto;
     width: 700px;
 }
+
 .selected {
     background-color: #eee;
 }
+
 .outside .date {
     color: #ccc;
 }
+
 .timetitle {
     white-space: nowrap;
     text-align: right;
 }
+
 .event {
     border-top: 1px solid #b2dba1;
     border-bottom: 1px solid #b2dba1;
@@ -33,16 +38,19 @@
     text-overflow: ellipsis;
     margin-bottom: 1px;
 }
+
 .event.begin {
     border-left: 1px solid #b2dba1;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
 }
+
 .event.end {
     border-right: 1px solid #b2dba1;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
 }
+
 .event.all-day {
     border-top: 1px solid #9acfea;
     border-bottom: 1px solid #9acfea;
@@ -51,20 +59,24 @@
     color: #31708f;
     border-width: 1px;
 }
+
 .event.all-day.begin {
     border-left: 1px solid #9acfea;
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
 }
+
 .event.all-day.end {
     border-right: 1px solid #9acfea;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
 }
+
 .event.clear {
     background: none;
     border: 1px solid transparent;
 }
+
 .table-tight > thead > tr > th,
 .table-tight > tbody > tr > th,
 .table-tight > tfoot > tr > th,
@@ -74,6 +86,7 @@
     padding-left: 0;
     padding-right: 0;
 }
+
 .table-tight-vert > thead > tr > th,
 .table-tight-vert > tbody > tr > th,
 .table-tight-vert > tfoot > tr > th,

@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class HomeController extends Controller
 {
     /**
@@ -23,7 +21,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return home();
     }
 
     /**
@@ -31,11 +29,11 @@ class HomeController extends Controller
      */
     public function home()
     {
-        if ( Auth::user()->role == 'ADMIN'){
+        if (Auth::user()->role == 'ADMIN') {
             return view('SpecificViews/Admin/home');
-        }elseif (Auth::user()->role == 'MODERATOR'){
+        } elseif (Auth::user()->role == 'MODERATOR') {
             return view('SpecificViews/Moderator/home');
-        }elseif (Auth::user()->role == 'USER'){
+        } elseif (Auth::user()->role == 'USER') {
             return view('SpecificViews/Person/home');
         };
     }

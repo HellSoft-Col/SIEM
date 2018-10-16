@@ -1,8 +1,9 @@
-.title-margin{
+.title-margin {
     margin-top: 50px;
     margin-bottom: 20px;
     font-size: 40px
 }
+
 .container-list {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
@@ -10,16 +11,20 @@
     overflow-x: hidden;
     padding: 15px;
 }
+
 .container {
     width: 1170px;
     margin-top: 150px;
 }
-label{
+
+label {
     font-size: 20px;
 }
-li{
+
+li {
     margin-bottom: 20px;
 }
-.btn{
+
+.btn {
     margin-top: 15px;
 }

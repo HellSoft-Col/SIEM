@@ -3,38 +3,45 @@
     margin: 0;
     padding: 0;
 }
+
 body {
     background: black;
     font-family: arial, verdana, tahoma;
 }
-label{
+
+label {
     font-size: 17px;
     color: white;
 }
-.space{
+
+.space {
     margin-top: 150px;
     margin-bottom: 30px;
 
 }
-.space-btn{
+
+.space-btn {
     margin-top: 15px;
     margin-bottom: 15px;
 }
-.crouselpro{
+
+.crouselpro {
     margin: 15px;
     padding: 15px;
 }
-.title-margin{
+
+.title-margin {
     margin-bottom: 15px;
     margin-top: 150px;
     padding-bottom: 15px;
-    font-size: 40px ;
-    color: white ;
+    font-size: 40px;
+    color: white;
 }
-.title-margin-reverse{
+
+.title-margin-reverse {
     margin-bottom: 15px;
     padding-bottom: 15px;
-    font-size: 30px ;
+    font-size: 30px;
     color: black;
 }
 
@@ -48,7 +55,8 @@ default width = 800/5 = 160px;
 */
 
 .accordian {
-    width: 805px; height: 320px;
+    width: 805px;
+    height: 320px;
     overflow: hidden;
 
     /*Time for some styling*/
@@ -86,11 +94,15 @@ default width = 800/5 = 160px;
 }
 
 /*Reduce with of un-hovered elements*/
-.accordian ul:hover li {width: 40px;}
+.accordian ul:hover li {
+    width: 40px;
+}
+
 /*Lets apply hover effects now*/
 /*The LI hover style should override the UL hover style*/
-.accordian ul li:hover {width: 640px;}
-
+.accordian ul li:hover {
+    width: 640px;
+}
 
 .accordian li img {
     display: block;
@@ -100,10 +112,12 @@ default width = 800/5 = 160px;
 .image_title {
     background: rgba(0, 0, 0, 0.5);
     position: absolute;
-    left: 0; bottom: 0;
+    left: 0;
+    bottom: 0;
     width: 640px;
 
 }
+
 .image_title a {
     display: block;
     color: #fff;
@@ -112,12 +126,12 @@ default width = 800/5 = 160px;
     font-size: 16px;
 }
 
-.row-striped:nth-of-type(odd){
+.row-striped:nth-of-type(odd) {
     background-color: #efefef;
     border-left: 4px #ffffff solid;
 }
 
-.row-striped:nth-of-type(even){
+.row-striped:nth-of-type(even) {
     background-color: #ffffff;
     border-left: 4px #efefef solid;
 }
@@ -127,11 +141,15 @@ default width = 800/5 = 160px;
 }
 
 /**/
-body {background-color:#000;}
+body {
+    background-color: #000;
+}
+
 #posts {
     text-align: center;
     font-size: 0;
 }
+
 #posts .post {
     position: relative;
     width: 100%;
@@ -143,8 +161,9 @@ body {background-color:#000;}
     background-position: center center;
     transition: all 300ms ease-out;
 }
+
 #posts .post h2 {
-    color:#fff;
+    color: #fff;
     position: absolute;
     bottom: 80px;
     margin: 0;
@@ -156,8 +175,9 @@ body {background-color:#000;}
     text-align: left;
     z-index: 1000;
 }
+
 #posts .post p {
-    color:#fff;
+    color: #fff;
     position: absolute;
     bottom: 40px;
     margin: 0;
@@ -168,6 +188,7 @@ body {background-color:#000;}
     text-align: left;
     z-index: 1000;
 }
+
 #posts .post:before {
     position: absolute;
     top: 0;
@@ -183,28 +204,59 @@ body {background-color:#000;}
     content: '';
     z-index: 1;
 }
+
 #posts .post:hover:before {
     opacity: 0.2;
     -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=20);
     filter: alpha(opacity=20);
 }
 
-
-
 /* === MEDIA QUERIES === */
 
 /* MOBILE FIRST */
 /* XS */
-/* SM */ @media (min-width: 34em) {#posts .post {width:50%;}}
-/* MD */ @media (min-width: 48em) {#posts .post {width:25%;}}
-/* LG */ @media (min-width: 62em) {#posts .post {width:33.33333333%;}}
-/* XL */ @media (min-width: 75em) {#posts .post {width:25%;}}
+/* SM */
+@media (min-width: 34em) {
+    #posts .post {
+        width: 50%;
+    }
+}
 
+/* MD */
+@media (min-width: 48em) {
+    #posts .post {
+        width: 25%;
+    }
+}
+
+/* LG */
+@media (min-width: 62em) {
+    #posts .post {
+        width: 33.33333333%;
+    }
+}
+
+/* XL */
+@media (min-width: 75em) {
+    #posts .post {
+        width: 25%;
+    }
+}
 
 /************************************************************************************************************/
-.product_view .modal-dialog{max-width: 800px; width: 100%;}
-.pre-cost{text-decoration: line-through; color: #a5a5a5;}
-.space-ten{padding: 10px 0;}
+.product_view .modal-dialog {
+    max-width: 800px;
+    width: 100%;
+}
+
+.pre-cost {
+    text-decoration: line-through;
+    color: #a5a5a5;
+}
+
+.space-ten {
+    padding: 10px 0;
+}
 
 .mini-carousel, .carousel {
     float: left;
@@ -267,11 +319,10 @@ body {background-color:#000;}
     position: relative;
 }
 
-.carousel ul li{
+.carousel ul li {
     float: left;
     margin: 0;
 }
-
 
 a.prev {
     position: absolute;
@@ -314,16 +365,20 @@ a.next {
     margin: 40px 31px 40px 31px;
 
 }
+
 .post-details {
     margin-bottom: 20px;
     float: left;
 }
+
 .author-name {
     margin-bottom: 20px;
 }
+
 .post-description {
     margin-bottom: 20px;
 }
+
 .orange {
     margin-bottom: 15px;
     width: 100%;
@@ -334,6 +389,7 @@ a.next {
     border-radius: 10px;
     text-transform: uppercase;
 }
+
 .grey {
     margin-top: 20px;
     float: left;
@@ -345,12 +401,15 @@ a.next {
     text-transform: uppercase;
     border-radius: 10px;
 }
+
 .option-dropdowns {
     margin-bottom: 20px;
 }
+
 .buttons {
     margin-bottom: 20px;
 }
+
 a.view-more-detail {
     float: left;
     width: 81%;

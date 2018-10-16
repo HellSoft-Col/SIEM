@@ -1,8 +1,26 @@
 .container {
     width: 1170px;
     margin-top: 150px;
-    text-align:center;
+    text-align: center;
 }
-label{
+
+label {
     font-size: 17px;
+}
+
+.container-login100::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(139, 139, 124, 0.7);
+    background: -webkit-linear-gradient(bottom, rgba(139, 139, 124, 0.47), rgba(139, 139, 124, 0.7));
+    background: -o-linear-gradient(bottom, rgba(139, 139, 124, 0.47), rgba(139, 139, 124, 0.7));
+    background: -moz-linear-gradient(bottom, rgba(139, 139, 124, 0.47), rgba(139, 139, 124, 0.7));
+    background: linear-gradient(bottom, rgba(139, 139, 124, 0.47), rgba(139, 139, 124, 0.7));
+    opacity: 0.9;
 }

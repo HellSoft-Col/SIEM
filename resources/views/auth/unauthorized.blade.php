@@ -1,7 +1,11 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: santiago_chaustre
- * Date: 16/10/18
- * Time: 02:50 PM
- */
+@extends('layouts.layout')
+
+@section('content')
+
+    <div class=”title m-b-md”>
+
+        Debe ser {{ strtoupper($message)}} para accesar esta pagina !
+
+    </div>
+
+@endsection

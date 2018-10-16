@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\Carreer;
 use App\Models\User;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\App;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rule;
 
 /**
@@ -34,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/user/update ';
 
     /**
      * Create a new controller instance.
@@ -60,8 +59,8 @@ class RegisterController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'carreer_id' => ['integer', 'required',
-                                Rule::in($this->carreers)
-                            ],
+                Rule::in($this->carreers)
+            ],
         ]);
     }
 

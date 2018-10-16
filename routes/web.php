@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+/**
+ * RUTAS PRINCIPALES
+ */
 
 Route::get('/', function () {
     return view('GeneralViews.guest');
@@ -20,6 +23,11 @@ Route::get('/home', function () {
     return view('layout_user');
 });
 
+Route::get('/resource', function () {
+    return view('GeneralViews.ResourcesViews.view');
+})->middleware('auth');
+
+
 Route::get('/user/update',function () {
     return view('SpecificViews.Person.update');
 })->name('user.update')
@@ -27,6 +35,7 @@ Route::get('/user/update',function () {
 Route::post('/user/update', 'UserController@update')
     ->name('user.update')
     ->middleware('auth');
+
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -47,20 +56,7 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/user', function () {
-    return 'Usuarios';
-});
-
 /* -----------------------------------------------------------------*/
-
-Route::get('/user/create','RegisterController@registro')->name('user.create');
-
-Route::put('/user/create/store','RegisterController@store')->name('user.store');
-
-
-Route::post('/user/update/profile','RegisterController@profile')->name('user.profile');
-
-Route::get('/user/main','RegisterController@menuPrincipal')->name('user.main');
 
 Route::get('/person/reservation/active', 'SeeReservationsController@activeReservations')->name('person.activeReservations');
 

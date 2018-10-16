@@ -31,7 +31,8 @@
     </button>
 
     <a class="navbar-brand mx-auto js-scroll-trigger" href="#">
-        <img id="logo" src="{!! asset('/svg/logo_white.svg') !!}"  height="55" class="d-inline-block align-top" alt="Logo Siem">
+        <img id="logo" src="{!! asset('/svg/logo_white.svg') !!}" height="55" class="d-inline-block align-top"
+             alt="Logo Siem">
     </a>
 
     <div class="collapse navbar-collapse" id="navbarTogglerSIEM">
@@ -47,7 +48,7 @@
 </nav>
 
 <main role="main" class="main">
-   @yield('content')
+    @yield('content')
 </main>
 <!-- Footer -->
 <footer class="page-footer font-small indigo" style="bottom: 0;">
