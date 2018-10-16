@@ -126,11 +126,9 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
-
-
-
+    
 @endsection
 @section('scripts')
     <script src="{{ asset('/js/eventsFeedsGeneral/behavior.js') }}" type="text/javascript"></script>

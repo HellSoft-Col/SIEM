@@ -14,10 +14,7 @@
 Route::get('/', function () {
     return view('layouts/layout');
 });
-
-Route::get('/home', function () {
-    return view('layouts/layout_user');
-});
+Route::get('/home', 'HomeController@home' )->middleware;
 
 Route::get('/events', function () {
     return view('GeneralViews/Events/events');

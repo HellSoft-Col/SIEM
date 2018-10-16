@@ -25,4 +25,18 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    /**
+     *
+     */
+    public function home()
+    {
+        if ( Auth::user()->role == 'ADMIN'){
+            return view('SpecificViews/Admin/home');
+        }elseif (Auth::user()->role == 'MODERATOR'){
+            return view('SpecificViews/Moderator/home');
+        }elseif (Auth::user()->role == 'USER'){
+            return view('SpecificViews/Person/home');
+        };
+    }
 }
