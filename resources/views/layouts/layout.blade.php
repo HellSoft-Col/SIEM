@@ -1,5 +1,11 @@
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>SIEM</title>
 
     <!-- CSRF Token -->
@@ -40,7 +46,7 @@
     </div>
 </nav>
 
-<main role="main">
+<main role="main" class="main">
    @yield('content')
 </main>
 <!-- Footer -->

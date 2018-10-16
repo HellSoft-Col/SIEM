@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="{{ asset('/css/login/main.css') }}">
 @endsection
 @section('content')
-
-
     <div class="limiter">
         <div class="container-login100">
             <div class="wrap-login100 p-t-190 p-b-30">
