@@ -43,11 +43,11 @@ Route::post('/user/update/profile','RegisterController@profile')->name('user.pro
 
 Route::get('/user/main','RegisterController@menuPrincipal')->name('user.main');
 
-Route::get('/person/reservation/active', 'SeeReservationsController@activeReservations')->name('person.activeReservations');
+Route::get('/person/reservation/active', 'ReservationsController@activeReservations')->name('person.activeReservations');
 
-Route::get('/person/reservation/history', 'SeeReservationsController@loadHistoryReservations')->name('person.historyReservations');
+Route::get('/person/reservation/history', 'ReservationsController@loadHistoryReservations')->name('person.historyReservations');
 
-Route::get('/person/reservation/history/{startTime}/{endTime}', 'SeeReservationsController@historyReservations')
+Route::get('/person/reservation/history/{startTime}/{endTime}', 'ReservationsController@historyReservations')
     ->name('person.historyReservations');
 
-Route::post('/person/reservation/delete', 'SeeReservationsController@cancelReservations')->name('person.cancelReservations');
+Route::post('/person/reservation/delete', 'ReservationsController@cancelReservations')->name('person.cancelReservations');
