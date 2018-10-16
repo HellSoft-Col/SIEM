@@ -23,6 +23,19 @@ Route::get('/home', function () {
     return view('layout_user');
 });
 
+Route::get('/events ', 'EventController@index');
+Route::get('/events/{event}', 'EventController@show')->where('id', '[0-9]+');
+Route::get('/feed ', 'PublicationController@index');
+Route::get('/person/resource/search', 'ResourceController@gosearch');
+Route::put('/person/resource/search', 'ResourceController@search');
+Route::get('/person/resource/view/{resource}', 'ResourceController@show');
+Route::post('/person/reservation/create', 'ReservationController@create');
+Route::put('/person/reservation/create', 'ReservationController@store');
+Route::get('/person/reservation/create', 'ReservationController@create')->name('reservation.create');
+
+Route::get('/user', function () {
+    return 'Usuarios';
+});
 Route::get('/resource', function () {
     return view('GeneralViews.ResourcesViews.view');
 })->middleware('auth');
@@ -47,7 +60,6 @@ Route::get('register', function (){
     return view('auth.register',["carreers" => $carreers]);
 })->name('register');
 Route::post('register', 'Auth\RegisterController@register');
-
 // Password Reset Routes...
 Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
 Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
@@ -57,27 +69,16 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 Route::get('/home', 'HomeController@index')->name('home');
 
 /* -----------------------------------------------------------------*/
-
 Route::get('/person/reservation/active', 'SeeReservationsController@activeReservations')->name('person.activeReservations');
 
-Route::get('/person/reservation/history', 'SeeReservationsController@loadHistoryReservations')->name('person.historyReservations');
+Route::get('/person/reservation/history', 'ReservationsController@loadHistoryReservations')->name('person.historyReservations');
 
-Route::get('/person/reservation/history/{startTime}/{endTime}', 'SeeReservationsController@historyReservations')
+Route::get('/person/reservation/history/{startTime}/{endTime}', 'ReservationsController@historyReservations')
     ->name('person.historyReservations');
 
-Route::post('/person/reservation/delete', 'SeeReservationsController@cancelReservations')->name('person.cancelReservations');
+Route::post('/person/reservation/delete', 'ReservationsController@cancelReservations')->name('person.cancelReservations');
 
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 /**
  * RUTAS PRUEBA
  */

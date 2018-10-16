@@ -48,6 +48,13 @@ class User extends Authenticatable
         return $this->belongsTo(Carreer::class);
     }
 
+    function hasPenalties(){
+        if($this->penalties()->where('active','1')->count()>0){
+            return true;
+        }
+        return false;
+    }
+
     function file(){
         return $this->belongsTo(File::class , 'file_id');
     }
