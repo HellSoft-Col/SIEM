@@ -11,3 +11,4 @@
     Usuario: <input type="text" name="user_id">
     <button type="submit">Crear</button>
 </form>
+<p>{{$message}}</p>

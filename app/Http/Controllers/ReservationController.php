@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Mail;
 
 class ReservationController extends Controller
 {
@@ -28,7 +29,9 @@ class ReservationController extends Controller
     public function create(Request $request)
     {
         $resource_id = $request->_resource;
-        return view('test_views.crear_reserva', compact('resource_id'));
+        $message = "";
+
+        return view('test_views.crear_reserva', compact('resource_id','message'));
     }
 
     /**
@@ -40,10 +43,11 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         $user = User::find($request->user_id);
+        $user->email = 'anfecoquin123@gmail.com';
+        $user->save();
         $resource = Resource::find($request->resource_id);
         $end_time = strtotime($request->end_date. " " .$request->end_time);
         $start_time = strtotime($request->start_date. " " .$request->start_time);
-
         $message = $this->canReserve($user,$resource,$start_time,$end_time);
 
         if($message==""){
@@ -55,9 +59,66 @@ class ReservationController extends Controller
                 'resource_id' => $resource->id,
                 'moulted' => '0',
             ]);
+            $sT = date('l jS \of F Y h:i:s A',$start_time);
+            $eT = date('l jS \of F Y h:i:s A',$end_time);
             $message .= "Reserva exitosa" ;
+            $email = [
+                'nameUser' => $user->name,
+                'emailUser' => $user->email,
+                'message' => $message,
+                'resourceId' => $resource->id,
+                'resourceName' => $resource->name,
+                'startTime' => $sT,
+                'endTime' => $eT
+            ];
+            $this->sendConfirmEmail($email);
+        }else{
+            $start_time.date('l jS \of F Y h:i:s A');
+            $end_time.date('l jS \of F Y h:i:s A');
+            $email = [
+                'nameUser' => $user->name,
+                'emailUser' => $user->email,
+                'message' => $message,
+                'resourceId' => $resource->id,
+                'resourceName' => $resource->name,
+                'startTime' => $start_time,
+                'endTime' => $end_time
+            ];
+            $this->sendErrorEmail($email);
         }
-        return redirect()->route('reservation.create')->with('message', [$message]);
+
+        $resource_id = $resource->id;
+        return view('test_views.crear_reserva', compact('resource_id','message'));
+    }
+
+    /**
+     * Send a confirm e-mail to the user.
+     *
+     * @email -> important info
+     */
+    public function sendConfirmEmail($email)
+    {
+        Mail::send('test_views.successMail', ['body' => $email], function ($message) use ($email){
+            $message->to($email['emailUser'], $email['nameUser'])
+                ->subject('Reserva creada exitosamente.');
+            $message->from('siemHellsoft2018@gmail.com','SIEM');
+        });
+    }
+
+    /**
+     * Send an e-mail reminder to the user.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function sendErrorEmail($email)
+    {
+        Mail::send('test_views.mail', ['body' => $email], function ($message) use ($email){
+            $message->to($email['emailUser'], $email['nameUser'])
+                ->subject('Reserva fallida.');
+            $message->from('siemHellsoft2018@gmail.com','SIEM');
+        });
     }
 
     /**
@@ -156,6 +217,7 @@ class ReservationController extends Controller
                 }
             }
         }
+
         else{
             $error_message.=" - Bloque incorrecto - ";
         }
