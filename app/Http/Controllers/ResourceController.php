@@ -172,6 +172,12 @@ class ResourceController extends Controller
         $r = [];
         $aux_resources = Resource::all();
 
+        foreach ($aux_resources as $resource){
+            if($this->matchBool($resource,$keyword, $type, $c_type, $characteristics, $operators)){
+                array_push($r, $resource);
+            }
+        }
+        /*
         foreach ($aux_resources as $resource) {
             if ($keyword == NULL) {
                 if ($resource->estado != 'DAMAGED' && $resource->estado != 'IN_MAINTENANCE') {
@@ -279,10 +285,49 @@ class ResourceController extends Controller
                     }
                 }
             }
-        }
-        return Resource::all();
-
-
+        }*/
+        return $r;
     }
 
+    private function matchBool($resource, $keyword, $type, $c_type, $characteristics, $operators){
+        $acum = true;
+        if(($resource->estado == 'DAMAGED' && $resource->estado == 'IN_MAINTENANCE')){
+            $acum = $acum && false;
+        }
+        if($keyword != NULL){
+            if (strpos($resource->name, $keyword) !== false || strpos($resource->description, $keyword) !== false) {
+                //
+            }
+            else{
+                $acum = $acum && false;
+            }
+        }
+        if ($type != NULL){
+            if($resource->type != $type){
+                $acum = $acum && false;
+            }
+        }
+        if($c_type != NULL){
+            if($resource->classroom_type->name == $c_type){
+                $acum = $acum && false;
+            }
+        }
+        else if ($characteristics[0] != NULL){
+            $acum_charact = $resource->hasCharacteristic($characteristics[0]);
+            $iteration = 0;
+            foreach ($characteristics as $i_characteristic) {
+                if ($iteration != 0) {
+                    $bool_value = $resource->hasCharacteristic($i_characteristic);
+                    if ($operators[$iteration] == 'AND') {
+                        $acum_charact = $acum_charact && $bool_value;
+                    } else if ($operators[$iteration] == 'OR') {
+                        $acum_charact = $acum_charact || $bool_value;
+                    }
+                }
+                $iteration += 1;
+            }
+            $acum = $acum && $acum_charact;
+        }
+        return $acum;
+    }
 }
