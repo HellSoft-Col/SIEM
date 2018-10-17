@@ -47,10 +47,10 @@
         <form method="GET" action="{{url('person/reservation/history/{startTime}/{endTime}')}}">
             {{csrf_field()}}
             <div class="row">
-                <div class="col-sm">
+                <div class="col">
                     <label>Fecha Inicio - Hora Inicio:</label>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <div class="form-group">
                         <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input"
@@ -69,7 +69,7 @@
                 <div class="col">
                     <label>Fecha Fin - Hora Fin:</label>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <div class="form-group">
                         <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input"
@@ -85,29 +85,28 @@
                         $('#datetimepickerEnd').datetimepicker();
                     });
                 </script>
+                <div class="col d-flex align-self-center">
+                    <button class="btn btn-dark d-flex align-self-center js-scroll-trigger">Filtrar reservas</button>
+                </div>
             </div>
-            <div>
-                <button class="btn btn-dark d-flex align-items-right js-scroll-trigger">Filtrar reservas</button>
-            </div>
+
         </form>
         <div class="container-list">
             <ul class="list-unstyled">
                 @if (!empty($reservations))
                     @foreach($reservations as $reservation)
                         <li class="media my-4">
-                            <img class="mr-3" src="{{asset($reservation['imagePath'])}}" alt="Generic placeholder image">
+                            <img class="mr-3" src="{{asset($reservation['imagePath'])}}" alt="Generic placeholder image" style="with:290px;height:171px;>
                             <div class="media-body d-flex align-items-center">
-                                <div class="row">
-                                    <div class="col">
+                                <div class="row flexcontainer" >
+                                    <div class="col itemcenter">
                                         <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                        <p>{{$reservation['salon']}}</p>
-                                        <p>{{$reservation['inicio']}}</p>
-                                        <p>{{$reservation['fin']}}</p>
+                                        <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
                                     </div>
-                                    <div class="col d-flex align-items-center">
+                                    <div class="col itemright d-flex align-items-center">
                                         <div class="d-flex align-items-center mx-auto">
-                                            <a class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                                recurso</a>
+                                            <button type="submit" class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
+                                                recurso</button>
                                         </div>
                                     </div>
                                 </div>

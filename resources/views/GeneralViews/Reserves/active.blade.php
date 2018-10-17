@@ -63,7 +63,7 @@
                 @if (!empty($reservations))
                         @foreach($reservations as $reservation)
                             <li class="media my-6">
-                                <div class="d-flex align-items-center mx-auto">
+                                <div class="col-sm-3 d-flex align-items-center mx-auto">
                                     <div class="form-check col-2" for="checkOne">
                                         <label class="form-check-label">
                                             <input type="checkbox" class="form-check-input" id="checkOne" name="selected[]"
@@ -72,14 +72,12 @@
                                     </div>
                                 </div>
                                 <div class="media-body d-flex align-items-center">
-                                    <div class="row">
-                                        <div class="col">
+                                    <div class="row flexcontainer">
+                                        <div class="col itemcenter">
                                             <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                            <p>{{$reservation['salon']}}</p><br>
-                                            <p>{{$reservation['inicio']}}</p><br>
-                                            <p>{{$reservation['fin']}}</p>
+                                            <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
                                         </div>
-                                        <div class="col-3 d-flex align-items-center">
+                                        <div class="col-3 itemright d-flex align-items-center">
                                             <div class="d-flex align-items-center mx-auto">
                                                 <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger" href="#">Ver
                                                     recurso</a>
