@@ -16,13 +16,15 @@
                 <h3 class="mb-0">Crear reserva</h3>
             </div>
             <div class="card-body">
-                <form class="form" role="form" autocomplete="off">
+                <form class="form" role="form" autocomplete="off" method= "POST" action="{{ url('/person/reservation/create') }}">
+                    {{ csrf_field() }}
+                    {{ method_field('PUT') }}
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label form-control-label" for="keyWord">Fecha Inicio - Hora
                             Inicio:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input"
+                                <input name= "start_time" type="text" class="form-control datetimepicker-input"
                                        data-target="#datetimepickerStart"/>
                                 <div class="input-group-append" data-target="#datetimepickerStart"
                                      data-toggle="datetimepicker">
@@ -42,7 +44,7 @@
                             Fin:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input"
+                                <input name= "end_time" type="text" class="form-control datetimepicker-input"
                                        data-target="#datetimepickerEnd"/>
                                 <div class="input-group-append" data-target="#datetimepickerEnd"
                                      data-toggle="datetimepicker">
@@ -58,8 +60,9 @@
 
                     </div>
                     <div class="d-flex flex-row justify-content-center">
-                        <a class="btn btn-dark js-scroll-trigger space" href="#">Realizar Reserva</a>
+                        <button type ="submit" class="btn btn-dark js-scroll-trigger space" href="#">Realizar Reserva</button>
                     </div>
+                    <input type="hidden" name="resource_id" value="{{$resource_id}}">
                 </form>
             </div>
         </div>

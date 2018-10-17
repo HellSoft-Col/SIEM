@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Mail;
 
 class ReservationController extends Controller
@@ -41,25 +42,29 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::find($request->user_id);
+        //$user = User::find($request->user_id);
+        $user = Auth::user();
         $user->email = 'anfecoquin123@gmail.com';
         $user->save();
         $resource = Resource::find($request->resource_id);
-        $end_time = strtotime($request->end_date . " " . $request->end_time);
-        $start_time = strtotime($request->start_date . " " . $request->start_time);
-        $message = $this->canReserve($user, $resource, $start_time, $end_time);
-
+        $end_time = date('Y-m-d H:i:s', strtotime($request->end_time));
+            //$request->end_time;
+            /**strtotime($request->end_date . " " . $request->end_time);*/;
+        $start_time = date('Y-m-d H:i:s', strtotime($request->start_time));;
+            //$request->start_time;
+            /**strtotime($request->start_date . " " . $request->start_time);*/;
+            $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time));
         if ($message == "") {
             Reservation::create([
                 'state' => 'ACTIVE',
-                'start_time' => $request->start_date . " " . $request->start_time,
-                'end_time' => $request->end_date . " " . $request->end_time,
+                'start_time' => date('Y-m-d H:i:s', strtotime($request->start_time)),
+                'end_time' => date('Y-m-d H:i:s', strtotime($request->end_time)),
                 'user_id' => $user->id,
                 'resource_id' => $resource->id,
                 'moulted' => '0',
             ]);
-            $sT = date('l jS \of F Y h:i:s A', $start_time);
-            $eT = date('l jS \of F Y h:i:s A', $end_time);
+            $sT = date('l jS \of F Y h:i:s A', strtotime($start_time));
+            $eT = date('l jS \of F Y h:i:s A', strtotime($end_time));
             $message .= "Reserva exitosa";
             $email = [
                 'nameUser' => $user->name,
@@ -87,7 +92,7 @@ class ReservationController extends Controller
         }
 
         $resource_id = $resource->id;
-        return view('test_views.crear_reserva', compact('resource_id', 'message'));
+        return view('GeneralViews.Reserves.create', compact('resource_id', 'message'));
     }
 
     /**
@@ -113,7 +118,7 @@ class ReservationController extends Controller
      */
     public function sendErrorEmail($email)
     {
-        Mail::send('test_views.mail', ['body' => $email], function ($message) use ($email) {
+        Mail::send('test_views.successMail', ['body' => $email], function ($message) use ($email) {
             $message->to($email['emailUser'], $email['nameUser'])
                 ->subject('Reserva fallida.');
             $message->from('siemHellsoft2018@gmail.com', 'SIEM');
@@ -189,6 +194,7 @@ class ReservationController extends Controller
             $min_hours = 24;
             $max_hours = 168;
         }
+        date_default_timezone_set('America/Bogota');
 
         if ($anteriority < 0) {
             $error_message .= " - Fecha en el pasado - ";
@@ -217,8 +223,8 @@ class ReservationController extends Controller
         if ($user->hasPenalties()) {
             $error_message .= " - El usuario tiene multas - ";
         }
-
-        if (!$resource->isAvailableBetween($start_time, $end_time)) {
+        //dd($resource);
+        if (!$resource->isAvailableBetween(date('Y-m-d H:i:s', $start_time), date('Y-m-d H:i:s', $end_time))) {
             $error_message .= " - No está disponible - ";
         }
         return $error_message;
