@@ -2,9 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -46,6 +45,14 @@ class User extends Authenticatable
 
     function carreer(){
         return $this->belongsTo(Carreer::class);
+    }
+
+    function hasPenalties()
+    {
+        if ($this->penalties()->where('active', '1')->count() > 0) {
+            return true;
+        }
+        return false;
     }
 
     function file(){

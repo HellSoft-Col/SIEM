@@ -14,7 +14,8 @@ class PublicationController extends Controller
      */
     public function index()
     {
-        //
+        return view('test_views.publicaciones')
+            ->with('publications', $this->getSomePublications(20));
     }
 
     /**
@@ -81,5 +82,16 @@ class PublicationController extends Controller
     public function destroy(Publication $publication)
     {
         //
+    }
+
+    /**
+     * @param
+     *  - limit: el numero maximo de publicaciones a retornar
+     * @return
+     *  - coleccion de publicaciones en orden de fecha descendente
+     */
+    private function getSomePublications($limit)
+    {
+        return Publication::all()->sortByDesc('date_time')->take($limit);
     }
 }
