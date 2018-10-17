@@ -19,242 +19,104 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm">
-                <div class="form-check-inline">
-                    <label class="form-check-label" for="radio1">
-                        <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1"
-                               checked>Activas
-                    </label>
-                </div>
-                <div class="form-check-inline">
-                    <label class="form-check-label" for="radio2">
-                        <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">Historial
-                    </label>
+        <form>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-check-inline">
+                        <label class="form-check-label" for="radio1">
+                            <input type="radio" class="form-check-input" id="radio1" name="optradio" value="{{url('/person/reservation/active')}}">
+                            Activas
+                        </label>
+                    </div>
+                    <div class="form-check-inline">
+                        <label class="form-check-label" for="radio2">
+                            <input type="radio" class="form-check-input" id="radio2" name="optradio"
+                                   value="{{url('/person/reservation/history')}}" checked>Historial
+                        </label>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script>
+            $('input[type="radio"]').on('click', function() {
+                window.location = $(this).val();
+            });
+        </script>
         <br>
-        <div class="row">
-            <div class="col-sm">
-                <label>Fecha Inicio - Hora Inicio:</label>
-            </div>
-            <div class="col-sm-3">
-                <div class="form-group">
-                    <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input"
-                               data-target="#datetimepickerStart"/>
-                        <div class="input-group-append" data-target="#datetimepickerStart" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+        <form method="GET" action="{{url('person/reservation/history/{startTime}/{endTime}')}}">
+            {{csrf_field()}}
+            <div class="row">
+                <div class="col-sm">
+                    <label>Fecha Inicio - Hora Inicio:</label>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input"
+                                   data-target="#datetimepickerStart" name="startTime" value="{{old('startTime')}}"/>
+                            <div class="input-group-append" data-target="#datetimepickerStart" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <script type="text/javascript">
-                $(function () {
-                    $('#datetimepickerStart').datetimepicker();
-                });
-            </script>
-            <div class="col">
-                <label>Fecha Fin - Hora Fin:</label>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepickerEnd"/>
-                        <div class="input-group-append" data-target="#datetimepickerEnd" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepickerStart').datetimepicker();
+                    });
+                </script>
+                <div class="col">
+                    <label>Fecha Fin - Hora Fin:</label>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input"
+                                   data-target="#datetimepickerEnd" name="endTime" value="{{old('endTime')}}"/>
+                            <div class="input-group-append" data-target="#datetimepickerEnd" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepickerEnd').datetimepicker();
+                    });
+                </script>
             </div>
-            <script type="text/javascript">
-                $(function () {
-                    $('#datetimepickerEnd').datetimepicker();
-                });
-            </script>
-        </div>
+            <div>
+                <button class="btn btn-dark d-flex align-items-right js-scroll-trigger">Filtrar reservas</button>
+            </div>
+        </form>
         <div class="container-list">
             <ul class="list-unstyled">
-                <li class="media my-4">
-                    <img class="mr-3" src="{{asset('/img/image_resource.jpg')}}" alt="Generic placeholder image">
-                    <div class="media-body d-flex align-items-center">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="mt-0 mb-1">Sala 2</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                            <div class="col d-flex align-items-center">
-                                <div class="d-flex align-items-center mx-auto">
-                                    <a class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                        recurso</a>
+                @if (!empty($reservations))
+                    @foreach($reservations as $reservation)
+                        <li class="media my-4">
+                            <img class="mr-3" src="{{asset($reservation['imagePath'])}}" alt="Generic placeholder image">
+                            <div class="media-body d-flex align-items-center">
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
+                                        <p>{{$reservation['salon']}}</p>
+                                        <p>{{$reservation['inicio']}}</p>
+                                        <p>{{$reservation['fin']}}</p>
+                                    </div>
+                                    <div class="col d-flex align-items-center">
+                                        <div class="d-flex align-items-center mx-auto">
+                                            <a class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
+                                                recurso</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="media my-4">
-                    <img class="mr-3" src="{{asset('/img/image_resource.jpg')}}" alt="Generic placeholder image">
-                    <div class="media-body d-flex align-items-center">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="mt-0 mb-1">Sala 2</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                            <div class="col d-flex align-items-center">
-                                <div class="d-flex align-items-center mx-auto">
-                                    <a class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                        recurso</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="media my-4">
-                    <img class="mr-3" src="{{asset('/img/image_resource.jpg')}}" alt="Generic placeholder image">
-                    <
-                    <div class="media-body d-flex align-items-center">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="mt-0 mb-1">Sala 2</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                            <div class="col d-flex align-items-center">
-                                <div class="d-flex align-items-center mx-auto">
-                                    <a class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                        recurso</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="media my-4">
-                    <img class="mr-3" src="{{asset('/img/image_resource.jpg')}}" alt="Generic placeholder image">
-                    <
-                    <div class="media-body d-flex align-items-center">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="mt-0 mb-1">Sala 2</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                            <div class="col d-flex align-items-center">
-                                <div class="d-flex align-items-center mx-auto">
-                                    <a class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                        recurso</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="media my-4">
-                    <img class="mr-3" src="{{asset('/img/image_resource.jpg')}}" alt="Generic placeholder image">
-                    <
-                    <div class="media-body d-flex align-items-center">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="mt-0 mb-1">Sala 2</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                            <div class="col d-flex align-items-center">
-                                <div class="d-flex align-items-center mx-auto">
-                                    <a class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                        recurso</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="media my-4">
-                    <img class="mr-3" src="{{asset('/img/image_resource.jpg')}}" alt="Generic placeholder image">
-                    <
-                    <div class="media-body d-flex align-items-center">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="mt-0 mb-1">Sala 2</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                            <div class="col d-flex align-items-center">
-                                <div class="d-flex align-items-center mx-auto">
-                                    <a class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                        recurso</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="media my-4">
-                    <img class="mr-3" src="{{asset('/img/image_resource.jpg')}}" alt="Generic placeholder image">
-                    <
-                    <div class="media-body d-flex align-items-center">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="mt-0 mb-1">Sala 2</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                            <div class="col d-flex align-items-center">
-                                <div class="d-flex align-items-center mx-auto">
-                                    <a class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                        recurso</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-
-                <li class="media my-4">
-                    <img class="mr-3" src="{{asset('/img/image_resource.jpg')}}" alt="Generic placeholder image">
-                    <
-                    <div class="media-body d-flex align-items-center">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="mt-0 mb-1">Sala 2</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                            <div class="col d-flex align-items-center">
-                                <div class="d-flex align-items-center mx-auto">
-                                    <a class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                        recurso</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li class="media my-4">
-                    <img class="mr-3" src="{{asset('/img/image_resource.jpg')}}" alt="Generic placeholder image">
-                    <
-                    <div class="media-body d-flex align-items-center">
-                        <div class="row">
-                            <div class="col">
-                                <h5 class="mt-0 mb-1">Sala 2</h5>
-                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce
-                                condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                            </div>
-                            <div class="col d-flex align-items-center">
-                                <div class="d-flex align-items-center mx-auto">
-                                    <a class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                        recurso</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </li>
+                        </li>
+                    @endforeach
+                @else
+                    <h1>No tiene historial de reservas</h1>
+                @endif
             </ul>
         </div>
     </div>

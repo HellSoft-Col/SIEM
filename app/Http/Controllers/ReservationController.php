@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom_type;
+use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Mail;
 
 class ReservationController extends Controller
@@ -227,7 +230,7 @@ class ReservationController extends Controller
     /**-------------------------------------------------------------------------**/
     public function activeReservations()
     {
-        $user_id = 10;
+        $user_id = Auth::user()->id;
         $reservations = [];
         $userItems = Reservation::where('user_id', $user_id)->where('state', 'ACTIVE')->get();
         foreach ($userItems as $uItem) {
@@ -242,21 +245,37 @@ class ReservationController extends Controller
             ];
             array_push($reservations, $item);
         }
-        return view('seeReservationsPerson.reservations', ['reservations' => $reservations]);
+        return view('GeneralViews.Reserves.active', ['reservations' => $reservations]);
     }
 
     public function loadHistoryReservations()
     {
+        $user_id = Auth::user()->id;
         $reservations = [];
-        return view('seeReservationsPerson.history', ['reservations' => $reservations]);
+        $userItems = Reservation::where('user_id', $user_id)
+            ->where('state', 'FINALIZED')->get();
+        foreach ($userItems as $uItem) {
+            $resource = Resource::where('id', $uItem->resource_id)->first();
+            $image = File::where('resource_id', $resource->id)->first();
+            $classroom = Classroom_type::where('id', $resource->classroom_type_id)->first();
+            $item = [
+                "imagePath" => $image->path,
+                "name" => $resource->name,
+                "salon" => $classroom->name,
+                "inicio" => $uItem->start_time,
+                "fin" => $uItem->end_time
+            ];
+            array_push($reservations, $item);
+        }
+        return view('GeneralViews.Reserves.history', ['reservations' => $reservations]);
     }
 
     public function historyReservations()
     {
         $data = request()->all();
-        $starTime = $data['startTime'];
-        $endTime = $data['endTime'];
-        $user_id = 1;
+        $starTime = date('Y-m-d',strtotime($data['startTime']));
+        $endTime = date('Y-m-d',strtotime($data['endTime']));
+        $user_id = Auth::user()->id;
         $reservations = [];
         if (!empty($starTime) and !empty($endTime)) {
             $userItems = Reservation::where('user_id', $user_id)
@@ -280,14 +299,14 @@ class ReservationController extends Controller
             ];
             array_push($reservations, $item);
         }
-        return view('seeReservationsPerson.history', ['reservations' => $reservations]);
+        return view('GeneralViews.Reserves.history', ['reservations' => $reservations]);
     }
 
     public function cancelReservations()
     {
         $data = request()->all();
         $reservas = isset($data['selected']) ? $data['selected'] : array();
-        $user_id = 10;
+        $user_id = Auth::user()->id;
         if (!empty($data['all']) and $data['all'] == true) {
             $userItems = Reservation::where('user_id', $user_id)->get();
             foreach ($userItems as $item) {
@@ -304,6 +323,6 @@ class ReservationController extends Controller
                 }
             }
         }
-        return redirect(route('person.activeReservations'));
+        return view('GeneralViews.Reserves.active');
     }
 }
