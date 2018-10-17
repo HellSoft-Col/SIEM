@@ -49,6 +49,7 @@
                         <img src="{{asset('/img/event_oboe_fagot.jpg')}}" style="width:100%;max-width:300px">
                     </a>
                 </slide>
+
                 <slide :index="1">
                     <a href="#" class="pop">
                         <img src=" {{asset('/img/event_piano.jpg')}}" style="width:100%;max-width:300px">

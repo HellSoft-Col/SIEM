@@ -1,4 +1,3 @@
-
 <p>Apreciado usuario(a), {{$body['nameUser']}}:</p>
 <p>Esta es la confirmación {{$body['resourceId']}} del préstamo realizado de forma
     exitosa en la plataforma SIEM en la fecha: {{$body['startTime']}} y

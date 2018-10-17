@@ -5,9 +5,8 @@ namespace Tests\Feature;
 use App\Models\File;
 use App\Models\Publication;
 use App\User;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class PublicationsModuleTest extends TestCase
 {

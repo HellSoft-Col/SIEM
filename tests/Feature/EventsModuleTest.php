@@ -5,9 +5,8 @@ namespace Tests\Feature;
 use App\Models\Event;
 use App\Models\File;
 use App\User;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class EventsModuleTest extends TestCase
 {
@@ -72,8 +71,8 @@ class EventsModuleTest extends TestCase
             'type' => 'EVENT',
         ]);
 
-        $this->get('/events/'.$e->id)
-        ->assertStatus(200)
+        $this->get('/events/' . $e->id)
+            ->assertStatus(200)
             ->assertSee('test')
             ->assertSee('Licho')
             ->assertSee('files\uploads');

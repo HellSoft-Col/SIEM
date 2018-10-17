@@ -5,9 +5,8 @@ namespace Tests\Feature;
 use App\Models\Classroom_type;
 use App\Models\Resource;
 use App\User;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ReservationsModuleTest extends TestCase
 {

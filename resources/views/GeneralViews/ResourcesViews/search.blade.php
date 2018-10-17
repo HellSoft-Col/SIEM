@@ -17,13 +17,16 @@
                 <h3 class="mb-0">Búsqueda de recursos</h3>
             </div>
             <div class="card-body">
-                <form class="form" role="form" autocomplete="off">
+                <form id="search_resource" class="form" role="form" method="POST"
+                      action="{{ route('resource.search') }}">
+                    @csrf
+                    {{ method_field('PUT') }}
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label form-control-label" for="keyWord">Palabra clave</label>
                         <div class="col-lg-9">
                             <div class="input-group">
                                 <input type="text" class="form-control" placeholder="Colocar palabra clave" id="keyWord"
-                                       name="keyWord">
+                                       name="keyword">
                                 <div class="input-group-append">
                                     <button class="btn btn-secondary" type="button">
                                         <i class="fa fa-search"></i>
@@ -35,9 +38,11 @@
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label form-control-label" for="resource">Recurso</label>
                         <div class="col-lg-9">
-                            <select id="resource" class="form-control" size="0" name="selectResource">
-                                <option value="room">Sala</option>
-                                <option value="instrument">Instrumento</option>
+                            <select onchange="onChangeEvent()" id="resource" class="form-control" size="0"
+                                    name="rcategory">
+                                <option value=""></option>
+                                <option value="CLASSROOM">Sala</option>
+                                <option value="INSTRUMENT">Instrumento</option>
                             </select>
                         </div>
                     </div>
@@ -45,65 +50,103 @@
                         <label class="col-lg-2 col-form-label form-control-label" for="typeResource">Tipo de
                             recurso</label>
                         <div class="col-lg-9">
-                            <select id="typeResource" class="form-control" size="0" name="selectTypeResource">
-                                <option value="studio">Estudio individual</option>
-                                <option value="keyboard">Teclado</option>
-                                <option value="assemble">Ensamble</option>
+                            <select id="typeResource" class="form-control" size="0"
+                                    name="rtype">
+                                <option value=""></option>
+                                @forelse($rtypes as $rtype)
+                                    <option hidden class="sala" value="{{$rtype->name}}">{{$rtype->name}}</option>
+                                @empty
+                                    <option value="">--</option>
+                                @endforelse
+                                @forelse($rtypes_instrument as $rtype)
+                                    <option hidden class="instrumento"
+                                            value="{{$rtype->name}}">{{$rtype->name}}</option>
+                                @empty
+                                    <option value="">--</option>
+                                @endforelse
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label form-control-label" for="mainCharacteristic">Característica</label>
                         <div class="col-lg-9">
-                            <select id="mainCharacteristic" class="form-control" size="0" name="mainCharacteristic">
-                                <option value="c1">Característica 1</option>
-                                <option value="c2">Característica 2</option>
-                                <option value="c3">Característica 3</option>
+                            <select name="rcaracteristic" id="mainCharacteristic" class="form-control" size="0"
+                                    name="mainCharacteristic">
+                                <option value=""></option>
+                                @forelse($rcaracteristics as $rcaracteristic)
+                                    <option hidden class="sala"
+                                            value="{{$rcaracteristic->name}}">{{$rcaracteristic->name}}</option>
+                                @empty
+                                    <option value="">--</option>
+                                @endforelse
+                                @forelse($rcaracteristics_instrument as $rcaracteristic)
+                                    <option hidden class="instrumento"
+                                            value="{{$rcaracteristic->name}}">{{$rcaracteristic->name}}</option>
+                                @empty
+                                    <option value="">--</option>
+                                @endforelse
                             </select>
                         </div>
                     </div>
-                    <div class="row d-flex flex-row justify-content-center">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <select id="option" class="form-control" size="0" name="option">
-                                    <option value="and">And</option>
-                                    <option value="or">Or</option>
-                                </select>
+                    <div id="options" name="options">
+
+                        <div id="char_1" class="row d-flex flex-row justify-content-center">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <select id="option" class="form-control" size="0" name="option">
+                                        <option value="and">AND</option>
+                                        <option value="or">OR</option>
+                                    </select>
+
+                                </div>
 
                             </div>
-
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <select id="additionalCharacteristic" class="form-control" size="0"
-                                        name="additionalCharacteristic">
-                                    <option value="c1">Característica 1</option>
-                                    <option value="c2">Característica 2</option>
-                                    <option value="c3">Característica 3</option>
-                                </select>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <select id="aditionalCharacteristic" class="form-control" size="0"
+                                            name="mainCharacteristic">
+                                        <option value=""></option>
+                                        @forelse($rcaracteristics as $rcaracteristic)
+                                            <option hidden class="sala"
+                                                    value="{{$rcaracteristic->name}}">{{$rcaracteristic->name}}</option>
+                                        @empty
+                                            <option value="">--</option>
+                                        @endforelse
+                                        @forelse($rcaracteristics_instrument as $rcaracteristic)
+                                            <option hidden class="instrumento"
+                                                    value="{{$rcaracteristic->name}}">{{$rcaracteristic->name}}</option>
+                                        @empty
+                                            <option value="">--</option>
+                                        @endforelse
+                                    </select>
+                                </div>
 
                             </div>
-
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <div class="d-flex align-items-center mx-auto">
-                                    <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                                       href="#">Añadir</a>
+                            <div class="row">
+                                <div class="form-group col-xs-100">
+                                    <div class="d-flex align-items-center mx-auto">
+                                        <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
+                                           href="#" onclick="addCaracteristic()">Añadir</a>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-100">
+                                    <div class="d-flex align-items-center mx-auto">
+                                        <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
+                                           href="#" onclick="delCaracteristic(this)">Borrar</a>
+                                    </div>
                                 </div>
                             </div>
 
                         </div>
-
                     </div>
                     <div class="d-flex flex-row justify-content-center">
-                        <a class="btn btn-dark js-scroll-trigger space" href="#">Buscar</a>
+                        <a class="btn btn-dark js-scroll-trigger space" href="#"
+                           onclick="event.preventDefault(); document.getElementById('search_resource').submit();">Buscar</a>
                     </div>
 
                 </form>
             </div>
         </div>
-
 
     </div>
 @endsection
@@ -112,4 +155,5 @@
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
     <script src="{{ asset('/js/date/date.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('/js/resource/search/js.js') }}" type="text/javascript"></script>
 @endsection

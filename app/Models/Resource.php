@@ -21,16 +21,18 @@ class Resource extends Model
             ->withPivot(['quantity']);
     }
 
-    function classroom_type(){
+    function classroom_type()
+    {
         return $this->belongsTo(Classroom_type::class);
     }
 
-    function hasCharacteristic($characteristicName){
+    function hasCharacteristic($characteristicName)
+    {
         $characteristics = $this->characteristics;
         $r = false;
-        foreach($characteristics as $characteristic){
-            if($characteristic->name==$characteristicName){
-                $r=true;
+        foreach ($characteristics as $characteristic) {
+            if ($characteristic->name == $characteristicName) {
+                $r = true;
                 break;
             }
         }
@@ -41,22 +43,24 @@ class Resource extends Model
         return $this->hasMany(File::class);
     }
 
-    function isAvailableBetween($start_time, $end_time){
-         if($this->reservations()
-            ->where('start_time', '>=',$start_time)->where('start_time', '<=', $end_time)
-            ->where('end_time', '>=',$start_time)->where('end_time', '<=', $end_time)
-                 ->where('state','ACTIVE')->count()>0){
-             return false;
-         }
-         return true;
+    function isAvailableBetween($start_time, $end_time)
+    {
+        if ($this->reservations()
+                ->where('start_time', '>=', $start_time)->where('start_time', '<=', $end_time)
+                ->where('end_time', '>=', $start_time)->where('end_time', '<=', $end_time)
+                ->where('state', 'ACTIVE')->count() > 0) {
+            return false;
+        }
+        return true;
     }
 
-    function reservationsIn($month){
+    function reservationsIn($month)
+    {
         $r = [];
-        $start = date("YYYY-mm-dd hh:mm:ss", mktime(0, 0, 0, $month,1 ,date("YYYY")));
-        $end = date("YYYY-mm-dd hh:mm:ss", mktime(0, 0, 0, $month,0,date("YYYY")));
-        foreach ($this->reservations as $reservation){
-            if($reservation->start_time >= $start && $reservation->end_time <= $end){
+        $start = date("YYYY-mm-dd hh:mm:ss", mktime(0, 0, 0, $month, 1, date("YYYY")));
+        $end = date("YYYY-mm-dd hh:mm:ss", mktime(0, 0, 0, $month, 0, date("YYYY")));
+        foreach ($this->reservations as $reservation) {
+            if ($reservation->start_time >= $start && $reservation->end_time <= $end) {
                 array_push($r, $reservation);
             }
         }
