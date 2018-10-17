@@ -8,111 +8,81 @@
     <link rel="stylesheet" href="{{ asset('/css/eventFeedGeneral/view.css') }}">
 @endsection
 @section('content')
-    <h1 class=" title-margin text-center my-3">Publicaciones</h1>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm">
-                <label>Palabra clave:</label>
-            </div>
-            <div class="col">
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search this blog">
-                    <div class="input-group-append">
-                        <button class="btn btn-secondary" type="button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="col">
-                <label>Fecha Inicio - Hora Inicio:</label>
-            </div>
-            <div class="col-sm-3">
-                <div class="form-group">
-                    <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input"
-                               data-target="#datetimepickerStart"/>
-                        <div class="input-group-append" data-target="#datetimepickerStart" data-toggle="datetimepicker">
-                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    <form method="POST" action="{{ url('feed') }}">
+        @csrf
+        <h1 class=" title-margin text-center my-3">Publicaciones</h1>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm">
+                    <label>Palabra clave:</label>
+                </div>
+                <div class="col">
+                    <div class="input-group">
+                        <input name="keyword" type="text" class="form-control" placeholder="Palabra clave">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
+
+                <div class="col">
+                    <label>Fecha Inicio - Fecha Fin:</label>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
+                            <input name="start_date" type="text" class="form-control datetimepicker-input"
+                                   data-target="#datetimepickerStart"/>
+                            <div class="input-group-append" data-target="#datetimepickerStart"
+                                 data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <label>-</label>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
+                            <input name="end_date" type="text" class="form-control datetimepicker-input"
+                                   data-target="#datetimepickerStart"/>
+                            <div class="input-group-append" data-target="#datetimepickerStart"
+                                 data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepickerStart').datetimepicker();
+                    });
+                </script>
             </div>
-            <script type="text/javascript">
-                $(function () {
-                    $('#datetimepickerStart').datetimepicker();
-                });
-            </script>
+
+
         </div>
 
 
-    </div>
+    </form>
 
     <section id="posts">
+        @php($x = 0)
 
-        <a href="#" title="A title of a page here" class="post pop" data-toggle="modal" data-target="#id1"
-           style="background-image: url('{{asset('/img/post3.jpg')}}');"><h2>Concierto Percusión</h2>
-            <p class="lead">Andrés Cocunubo</p></a>
-        <a href="#" title="A title of a page here" class="post pop"
-           style="background-image: url('{{asset('/img/post_violin.jpg')}}');"><h2>El violin una pasión</h2>
-            <p class="lead">María Pérez</p></a>
-        <a href="#" title="A title of a page here" class="post pop"
-           style="background-image: url(https://placeimg.com/640/480/nature);"><h2>Another title on a post</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post pop"
-           style="background-image: url(https://placeimg.com/640/480/people);"><h2>Posts are better with titles</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/tech);"><h2>Some titles are better than others</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/grayscale);"><h2>Titles can be long</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/sepia);"><h2>Short titles are a thing too</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/animals);"><h2>As long as they look different</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/tech);"><h2>Lorem ipsum sucks</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/animals);"><h2>A title of a page here</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/arch);"><h2>This post has a title</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/nature);"><h2>Another title on a post</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/people);"><h2>Posts are better with titles</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/tech);"><h2>Some titles are better than others</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/grayscale);"><h2>Titles can be long</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/sepia);"><h2>Short titles are a thing too</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/animals);"><h2>As long as they look different</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/tech);"><h2>Lorem ipsum sucks</h2>
-            <p class="lead">By Author name</p></a>
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/animals);"><h2>As long as they look different</h2>
-            <p class="lead">By Author name</p></a>
-
-        <a href="#" title="A title of a page here" class="post"
-           style="background-image: url(https://placeimg.com/640/480/animals);"><h2>As long as they look different</h2>
-            <p class="lead">By Author name</p></a>
-
+        @foreach($publications as $publication)
+            @foreach($publication->files as $file)
+                <a href="#" title="{{ $publication->header }}" class="post pop" data-toggle="modal"
+                   data-target="#{{ 'id' . ((string) $x) }}" style="background-image: url('{{ $file->path }}');">
+                    <h2>{{ $publication->header }}</h2>
+                    <p class="lead">{{ $publication->user->name }}</p></a>
+                @php($x+=1)
+                @break
+            @endforeach
+        @endforeach
     </section>
 
     <!-- Jay's Viewport Helper -->
@@ -124,60 +94,51 @@
         <span class="hidden-lg-down">SIZE XL</span>
     </div>
     <!-- /Jay's Viewport Helper -->
-    <div class="modal fade product_view" id="id1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+
+    @php($i=0)
+    @foreach($publications as $publication)
+        <div class="modal fade product_view" id="{{ 'id' . ((string) $i) }}" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <a href="#" data-dismiss="modal" class="pull-right"><span class="fa fa-times"></span></a>
-                        <h3 class="modal-title">Concierto percusión</h3>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="mini-carousel">
-                                <ul class="mini-item">
-                                    <li><a href="#" title="Image1-Small"> <img src="{{asset('/img/post1.jpg')}}"
-                                                                               style="width:100%;max-width:300px;"
-                                                                               alt="Product"></a></li>
-                                    <li><a href="#" title="Image2-Small"><img src="{{asset('/img/post2.jpg')}}"
-                                                                              style="width:100%;max-width:300px;"
-                                                                              alt="image2-small"></a></li>
-                                    <li><a href="#" title="Image3-Small"><img src="{{asset('/img/post3.jpg')}}"
-                                                                              style="width:100%;max-width:300px;"
-                                                                              alt="image3-small"></a></li>
-                                    <li><a href="#" title="Image4-Small"><img src="{{asset('/img/post4.jpg')}}"
-                                                                              style="width:100%;max-width:300px;"
-                                                                              alt="image4-small"></a></li>
-                                </ul>
-                            </div>
-                            <div class="carousel zoom">
-                                <div class="image-large">
-                                    <ul>
-                                        <li><img src="{{asset('/img/post1.jpg')}}"
-                                                 style="width:100%;max-width:300px;background-position: center; "
-                                                 alt="Product" alt="image1-large"></li>
-                                        <li><img src="{{asset('/img/post2.jpg')}}" style="width:100%;max-width:300px;">
-                                        </li>
-                                        <li><img src="{{asset('/img/post3.jpg')}}" style="width:100%;max-width:300px;">
-                                        </li>
-                                        <li><img src="{{asset('/img/post4.jpg')}}" style="width:100%;max-width:300px;">
-                                        </li>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <a href="#" data-dismiss="modal" class="pull-right"><span class="fa fa-times"></span></a>
+                            <h3 class="modal-title">{{ $publication->header }}</h3>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="mini-carousel">
+                                    <ul class="mini-item">
+                                        @foreach($publication->files as $file)
+                                            <li><a href="#" title="{{ $file->description }}"> <img
+                                                        src="{{asset($file->path)}}"
+                                                        style="width:100%;max-width:300px;"
+                                                        alt="{{ $file->description }}"></a></li>
+                                        @endforeach
                                     </ul>
-                                    <a href="#" class="prev fa fa-chevron-left"></a>
-                                    <a href="#" class="next fa fa-chevron-right"></a>
-
                                 </div>
-
-                            </div>
-
-                            <div class="detail">
-                                <div class="post-details">
-                                    <h3 class="author-name">Andres Cocunubo</h3>
-                                    <h5 class="post-description">Cras sit amet nibh libero, in gravida nulla. Nulla vel
-                                        metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate
-                                        at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla.
-                                        Donec lacinia congue felis in faucibus.</h5>
+                                <div class="carousel zoom">
+                                    <div class="image-large">
+                                        <ul>
+                                            @php($j = 0 )
+                                            @foreach($publication->files as $file)
+                                                <li><img src="{{asset($file->path)}}"
+                                                         style="width:100%;max-width:300px; {{ $j == 0 ? ' background-position: center;' : '' }}">
+                                                </li>
+                                                @php($j+=1)
+                                            @endforeach
+                                        </ul>
+                                        <a href="#" class="prev fa fa-chevron-left"></a>
+                                        <a href="#" class="next fa fa-chevron-right"></a>
+                                    </div>
+                                </div>
+                                <div class="detail">
+                                    <div class="post-details">
+                                        <h3 class="author-name">{{ $publication->user->name }}</h3>
+                                        <h5 class="post-description">{{ $publication->description }}</h5>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -185,7 +146,8 @@
                 </div>
             </div>
         </div>
-    </div>
+        @php($i+=1)
+    @endforeach
 
 @endsection
 @section('scripts')

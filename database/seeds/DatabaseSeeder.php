@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EventSeeder::class);
         $this->call(PenaltySeeder::class);
         $this->call(FileSeeder::class);
+
+
         Model::reguard();
     }
 }
