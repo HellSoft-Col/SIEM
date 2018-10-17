@@ -14,7 +14,7 @@ class CreateEventTable extends Migration
     public function up()
     {
 
-        Schema::create('eventFeedGeneral', function (Blueprint $table) {
+        Schema::create('event', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamp('date_time');
             $table->timestamp('date_time_end');

@@ -15,8 +15,8 @@ class EventController extends Controller
     public function index()
     {
 
-        return view('test_views.eventos')
-            ->with('events', $this->getSomeEvents(20));
+        return view('GeneralViews.Events.events')
+            ->with(['events' => $this->getSomeEvents(20),]);
     }
 
     /**
@@ -48,7 +48,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return view('test_views.evento_detail', compact('event'));
+        return view('test_views.evento_detail', compact('events'));
     }
 
     /**

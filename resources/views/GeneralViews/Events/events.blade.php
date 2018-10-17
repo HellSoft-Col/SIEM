@@ -44,42 +44,21 @@
             <carousel-3d :width="300" :height="400" :perspective="0" :space="200" :display="5" :controls-visible="true"
                          :controls-prev-html="'❬'" :controls-next-html="'❭'" :controls-width="30" :controls-height="60"
                          :clickable="true" :autoplay="true" :autoplay-timeout="5000">
-                <slide :index="0">
-                    <a href="#" class="pop">
-                        <img src="{{asset('/img/event_oboe_fagot.jpg')}}" style="width:100%;max-width:300px">
-                    </a>
-                </slide>
 
-                <slide :index="1">
-                    <a href="#" class="pop">
-                        <img src=" {{asset('/img/event_piano.jpg')}}" style="width:100%;max-width:300px">
-                    </a>
-                </slide>
-                <slide :index="2">
-                    <a href="#" class="pop">
-                        <img src="{{asset('/img/event_percusion.jpg')}}" style="width:100%;max-width:300px">
-                    </a>
-                </slide>
-                <slide :index="3">
-                    <a href="#" class="pop">
-                        <img src="{{asset('/img/event_oboe.jpg')}}" style="width:100%;max-width:300px">
-                    </a>
-                </slide>
-                <slide :index="4">
-                    <a href="#" class="pop">
-                        <img src="{{asset('/img/event_estelares.jpg')}}" style="width:100%;max-width:300px">
-                    </a>
-                </slide>
-                <slide :index="5">
-                    <a href="#" class="pop">
-                        <img src="{{asset('/img/event_previsiones.png')}}" style="width:100%;max-width:300px">
-                    </a>
-                </slide>
-                <slide :index="6">
-                    <a href="#" class="pop">
-                        <img src="{{asset('/img/event_conferencia.png')}}" style="width:100%;max-width:300px">
-                    </a>
-                </slide>
+                @php($i = 0)
+                @forelse($events as $event)
+                    @foreach($event->files as $file)
+                        <slide :index="{{ $i++ }}">
+                            <a href="#" class="pop">
+                                <img src="{!! asset($file->path) !!}" style="width:100%;max-width:300px">
+                            </a>
+                        </slide>
+                        @break
+                    @endforeach
+                @empty
+
+                @endforelse
+
             </carousel-3d>
 
         </div>
@@ -91,7 +70,7 @@
         <script>new Vue({
                 el: '#carousel3d',
                 data: {
-                    slides: 7
+                    slides: {{ $events->count() }}
                 },
                 components: {
                     'carousel-3d': Carousel3d.Carousel3d,
@@ -101,41 +80,30 @@
             //# sourceURL=pen.js
         </script>
         <div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-secondary">23</span></h1>
-                    <h2>OCT</h2>
+            @php($months = [ 'ENER' , 'FEBR' , 'MARZ' , 'ABRL' , 'MAYO' , 'JUN' , 'JUL' , 'AGO' , 'SEPT' , 'OCT' , 'NOV' , 'DIC'])
+            @foreach($events as $event)
+                <div class="row row-striped">
+                    <div class="col-2 text-right">
+                        <h1 class="display-4"><span
+                                class="badge badge-secondary">{{ substr($event->date_time, 8,2) }}</span></h1>
+                        <h2>{{$months[((int)substr($event->date_time, 5,2))- 1]}}</h2>
+                    </div>
+                    <div class="col-10">
+                        <h3 class="text-uppercase"><strong>{{ $event->name }}</strong></h3>
+                        <ul class="list-inline">
+                            <li class="list-inline-item"><i class="fa fa-calendar-o"
+                                                            aria-hidden="true"></i> {{ substr($event->date_time, 0, 10) }}
+                            </li>
+                            <li class="list-inline-item"><i class="fa fa-clock-o"
+                                                            aria-hidden="true"></i> {{ substr($event->date_time, 11, 5) . ' - ' . substr($event->date_time_end, 11, 5)}}
+                            </li>
+                            <li class="list-inline-item"><i class="fa fa-location-arrow"
+                                                            aria-hidden="true"></i> {{  $event->place }} </li>
+                        </ul>
+                        <p> {{ $event->description }} </p>
+                    </div>
                 </div>
-                <div class="col-10">
-                    <h3 class="text-uppercase"><strong>Ice Cream Social</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Monday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 12:30 PM - 2:00 PM
-                        </li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Cafe</li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
-            <div class="row row-striped">
-                <div class="col-2 text-right">
-                    <h1 class="display-4"><span class="badge badge-secondary">27</span></h1>
-                    <h2>OCT</h2>
-                </div>
-                <div class="col-10">
-                    <h3 class="text-uppercase"><strong>Operations Meeting</strong></h3>
-                    <ul class="list-inline">
-                        <li class="list-inline-item"><i class="fa fa-calendar-o" aria-hidden="true"></i> Friday</li>
-                        <li class="list-inline-item"><i class="fa fa-clock-o" aria-hidden="true"></i> 2:30 PM - 4:00 PM
-                        </li>
-                        <li class="list-inline-item"><i class="fa fa-location-arrow" aria-hidden="true"></i> Room 4019
-                        </li>
-                    </ul>
-                    <p>Lorem ipsum dolsit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                        et dolore magna aliqua.</p>
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
