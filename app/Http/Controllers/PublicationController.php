@@ -14,6 +14,7 @@ class PublicationController extends Controller
      */
     public function index()
     {
+        // buttons
         return view('GeneralViews.Feeds.feed')
             ->with('publications', $this->getSomePublications(20));
     }
