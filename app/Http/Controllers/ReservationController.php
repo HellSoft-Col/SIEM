@@ -30,8 +30,7 @@ class ReservationController extends Controller
     {
         $resource_id = $request->_resource;
         $message = "";
-
-        return view('test_views.crear_reserva', compact('resource_id', 'message'));
+        return view('GeneralViews.Reserves.create', compact('resource_id', 'message'));
     }
 
     /**

@@ -49,7 +49,7 @@ class ResourceController extends Controller
     {
         $now = new \DateTime('now');
         $reservations = $resource->reservationsIn($now->format('m'));
-        return view('test_views.recurso_detail', compact('resource', 'reservations'));
+        return view('GeneralViews.ResourcesViews.view', compact('resource', 'reservations'));
     }
 
     /**
@@ -177,115 +177,7 @@ class ResourceController extends Controller
                 array_push($r, $resource);
             }
         }
-        /*
-        foreach ($aux_resources as $resource) {
-            if ($keyword == NULL) {
-                if ($resource->estado != 'DAMAGED' && $resource->estado != 'IN_MAINTENANCE') {
-                    if ($resource->type == $type) {
 
-                        if ($resource->classroom_type->name == $c_type) {
-                            $acum = $resource->hasCharacteristic($characteristics[0]);
-                            $iteration = 0;
-                            foreach ($characteristics as $i_characteristic) {
-                                if ($iteration != 0) {
-                                    $bool_value = $resource->hasCharacteristic($i_characteristic);
-                                    if ($operators[$iteration] == 'AND') {
-                                        $acum = $acum && $bool_value;
-                                    } else if ($operators[$iteration] == 'OR') {
-                                        $acum = $acum || $bool_value;
-                                    }
-                                }
-                                $iteration += 1;
-                            }
-                            if ($acum) {
-                                array_push($r, $resource);
-                            }
-                        }
-                    }
-                }
-            } else if ($type == NULL) {
-                if ($resource->estado != 'DAMAGED' && $resource->estado != 'IN_MAINTENANCE') {
-                    if (strpos($resource->name, $keyword) !== false || strpos($resource->description, $keyword) !== false) {
-                        if ($resource->classroom_type->name == $c_type) {
-                            $acum = $resource->hasCharacteristic($characteristics[0]);
-                            $iteration = 0;
-                            foreach ($characteristics as $i_characteristic) {
-                                if ($iteration != 0) {
-                                    $bool_value = $resource->hasCharacteristic($i_characteristic);
-                                    if ($operators[$iteration] == 'AND') {
-                                        $acum = $acum && $bool_value;
-                                    } else if ($operators[$iteration] == 'OR') {
-                                        $acum = $acum || $bool_value;
-                                    }
-                                }
-                                $iteration += 1;
-                            }
-                            if ($acum) {
-                                array_push($r, $resource);
-                            }
-                        }
-                    }
-                }
-            } else if ($c_type == NULL) {
-                if ($resource->estado != 'DAMAGED' && $resource->estado != 'IN_MAINTENANCE') {
-                    if (strpos($resource->name, $keyword) !== false || strpos($resource->description, $keyword) !== false) {
-                        if ($resource->type == $type) {
-                            $acum = $resource->hasCharacteristic($characteristics[0]);
-                            $iteration = 0;
-                            foreach ($characteristics as $i_characteristic) {
-                                if ($iteration != 0) {
-                                    $bool_value = $resource->hasCharacteristic($i_characteristic);
-                                    if ($operators[$iteration] == 'AND') {
-                                        $acum = $acum && $bool_value;
-                                    } else if ($operators[$iteration] == 'OR') {
-                                        $acum = $acum || $bool_value;
-                                    }
-                                }
-                                $iteration += 1;
-                            }
-                            if ($acum) {
-                                array_push($r, $resource);
-                            }
-                        }
-                    }
-                }
-            } else if ($characteristics[0] == NULL) {
-                if ($resource->estado != 'DAMAGED' && $resource->estado != 'IN_MAINTENANCE') {
-                    if (strpos($resource->name, $keyword) !== false || strpos($resource->description, $keyword) !== false) {
-                        if ($resource->type == $type) {
-                            if ($resource->classroom_type->name == $c_type) {
-                                array_push($r, $resource);
-                            }
-                        }
-                    }
-                }
-            } else {
-                if ($resource->estado != 'DAMAGED' && $resource->estado != 'IN_MAINTENANCE') {
-                    if (strpos($resource->name, $keyword) !== false || strpos($resource->description, $keyword) !== false) {
-                        if ($resource->type == $type) {
-                            if ($resource->classroom_type->name == $c_type) {
-                                $acum = $resource->hasCharacteristic($characteristics[0]);
-                                $iteration = 0;
-                                foreach ($characteristics as $i_characteristic) {
-                                    if ($iteration != 0) {
-                                        $bool_value = $resource->hasCharacteristic($i_characteristic);
-                                        if ($operators[$iteration] == 'AND') {
-                                            $acum = $acum && $bool_value;
-                                        } else if ($operators[$iteration] == 'OR') {
-                                            $acum = $acum || $bool_value;
-                                        }
-                                    }
-                                    $iteration += 1;
-                                }
-                                if ($acum) {
-                                    array_push($r, $resource);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }*/
         return $r;
     }
 

@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 @section('includes')
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css'>
+    name
     <link rel="stylesheet" href="{{ asset('/css/eventFeedGeneral/carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/eventFeedGeneral/view.css') }}">
     <style class="cp-pen-styles">#carousel3d .carousel-3d-slide {

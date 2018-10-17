@@ -77,7 +77,6 @@ Route::post('/person/reservation/delete', 'ReservationsController@cancelReservat
 Route::get('/events/{event}', 'EventController@show')->where('id', '[0-9]+');
 
 
-Route::post('/person/reservation/create', 'ReservationController@create');
 Route::put('/person/reservation/create', 'ReservationController@store');
 Route::get('/person/reservation/create', 'ReservationController@create')->name('reservation.create');
 
@@ -89,4 +88,7 @@ Route::put('/person/resource/search', 'ResourceController@search')->name('resour
 Route::get('/events ', 'EventController@index');
 Route::get('/feed ', 'PublicationController@index')->name('feed.get');
 Route::post('/feed ', 'PublicationController@index')->name('feed.post');
-Route::get('/person/resource/view/{resource}', 'ResourceController@show')->middelware('auth');
+Route::get('/person/resource/view/{resource}', 'ResourceController@show')
+    ->middleware('auth');
+
+Route::post('/person/reservation/create', 'ReservationController@create')->name('create.reservation');
