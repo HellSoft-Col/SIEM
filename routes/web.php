@@ -92,3 +92,7 @@ Route::get('/person/resource/view/{resource}', 'ResourceController@show')
     ->middleware('auth');
 
 Route::post('/person/reservation/create', 'ReservationController@create')->name('create.reservation');
+
+Route::get('/result', function () {
+    return view('GeneralViews.ResourcesViews.result');
+});
