@@ -44,6 +44,12 @@
     height: 100px;
     margin-left:auto;              /* new */
 }
+.message-create{
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+    color: red;
+}
 .btn{
     margin-top: 0;
 }

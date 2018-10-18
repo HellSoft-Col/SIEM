@@ -46,7 +46,7 @@ class ReservationController extends Controller
     {
         //$user = User::find($request->user_id);
         $user = Auth::user();
-        $user->email = 'lichobaron@gmail.com';
+        $user->email = 'ailin.rojasb@gmail.com';
         $user->save();
         $resource = Resource::find($request->resource_id);
         $end_time = date('Y-m-d H:i:s', strtotime($request->end_time));

@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="{{ asset('/css/reserve/content.css') }}">
 @endsection
 @section('options')
-    <a class="dropdown-item" href="#">Publicaciones</a>
-    <a class="dropdown-item" href="#">Eventos</a>
+    <a class="dropdown-item" href="{{url('/feed')}}">Publicaciones</a>
+    <a class="dropdown-item" href="{{url('/events')}}">Eventos</a>
 @endsection
 @section('content')
     <div class="container">
@@ -24,8 +24,8 @@
                             Inicio:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
-                                <input name= "start_time" type="text" class="form-control datetimepicker-input"
-                                       data-target="#datetimepickerStart"/>
+                                <input name= "start_time" value="{{old('start_time')}}" type="text" class="form-control datetimepicker-input"
+                                       data-target="#datetimepickerStart" required/>
                                 <div class="input-group-append" data-target="#datetimepickerStart"
                                      data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -44,8 +44,8 @@
                             Fin:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
-                                <input name= "end_time" type="text" class="form-control datetimepicker-input"
-                                       data-target="#datetimepickerEnd"/>
+                                <input name= "end_time" value="{{old('end_time')}}"type="text" class="form-control datetimepicker-input"
+                                       data-target="#datetimepickerEnd" required/>
                                 <div class="input-group-append" data-target="#datetimepickerEnd"
                                      data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -64,7 +64,10 @@
                         <button type ="submit" class="btn btn-dark js-scroll-trigger space" href="#">Realizar Reserva</button>
                     </div>
                 </form>
-                <p>{{$message}}</p>
+                <div class="message-create">
+                    <p>{{$message}}</p>
+                </div>
+
             </div>
         </div>
     </div>
