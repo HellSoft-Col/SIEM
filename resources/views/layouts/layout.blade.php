@@ -37,9 +37,9 @@
 
     <div class="collapse navbar-collapse" id="navbarTogglerSIEM">
         <div class="navbar-nav mx-auto text-center">
-            <a class="nav-item nav-link active js-scroll-trigger" href="#">Inicio </a>
-            <a class="nav-item nav-link js-scroll-trigger" href="#">Eventos</a>
-            <a class="nav-item nav-link js-scroll-trigger" href="#">Publicaciones</a>
+            <a class="nav-item nav-link active js-scroll-trigger" href="{{url('/home')}}">Inicio </a>
+            <a class="nav-item nav-link js-scroll-trigger" href="{{url('/events')}}">Eventos</a>
+            <a class="nav-item nav-link js-scroll-trigger" href="{{url('/feed')}}">Publicaciones</a>
         </div>
         <div class="d-flex flex-row justify-content-center">
             <a class="mr-2 btn btn-outline-light text-light js-scroll-trigger" href="{{ url('/login') }}">Login</a>

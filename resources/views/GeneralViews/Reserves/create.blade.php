@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="{{ asset('/css/reserve/content.css') }}">
 @endsection
 @section('options')
-    <a class="dropdown-item" href="#">Publicaciones</a>
-    <a class="dropdown-item" href="#">Eventos</a>
+    <a class="dropdown-item" href="{{url('/feed')}}">Publicaciones</a>
+    <a class="dropdown-item" href="{{url('/events')}}">Eventos</a>
 @endsection
 @section('content')
     <div class="container">
@@ -16,14 +16,16 @@
                 <h3 class="mb-0">Crear reserva</h3>
             </div>
             <div class="card-body">
-                <form class="form" role="form" autocomplete="off">
+                <form class="form" role="form" autocomplete="off" method= "POST" action="{{ url('/person/reservation/create') }}">
+                    {{ csrf_field() }}
+                    {{ method_field('PUT') }}
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label form-control-label" for="keyWord">Fecha Inicio - Hora
                             Inicio:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input"
-                                       data-target="#datetimepickerStart"/>
+                                <input name= "start_time" value="{{old('start_time')}}" type="text" class="form-control datetimepicker-input"
+                                       data-target="#datetimepickerStart" required/>
                                 <div class="input-group-append" data-target="#datetimepickerStart"
                                      data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -42,8 +44,8 @@
                             Fin:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
-                                <input type="text" class="form-control datetimepicker-input"
-                                       data-target="#datetimepickerEnd"/>
+                                <input name= "end_time" value="{{old('end_time')}}"type="text" class="form-control datetimepicker-input"
+                                       data-target="#datetimepickerEnd" required/>
                                 <div class="input-group-append" data-target="#datetimepickerEnd"
                                      data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
@@ -57,10 +59,15 @@
                         </script>
 
                     </div>
+                    <input type="hidden" name="resource_id" value="{{$resource_id}}">
                     <div class="d-flex flex-row justify-content-center">
-                        <a class="btn btn-dark js-scroll-trigger space" href="#">Realizar Reserva</a>
+                        <button type ="submit" class="btn btn-dark js-scroll-trigger space" href="#">Realizar Reserva</button>
                     </div>
                 </form>
+                <div class="message-create">
+                    <p>{{$message}}</p>
+                </div>
+
             </div>
         </div>
     </div>

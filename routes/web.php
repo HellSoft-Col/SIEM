@@ -19,9 +19,10 @@ Route::get('/', function () {
 })->name('principal')
     ->middleware('guest');
 
+/**
 Route::get('/home', function () {
     return view('layout_user');
-});
+});*/
 
 Route::get('/user', function () {
     return 'Usuarios';
@@ -81,10 +82,6 @@ Route::put('/person/reservation/create', 'ReservationController@store');
 Route::get('/person/reservation/create', 'ReservationController@create')->name('reservation.create');
 
 /* -----------------------------------------------------------------*/
-
-Route::get('/person/resource/search', 'ResourceController@gosearch')
-    ->middleware('auth');
-Route::put('/person/resource/search', 'ResourceController@search')->name('resource.search');
 Route::get('/events ', 'EventController@index');
 Route::get('/feed ', 'PublicationController@index')->name('feed.get');
 Route::post('/feed ', 'PublicationController@index')->name('feed.post');
@@ -92,7 +89,8 @@ Route::get('/person/resource/view/{resource}', 'ResourceController@show')
     ->middleware('auth');
 
 Route::post('/person/reservation/create', 'ReservationController@create')->name('create.reservation');
-
-Route::get('/result', function () {
-    return view('GeneralViews.ResourcesViews.result');
-});
+Route::put('/person/reservation/create', 'ReservationController@store');
+Route::get('/person/reservation/create', 'ReservationController@create')->name('reservation.create');
+Route::get('/person/resource/search', 'ResourceController@gosearch')
+    ->middleware('auth');
+Route::put('/person/resource/search', 'ResourceController@search')->name('resource.search');

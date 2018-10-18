@@ -1,5 +1,5 @@
 .title-margin {
-    margin-top: 50px;
+    margin-top: 30px;
     margin-bottom: 20px;
     font-size: 40px
 }
@@ -14,7 +14,28 @@
 
 .container {
     width: 1170px;
-    margin-top: 150px;
+    margin-top: 50px;
+}
+.container-result {
+    width: 1170px;
+    margin-top: 80px;
+}
+
+.flexcontainer {
+    display: flex;
+    justify-content: flex-start;   /* adjustment */
+    position: relative;            /* new */
+    width: 500px;
+    height: 200px;
+}
+
+.itemcenter {
+    flex: 0 1 auto;
+    width: 180px;
+    height: 150px;
+    position: absolute;             /* new */
+    left:60%;
+    transform: translateX(-50%);
 }
 .flexcontainer {
     display: flex;
@@ -39,6 +60,21 @@
     margin-left: auto;              /* new */
 }
 
+.itemright {
+    flex: 0 1 auto;
+    width: 100px;
+    height: 100px;
+    margin-left:auto;              /* new */
+}
+.message-create{
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+    color: red;
+}
+.btn{
+    margin-top: 0;
+}
 label {
     font-size: 20px;
 }
@@ -47,6 +83,4 @@ li {
     margin-bottom: 20px;
 }
 
-.btn {
-    margin-top: 15px;
-}
+

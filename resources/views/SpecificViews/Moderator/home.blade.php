@@ -110,7 +110,7 @@
                         <div class="div-table-col">
                             <a href="https://rh.javeriana.edu.co/psp/HR9/EMPLOYEE/HRMS/c/UJ_INSCRIPCIONES_AUTOSERVICIO.UJ_AUTO_BIENVENIDO.GBL?FolderPath=PORTAL_ROOT_OBJECT.UJ_INSCRIPCIONES.UJ_AUTO_BIENVENIDO_GBL_1"
                                target="_blank">
-                                <img src="{{asset('eventsFeedsGeneral')}}" height="55">
+                                <img src="{{asset('/img/svg/icons/events.svg')}}" height="55">
                             </a>
                         </div>
                         <div class="div-table-col">

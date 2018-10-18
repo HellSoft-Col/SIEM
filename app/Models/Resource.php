@@ -45,13 +45,22 @@ class Resource extends Model
 
     function isAvailableBetween($start_time, $end_time)
     {
-        if ($this->reservations()
+        $r = true;
+        $aux_reservations = $this->reservations()->where('state', 'ACTIVE')->get();
+        foreach ($aux_reservations as $reservation){
+            if(!(($start_time<=$reservation->start_time && $end_time<=$reservation->start_time)||
+                ($start_time>=$reservation->end_time && $end_time<=$reservation->end_time))){
+                $r = false;
+            }
+        }
+        return $r;
+
+        /*if ($this->reservations()
                 ->where('start_time', '>=', $start_time)->where('start_time', '<=', $end_time)
                 ->where('end_time', '>=', $start_time)->where('end_time', '<=', $end_time)
                 ->where('state', 'ACTIVE')->count() > 0) {
             return false;
-        }
-        return true;
+        }*/
     }
 
     function reservationsIn($month)

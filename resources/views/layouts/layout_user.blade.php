@@ -30,6 +30,8 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{Auth::user()->name}}<span class="caret"></span></a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="{{ url('/home') }}">Inicio</a>
+            @yield('options')
+
             <a class="dropdown-item" href="{{ route('logout') }}"
                onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">Logout</a>
