@@ -37,12 +37,40 @@
     left:60%;
     transform: translateX(-50%);
 }
+.flexcontainer {
+    display: flex;
+    justify-content: flex-start;   /* adjustment */
+    position: relative;            /* new */
+    width: 500px;
+    height: 200px;
+}
+
+.itemcenter {
+    flex: 0 1 auto;
+    width: 150px;
+    height: 100px;
+    position: absolute;             /* new */
+    left: 50%;
+    transform: translateX(-50%);
+}
+.itemright {
+    flex: 0 1 auto;
+    width: 100px;
+    height: 100px;
+    margin-left: auto;              /* new */
+}
 
 .itemright {
     flex: 0 1 auto;
     width: 100px;
     height: 100px;
     margin-left:auto;              /* new */
+}
+.message-create{
+    margin-top: 20px;
+    font-size: 20px;
+    text-align: center;
+    color: red;
 }
 .btn{
     margin-top: 0;

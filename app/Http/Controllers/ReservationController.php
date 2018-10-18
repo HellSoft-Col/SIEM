@@ -46,7 +46,7 @@ class ReservationController extends Controller
     {
         //$user = User::find($request->user_id);
         $user = Auth::user();
-        $user->email = 'lichobaron@gmail.com';
+        $user->email = 'anfecoquin123@gmail.com';
         $user->save();
         $resource = Resource::find($request->resource_id);
         $end_time = date('Y-m-d H:i:s', strtotime($request->end_time));
@@ -63,7 +63,7 @@ class ReservationController extends Controller
                 'end_time' => date('Y-m-d H:i:s', strtotime($request->end_time)),
                 'user_id' => $user->id,
                 'resource_id' => $resource->id,
-                'moulted' => '0',
+                'moulted' => '0'
             ]);
             $sT = date('l jS \of F Y h:i:s A', strtotime($start_time));
             $eT = date('l jS \of F Y h:i:s A', strtotime($end_time));
@@ -75,7 +75,8 @@ class ReservationController extends Controller
                 'resourceId' => $resource->id,
                 'resourceName' => $resource->name,
                 'startTime' => $sT,
-                'endTime' => $eT
+                'endTime' => $eT,
+                'resource_tipo' => $resource->type,
             ];
             $this->sendConfirmEmail($email);
         } else {
@@ -87,6 +88,7 @@ class ReservationController extends Controller
                 'message' => $message,
                 'resourceId' => $resource->id,
                 'resourceName' => $resource->name,
+                'resource_tipo' => $resource->type,
                 'startTime' => $start_time,
                 'endTime' => $end_time
             ];
@@ -104,7 +106,7 @@ class ReservationController extends Controller
      */
     public function sendConfirmEmail($email)
     {
-        Mail::send('test_views.successMail', ['body' => $email], function ($message) use ($email) {
+        Mail::send('mails.successMail', ['body' => $email], function ($message) use ($email) {
             $message->to($email['emailUser'], $email['nameUser'])
                 ->subject('Reserva creada exitosamente.');
             $message->from('siemHellsoft2018@gmail.com', 'SIEM');
@@ -120,7 +122,7 @@ class ReservationController extends Controller
      */
     public function sendErrorEmail($email)
     {
-        Mail::send('test_views.successMail', ['body' => $email], function ($message) use ($email) {
+        Mail::send('mails.errorMail', ['body' => $email], function ($message) use ($email) {
             $message->to($email['emailUser'], $email['nameUser'])
                 ->subject('Reserva fallida.');
             $message->from('siemHellsoft2018@gmail.com', 'SIEM');
@@ -197,7 +199,6 @@ class ReservationController extends Controller
             $max_hours = 168;
         }
         date_default_timezone_set('America/Bogota');
-
         if ($anteriority < 0) {
             $error_message .= " - Fecha en el pasado - ";
         }
