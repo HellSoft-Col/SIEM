@@ -16,7 +16,7 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -190,13 +190,15 @@ class ResourceController extends Controller
             $acum_charact = $resource->hasCharacteristic($characteristics[0]);
             $iteration = 0;
             foreach ($characteristics as $i_characteristic) {
-                if ($iteration != 0) {
-                    //dd($i_characteristic, $operators[$iteration]);
-                    $bool_value = $resource->hasCharacteristic($i_characteristic);
-                    if ($operators[$iteration] == 'AND') {
-                        $acum_charact = $acum_charact && $bool_value;
-                    } else if ($operators[$iteration] == 'OR') {
-                        $acum_charact = $acum_charact || $bool_value;
+                if($i_characteristic != NULL){
+                    if ($iteration != 0) {
+                        //dd($i_characteristic, $operators[$iteration]);
+                        $bool_value = $resource->hasCharacteristic($i_characteristic);
+                        if ($operators[$iteration] == 'AND') {
+                            $acum_charact = $acum_charact && $bool_value;
+                        } else if ($operators[$iteration] == 'OR') {
+                            $acum_charact = $acum_charact || $bool_value;
+                        }
                     }
                 }
                 $iteration += 1;
@@ -205,7 +207,8 @@ class ResourceController extends Controller
         }
 
         if($keyword != NULL){
-            if (strpos($resource->name, $keyword) !== false || strpos($resource->description, $keyword) !== false) {
+            if (strpos(strtoupper($resource->name), strtoupper($keyword)) !== false
+                || strpos(strtoupper($resource->description), strtoupper($keyword)) !== false) {
                 //
             }
             else{

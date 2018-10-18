@@ -45,10 +45,10 @@
                 <label>-</label>
                 <div class="col">
                     <div class="form-group">
-                        <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
+                        <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
                             <input name="end_date" type="text" class="form-control datetimepicker-input"
-                                   data-target="#datetimepickerStart"/>
-                            <div class="input-group-append" data-target="#datetimepickerStart"
+                                   data-target="#datetimepickerEnd"/>
+                            <div class="input-group-append" data-target="#datetimepickerEnd"
                                  data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -57,7 +57,7 @@
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        $('#datetimepickerStart').datetimepicker();
+                        $('#datetimepickerEnd').datetimepicker();
                     });
                 </script>
                 <div class="col">
@@ -137,6 +137,9 @@
                                     <div class="post-details">
                                         <h3 class="author-name">{{ $publication->user->name }}</h3>
                                         <h5 class="post-description">{{ $publication->description }}</h5>
+                                        <br>
+                                        <br>
+                                        <h5 class="post-description">"Creado el "  {{ date('l jS \of F Y h:i:s A', strtotime($publication->date_time))}}</h5>
                                     </div>
                                 </div>
                             </div>

@@ -14,7 +14,6 @@ class EventController extends Controller
      */
     public function index()
     {
-
         return view('GeneralViews.Events.events')
             ->with(['events' => $this->getSomeEvents(20),]);
     }
@@ -93,6 +92,8 @@ class EventController extends Controller
      */
     private function getSomeEvents($limit)
     {
-        return Event::all()->sortByDesc('date_time')->take($limit);
+        return Event::all()
+            ->where('date_time','>=', date('Y-m-d H:i:s', time()))
+            ->sortByDesc('date_time')->take($limit);
     }
 }
