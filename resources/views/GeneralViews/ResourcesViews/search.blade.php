@@ -140,8 +140,7 @@
                         </div>
                     </div>
                     <div class="d-flex flex-row justify-content-center">
-                        <a class="btn btn-dark js-scroll-trigger space" href="#"
-                           onclick="event.preventDefault(); document.getElementById('search_resource').submit();">Buscar</a>
+                        <button type="submit" class="btn btn-dark js-scroll-trigger space" href="{{url('/person/resource/result')}}">Buscar</button>
                     </div>
 
                 </form>

@@ -60,9 +60,9 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 Route::get('/home', 'HomeController@index')->name('home');
 
 /* -----------------------------------------------------------------*/
-Route::get('/person/reservation/active', 'SeeReservationsController@activeReservations')->name('person.activeReservations');
+Route::get('/person/reservation/active', 'ReservationController@activeReservations')->name('person.activeReservations');
 
-Route::get('/person/reservation/history', 'ReservationsController@loadHistoryReservations')->name('person.historyReservations');
+Route::get('/person/reservation/history', 'ReservationController@loadHistoryReservations')->name('person.historyReservations');
 
 Route::get('/person/reservation/history/{startTime}/{endTime}', 'ReservationsController@historyReservations')
     ->name('person.historyReservations');

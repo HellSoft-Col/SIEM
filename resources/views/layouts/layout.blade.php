@@ -32,7 +32,7 @@
 
     <a class="navbar-brand mx-auto js-scroll-trigger" href="#">
         <img id="logo" src="{!! asset('/svg/logo_white.svg') !!}" height="55" class="d-inline-block align-top"
-             alt="Logo Siem">
+             alt="Logo Siem" href="{{url('\home')}}">
     </a>
 
     <div class="collapse navbar-collapse" id="navbarTogglerSIEM">

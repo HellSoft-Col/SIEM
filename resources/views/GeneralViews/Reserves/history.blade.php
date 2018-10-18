@@ -85,8 +85,8 @@
                         $('#datetimepickerEnd').datetimepicker();
                     });
                 </script>
-                <div class="col d-flex align-self-center">
-                    <button class="btn btn-dark d-flex align-self-center js-scroll-trigger">Filtrar reservas</button>
+                <div class="col">
+                    <button class="btn btn-dark d-flex align-self-center js-scroll-trigger">Filtar reservas</button>
                 </div>
             </div>
 
