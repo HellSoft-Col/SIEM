@@ -207,7 +207,8 @@ class ResourceController extends Controller
         }
 
         if($keyword != NULL){
-            if (strpos($resource->name, $keyword) !== false || strpos($resource->description, $keyword) !== false) {
+            if (strpos(strtoupper($resource->name), strtoupper($keyword)) !== false
+                || strpos(strtoupper($resource->description), strtoupper($keyword)) !== false) {
                 //
             }
             else{

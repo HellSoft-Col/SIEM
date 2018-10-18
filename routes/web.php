@@ -84,7 +84,7 @@ Route::get('/person/reservation/create', 'ReservationController@create')->name('
 /* -----------------------------------------------------------------*/
 Route::get('/events ', 'EventController@index');
 Route::get('/feed ', 'PublicationController@index')->name('feed.get');
-Route::post('/feed ', 'PublicationController@index')->name('feed.post');
+Route::post('/feed ', 'PublicationController@search')->name('feed.post');
 Route::get('/person/resource/view/{resource}', 'ResourceController@show')
     ->middleware('auth');
 
