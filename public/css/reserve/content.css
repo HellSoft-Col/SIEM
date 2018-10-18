@@ -57,13 +57,6 @@
     flex: 0 1 auto;
     width: 100px;
     height: 100px;
-    margin-left: auto;              /* new */
-}
-
-.itemright {
-    flex: 0 1 auto;
-    width: 100px;
-    height: 100px;
     margin-left:auto;              /* new */
 }
 .message-create{
@@ -71,6 +64,11 @@
     font-size: 20px;
     text-align: center;
     color: red;
+}
+.container-description{
+    width: 300px;
+    margin-right: 80px;
+
 }
 .btn{
     margin-top: 0;

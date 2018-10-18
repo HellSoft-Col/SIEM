@@ -13,17 +13,15 @@
         @csrf
         <h1 class=" title-margin text-center my-3">Publicaciones</h1>
         <div class="container">
+            <form method="GET" action="{{url('/feed')}}">
             <div class="row">
-                <div class="col-sm">
+                <div class="col">
                     <label>Palabra clave:</label>
                 </div>
                 <div class="col">
                     <div class="input-group">
                         <input name="keyword" type="text" class="form-control" placeholder="Palabra clave">
                         <div class="input-group-append">
-                            <button class="btn btn-secondary" type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -31,7 +29,7 @@
                 <div class="col">
                     <label>Fecha Inicio - Fecha Fin:</label>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <div class="form-group">
                         <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
                             <input name="start_date" type="text" class="form-control datetimepicker-input"
@@ -45,7 +43,7 @@
                 </div>
 
                 <label>-</label>
-                <div class="col-sm-3">
+                <div class="col">
                     <div class="form-group">
                         <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
                             <input name="end_date" type="text" class="form-control datetimepicker-input"
@@ -62,12 +60,13 @@
                         $('#datetimepickerStart').datetimepicker();
                     });
                 </script>
+                <div class="col">
+                    <button class="btn btn-dark d-flex align-self-center js-scroll-trigger">Buscar</button>
+                </div>
+
             </div>
-
-
+            </form>
         </div>
-
-
     </form>
 
     <section id="posts">

@@ -21,7 +21,7 @@
 <nav class="navbar nav-masthead navbar-dark sticky-top" style="background-color: #000000;" id="mainNav">
 
     <a class="nav navbar-nav navbar-logo mr-auto js-scroll-trigger" href="#">
-        <img id="logo" src="{!! asset('/svg/logo_white.svg') !!}"  height="55" alt="Logo Siem">
+        <img id="logo" src="{!! asset('/svg/logo_white.svg') !!}"  height="55" alt="Logo Siem" href="{{url('\home')}}">
     </a>
     <div class="inset" style="margin-right: 10px;">
         <img src="{{ asset(Auth::user()->file->path) }}">
