@@ -19,6 +19,7 @@
                 </div>
             </div>
         </div>
+        <hr>
         <form>
             <div class="row">
                 <div class="col-sm">
@@ -85,10 +86,11 @@
                         $('#datetimepickerEnd').datetimepicker();
                     });
                 </script>
-                <div class="col">
+                <div class="col d-flex justify-content-start">
                     <button class="btn btn-dark d-flex align-self-center js-scroll-trigger">Filtar reservas</button>
                 </div>
             </div>
+            <hr>
 
         </form>
         <div class="container-list">
@@ -96,14 +98,19 @@
                 @if (!empty($reservations))
                     @foreach($reservations as $reservation)
                         <li class="media my-4">
-                            <img class="mr-3" src="{{asset($reservation['imagePath'])}}" alt="Generic placeholder image" style="with:290px;height:171px;>
+                            <div class="col-md-4">
+                                <img class="mr-3" src="{{asset($reservation['imagePath'])}}" alt="Generic placeholder image" style="with:290px;height:171px;>
                             <div class="media-body d-flex align-items-center">
-                                <div class="row flexcontainer" >
-                                    <div class="col itemcenter">
+                            </div>
+                                <div class="row" >
+                                    <div class="col text-center">
                                         <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                        <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
+                                        <p class="container-description mr-auto">{{$reservation['salon']}}<br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
                                     </div>
-                                    <div class="col itemright d-flex align-items-center">
+                                </div>
+                            <div class="col d-flex">
+                                <div class="col d-flex justify-content-center">
+                                    <div class="d-flex align-items-center">
                                         <div class="d-flex align-items-center mx-auto">
                                             <button type="submit" class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
                                                 recurso</button>
@@ -111,6 +118,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </li>
                     @endforeach
                 @else

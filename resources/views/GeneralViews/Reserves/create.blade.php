@@ -44,7 +44,7 @@
                             Fin:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
-                                <input name= "end_time" value="{{old('end_time')}}"type="text" class="form-control datetimepicker-input"
+                                <input name= "end_time" value="{{old('end_time')}} "type="text" class="form-control datetimepicker-input"
                                        data-target="#datetimepickerEnd" required/>
                                 <div class="input-group-append" data-target="#datetimepickerEnd"
                                      data-toggle="datetimepicker">

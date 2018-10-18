@@ -46,8 +46,6 @@ class ReservationController extends Controller
     {
         //$user = User::find($request->user_id);
         $user = Auth::user();
-        $user->email = 'anfecoquin123@gmail.com';
-        $user->save();
         $resource = Resource::find($request->resource_id);
         $end_time = date('Y-m-d H:i:s', strtotime($request->end_time));
             //$request->end_time;
@@ -96,7 +94,7 @@ class ReservationController extends Controller
         }
 
         $resource_id = $resource->id;
-        return view('GeneralViews.Reserves.create', compact('resource_id', 'message'));
+        return view('GeneralViews.Reserves.create', compact('resource_id', 'message','start_time','end_time'));
     }
 
     /**

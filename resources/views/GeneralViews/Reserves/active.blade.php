@@ -63,8 +63,8 @@
                 @if (!empty($reservations))
                         @foreach($reservations as $reservation)
                             <li class="media my-6">
-                                <div class="col-sm-3 d-flex align-items-center mx-auto">
-                                    <div class="form-check col-2" for="checkOne">
+                                <div class="col-md-4">
+                                    <div class="form-check " for="checkOne">
                                         <label class="form-check-label">
                                             <input type="checkbox" class="form-check-input" id="checkOne" name="selected[]"
                                                    value="{{$reservation['id']}}">
@@ -72,18 +72,22 @@
                                     </div>
                                 </div>
                                 <div class="media-body d-flex align-items-center">
-                                    <div class="row flexcontainer">
-                                        <div class="col itemcenter">
+                                    <div class="row">
+                                        <div class="col text-center">
                                             <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
                                             <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
                                         </div>
-                                        <div class="col-3 itemright d-flex align-items-center">
+
+                                    </div>
+                                    <div class="col d-flex justify-content-end ">
+                                        <div class="col d-flex justify-content-end">
                                             <div class="d-flex align-items-center mx-auto">
                                                 <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger" href="#">Ver
                                                     recurso</a>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </li>
                         @endforeach
