@@ -59,11 +59,12 @@
                         </script>
 
                     </div>
+                    <input type="hidden" name="resource_id" value="{{$resource_id}}">
                     <div class="d-flex flex-row justify-content-center">
                         <button type ="submit" class="btn btn-dark js-scroll-trigger space" href="#">Realizar Reserva</button>
                     </div>
-                    <input type="hidden" name="resource_id" value="{{$resource_id}}">
                 </form>
+                <p>{{$message}}</p>
             </div>
         </div>
     </div>

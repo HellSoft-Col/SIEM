@@ -156,7 +156,7 @@ class ResourceController extends Controller
         }
 
         $resources = $this->match($keyword, $type, $c_type, $characteristics, $operators);
-        return view('test_views.resultados_buscar_recurso',
+        return view('GeneralViews.ResourcesViews.result',
             [
                 'characteristics' => $characteristics,
                 'resources' => $resources,

@@ -11,7 +11,7 @@ $factory->define(File::class, function (Faker $faker) {
     $resourcesIds = \App\Models\Resource::all()->pluck('id')->toArray();
 
     return [
-        'path' => '/img/event_oboe_fagot.jpg',
+        'path' => '/img/sala_test.jpg',
         'description' => $faker ->realText($maxNbChars = 100, $indexSize = 2),
         'event_id' => $faker ->randomElement($eventsIds),
         'resource_id' => $faker->randomElement($resourcesIds),
