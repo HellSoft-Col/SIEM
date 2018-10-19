@@ -16,10 +16,12 @@ class AdminMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->role == 'ADMIN') {
-            return $next($request);
+        if (Auth::check()) {
+            if (Auth::user()->role === "ADMIN") {
+                return $next($request);
+            }
         }
 
-        return view('auth.unauthorized')->withMessage("Admin");
+        return abort(403, 'Necesita permisos de administrador para acceder.');
     }
 }

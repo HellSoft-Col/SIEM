@@ -30,16 +30,18 @@
         <span class="sr-only">Toggle navigation</span>
     </button>
 
-    <a class="navbar-brand mx-auto js-scroll-trigger" href="#">
+    <a class="navbar-brand mx-auto js-scroll-trigger" href="{{ url('') }}">
         <img id="logo" src="{!! asset('/svg/logo_white.svg') !!}" height="55" class="d-inline-block align-top"
              alt="Logo Siem">
     </a>
 
     <div class="collapse navbar-collapse" id="navbarTogglerSIEM">
         <div class="navbar-nav mx-auto text-center">
-            <a class="nav-item nav-link active js-scroll-trigger" href="#">Inicio </a>
-            <a class="nav-item nav-link js-scroll-trigger" href="#">Eventos</a>
-            <a class="nav-item nav-link js-scroll-trigger" href="#">Publicaciones</a>
+            <a class="nav-item nav-link {{ Request::is('/') ? 'active' : ''}} js-scroll-trigger" href="{{ url('') }}">Inicio </a>
+            <a class="nav-item nav-link {{ Request::is('events') ? 'active' : ''}} js-scroll-trigger"
+               href="{{ url('/events') }}">Eventos</a>
+            <a class="nav-item nav-link {{ Request::is('feed') ? 'active' : ''}} js-scroll-trigger"
+               href="{{ url('/feed ') }}">Publicaciones</a>
         </div>
         <div class="d-flex flex-row justify-content-center">
             <a class="mr-2 btn btn-outline-light text-light js-scroll-trigger" href="{{ url('/login') }}">Login</a>
@@ -119,27 +121,27 @@
                 <div class="mb-5 flex-center">
 
                     <!-- Facebook -->
-                    <a class="fb-ic">
+                    <a href="https://www.facebook.com/unijaveriana/" class="fb-ic">
                         <i class="fa fa-facebook fa-lg white-text mr-4"> </i>
                     </a>
                     <!-- Twitter -->
-                    <a class="tw-ic">
+                    <a href="https://www.facebook.com/unijaveriana/" class="tw-ic">
                         <i class="fa fa-twitter fa-lg white-text mr-4"> </i>
                     </a>
                     <!-- Google +-->
-                    <a class="gplus-ic">
+                    <a href="https://www.facebook.com/unijaveriana/" class="gplus-ic">
                         <i class="fa fa-google-plus fa-lg white-text mr-4"> </i>
                     </a>
                     <!--Linkedin -->
-                    <a class="li-ic">
+                    <a href="https://www.facebook.com/unijaveriana/" class="li-ic">
                         <i class="fa fa-linkedin fa-lg white-text mr-4"> </i>
                     </a>
                     <!--Instagram-->
-                    <a class="ins-ic">
+                    <a href="https://www.facebook.com/unijaveriana/" class="ins-ic">
                         <i class="fa fa-instagram fa-lg white-text mr-4"> </i>
                     </a>
                     <!--Pinterest-->
-                    <a class="pin-ic">
+                    <a href="https://www.facebook.com/unijaveriana/" class="pin-ic">
                         <i class="fa fa-pinterest fa-lg white-text"> </i>
                     </a>
 

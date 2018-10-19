@@ -10,7 +10,8 @@
     <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
     <!-- Scripts -->
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     @yield('includes')
     <link rel="stylesheet" href="{{ asset('/css/mystyle_user.css') }}">
@@ -21,21 +22,28 @@
 <nav class="navbar nav-masthead navbar-dark sticky-top" style="background-color: #000000;" id="mainNav">
 
     <a class="nav navbar-nav navbar-logo mr-auto js-scroll-trigger" href="#">
-        <img id="logo" src="{!! asset('/svg/logo_white.svg') !!}"  height="55" alt="Logo Siem">
+        <img id="logo" src="{!! asset('/svg/logo_white.svg') !!}" height="55" alt="Logo Siem">
     </a>
     <div class="inset" style="margin-right: 10px;">
         <img src="{{ asset(Auth::user()->file->path) }}">
     </div>
-    <div class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{Auth::user()->name}}<span class="caret"></span></a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+    <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" style="color: white;" data-toggle="dropdown" role="button" href="#"
+           aria-haspopup="true"
+           aria-expanded="false" v-pre>{{Auth::user()->name}}<span class="caret"></span></a>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="{{ url('/home') }}">Inicio</a>
             <a class="dropdown-item" href="{{ route('logout') }}"
                onclick="event.preventDefault();
-                    document.getElementById('logout-form').submit();">Logout</a>
+                                                     document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+            </a>
+
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
+
         </div>
     </div>
 
@@ -157,9 +165,14 @@
 </footer>
 <!-- Footer -->
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 @yield('scripts')
 <script src="{{ asset('/js/script.min.js') }}" type="text/javascript"></script>
 

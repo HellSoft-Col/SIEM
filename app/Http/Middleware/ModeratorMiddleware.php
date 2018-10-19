@@ -15,10 +15,13 @@ class ModeratorMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->role == 'MODERATOR') {
-            return $next($request);
+        if (Auth::check()) {
+            if (Auth::user()->role === "MODERATOR") {
+                return $next($request);
+            }
+
         }
 
-        return view('auth.unauthorized')->withMessage("Moderador");
+        return abort(403, 'Necesita permisos de moderador para acceder.');
     }
 }

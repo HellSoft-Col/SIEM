@@ -16,8 +16,7 @@
 
 Route::get('/', function () {
     return view('GeneralViews.guest');
-})->name('principal')
-    ->middleware('guest');
+})->name('homep');
 
 Route::get('/home', function () {
     return view('layout_user');
@@ -39,6 +38,9 @@ Route::post('/user/update', 'UserController@update')
     ->name('user.update')
     ->middleware('auth');
 
+Route::get('/unauthorized', function () {
+    return view('auth.unauthorized');
+})->name('unauthorized');
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -85,7 +87,7 @@ Route::get('/person/reservation/create', 'ReservationController@create')->name('
 Route::get('/person/resource/search', 'ResourceController@gosearch')
     ->middleware('auth');
 Route::put('/person/resource/search', 'ResourceController@search')->name('resource.search');
-Route::get('/events ', 'EventController@index');
+Route::get('/events ', 'EventController@index')->name('|');
 Route::get('/feed ', 'PublicationController@index')->name('feed.get');
 Route::post('/feed ', 'PublicationController@index')->name('feed.post');
 Route::get('/person/resource/view/{resource}', 'ResourceController@show')

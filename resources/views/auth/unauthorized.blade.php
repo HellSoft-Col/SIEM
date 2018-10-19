@@ -1,11 +1,16 @@
-@extends('layouts.layout')
+<!DOCTYPE html>
+<html>
+<head>
+    <title> ERROR</title>
+</head>
+<body>
+<div class=”title m-b-md”>
+    @if (session()->has('message'))
+        Debe ser {{ strtoupper(session()->get('message'))}} para accesar esta pagina !
+    @else
+        ERROR!
+    @endif
+</div>
 
-@section('content')
-
-    <div class=”title m-b-md”>
-
-        Debe ser {{ strtoupper($message)}} para accesar esta pagina !
-
-    </div>
-
-@endsection
+</body>
+</html>

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
+
 class PersonMiddleware
 {
     /**
@@ -16,10 +17,13 @@ class PersonMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->role == 'USER') {
-            return $next($request);
+        if (Auth::check()) {
+            if (Auth::user()->role === "USER") {
+                return $next($request);
+            }
+
         }
 
-        return view('auth.unauthorized')->withMessage("Person");
+        return abort(403, 'Necesita permisos de persona para acceder.');
     }
 }
