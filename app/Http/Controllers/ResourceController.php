@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 class ResourceController extends Controller
 {
@@ -15,7 +16,7 @@ class ResourceController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -146,9 +147,9 @@ class ResourceController extends Controller
                 if ($i == 5) {
                     array_push($characteristics, $request);
                     array_push($operators, NULL);
-                } else if ($i % 2 == 0) {
-                    array_push($characteristics, $request);
                 } else if ($i % 2 != 0) {
+                    array_push($characteristics, $request);
+                } else if ($i % 2 == 0) {
                     array_push($operators, $request);
                 }
             }
@@ -156,7 +157,7 @@ class ResourceController extends Controller
         }
 
         $resources = $this->match($keyword, $type, $c_type, $characteristics, $operators);
-        return view('test_views.resultados_buscar_recurso',
+        return view('GeneralViews.ResourcesViews.result',
             [
                 'characteristics' => $characteristics,
                 'resources' => $resources,
@@ -168,57 +169,68 @@ class ResourceController extends Controller
 
     private function match($keyword, $type, $c_type, $characteristics, $operators)
     {
-
         $r = [];
         $aux_resources = Resource::all();
 
         foreach ($aux_resources as $resource){
-            if($this->matchBool($resource,$keyword, $type, $c_type, $characteristics, $operators)){
+            //dd($resource)->attributes;
+            if(($this->matchBool($resource,$keyword, $type, $c_type, $characteristics, $operators))){
                 array_push($r, $resource);
             }
         }
-
+        //dd($r);
         return $r;
     }
 
     private function matchBool($resource, $keyword, $type, $c_type, $characteristics, $operators){
         $acum = true;
-        if(($resource->estado == 'DAMAGED' && $resource->estado == 'IN_MAINTENANCE')){
-            $acum = $acum && false;
+
+        //dd($characteristics[0]);
+        if ($characteristics[0] != NULL){
+            $acum_charact = $resource->hasCharacteristic($characteristics[0]);
+            $iteration = 0;
+            foreach ($characteristics as $i_characteristic) {
+                if($i_characteristic != NULL){
+                    if ($iteration != 0) {
+                        //dd($i_characteristic, $operators[$iteration]);
+                        $bool_value = $resource->hasCharacteristic($i_characteristic);
+                        if ($operators[$iteration] == 'AND') {
+                            $acum_charact = $acum_charact && $bool_value;
+                        } else if ($operators[$iteration] == 'OR') {
+                            $acum_charact = $acum_charact || $bool_value;
+                        }
+                    }
+                }
+                $iteration += 1;
+            }
+            $acum = $acum_charact;
         }
+
         if($keyword != NULL){
-            if (strpos($resource->name, $keyword) !== false || strpos($resource->description, $keyword) !== false) {
+            if (strpos(strtoupper($resource->name), strtoupper($keyword)) !== false
+                || strpos(strtoupper($resource->description), strtoupper($keyword)) !== false) {
                 //
             }
             else{
                 $acum = $acum && false;
             }
         }
+
         if ($type != NULL){
             if($resource->type != $type){
-                $acum = $acum && false;
+                $acum =  $acum && false;
             }
         }
+
+        //dd($resource->type != $type, $resource->type, $type);
         if($c_type != NULL){
-            if($resource->classroom_type->name == $c_type){
-                $acum = $acum && false;
+            if($resource->classroom_type->name != $c_type){
+                $acum =  $acum && false;
             }
         }
-        else if ($characteristics[0] != NULL){
-            $acum_charact = $resource->hasCharacteristic($characteristics[0]);
-            $iteration = 0;
-            foreach ($characteristics as $i_characteristic) {
-                if ($iteration != 0) {
-                    $bool_value = $resource->hasCharacteristic($i_characteristic);
-                    if ($operators[$iteration] == 'AND') {
-                        $acum_charact = $acum_charact && $bool_value;
-                    } else if ($operators[$iteration] == 'OR') {
-                        $acum_charact = $acum_charact || $bool_value;
-                    }
-                }
-                $iteration += 1;
-            }
-            $acum = $acum && $acum_charact;
+
+        if($resource->state == 'DAMAGED' || $resource->state == 'IN_MAINTENANCE'){
+            $acum = $acum && false;
         }
         return $acum;
     }

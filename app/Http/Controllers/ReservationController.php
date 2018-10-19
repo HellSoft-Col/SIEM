@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classroom_type;
+use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Mail;
 
 class ReservationController extends Controller
@@ -41,25 +44,26 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        $user = User::find($request->user_id);
-        $user->email = 'anfecoquin123@gmail.com';
-        $user->save();
+        $user = Auth::user();
         $resource = Resource::find($request->resource_id);
-        $end_time = strtotime($request->end_date . " " . $request->end_time);
-        $start_time = strtotime($request->start_date . " " . $request->start_time);
-        $message = $this->canReserve($user, $resource, $start_time, $end_time);
-
+        $end_time = date('Y-m-d H:i:s', strtotime($request->end_time));
+            //$request->end_time;
+            /**strtotime($request->end_date . " " . $request->end_time);*/;
+        $start_time = date('Y-m-d H:i:s', strtotime($request->start_time));
+            //$request->start_time;
+            /**strtotime($request->start_date . " " . $request->start_time);*/;
+            $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time));
         if ($message == "") {
             Reservation::create([
                 'state' => 'ACTIVE',
-                'start_time' => $request->start_date . " " . $request->start_time,
-                'end_time' => $request->end_date . " " . $request->end_time,
+                'start_time' => date('Y-m-d H:i:s', strtotime($request->start_time)),
+                'end_time' => date('Y-m-d H:i:s', strtotime($request->end_time)),
                 'user_id' => $user->id,
                 'resource_id' => $resource->id,
-                'moulted' => '0',
+                'moulted' => '0'
             ]);
-            $sT = date('l jS \of F Y h:i:s A', $start_time);
-            $eT = date('l jS \of F Y h:i:s A', $end_time);
+            $sT = date('l jS \of F Y h:i:s A', strtotime($start_time));
+            $eT = date('l jS \of F Y h:i:s A', strtotime($end_time));
             $message .= "Reserva exitosa";
             $email = [
                 'nameUser' => $user->name,
@@ -68,7 +72,8 @@ class ReservationController extends Controller
                 'resourceId' => $resource->id,
                 'resourceName' => $resource->name,
                 'startTime' => $sT,
-                'endTime' => $eT
+                'endTime' => $eT,
+                'resource_tipo' => $resource->type,
             ];
             $this->sendConfirmEmail($email);
         } else {
@@ -80,6 +85,7 @@ class ReservationController extends Controller
                 'message' => $message,
                 'resourceId' => $resource->id,
                 'resourceName' => $resource->name,
+                'resource_tipo' => $resource->type,
                 'startTime' => $start_time,
                 'endTime' => $end_time
             ];
@@ -87,7 +93,7 @@ class ReservationController extends Controller
         }
 
         $resource_id = $resource->id;
-        return view('test_views.crear_reserva', compact('resource_id', 'message'));
+        return view('GeneralViews.Reserves.create', compact('resource_id', 'message','start_time','end_time'));
     }
 
     /**
@@ -97,7 +103,7 @@ class ReservationController extends Controller
      */
     public function sendConfirmEmail($email)
     {
-        Mail::send('test_views.successMail', ['body' => $email], function ($message) use ($email) {
+        Mail::send('mails.successMail', ['body' => $email], function ($message) use ($email) {
             $message->to($email['emailUser'], $email['nameUser'])
                 ->subject('Reserva creada exitosamente.');
             $message->from('siemHellsoft2018@gmail.com', 'SIEM');
@@ -113,7 +119,7 @@ class ReservationController extends Controller
      */
     public function sendErrorEmail($email)
     {
-        Mail::send('test_views.mail', ['body' => $email], function ($message) use ($email) {
+        Mail::send('mails.errorMail', ['body' => $email], function ($message) use ($email) {
             $message->to($email['emailUser'], $email['nameUser'])
                 ->subject('Reserva fallida.');
             $message->from('siemHellsoft2018@gmail.com', 'SIEM');
@@ -189,7 +195,7 @@ class ReservationController extends Controller
             $min_hours = 24;
             $max_hours = 168;
         }
-
+        date_default_timezone_set('America/Bogota');
         if ($anteriority < 0) {
             $error_message .= " - Fecha en el pasado - ";
         }
@@ -217,8 +223,8 @@ class ReservationController extends Controller
         if ($user->hasPenalties()) {
             $error_message .= " - El usuario tiene multas - ";
         }
-
-        if (!$resource->isAvailableBetween($start_time, $end_time)) {
+        //dd($resource);
+        if (!$resource->isAvailableBetween(date('Y-m-d H:i:s', $start_time), date('Y-m-d H:i:s', $end_time))) {
             $error_message .= " - No está disponible - ";
         }
         return $error_message;
@@ -227,7 +233,7 @@ class ReservationController extends Controller
     /**-------------------------------------------------------------------------**/
     public function activeReservations()
     {
-        $user_id = 10;
+        $user_id = Auth::user()->id;
         $reservations = [];
         $userItems = Reservation::where('user_id', $user_id)->where('state', 'ACTIVE')->get();
         foreach ($userItems as $uItem) {
@@ -242,21 +248,37 @@ class ReservationController extends Controller
             ];
             array_push($reservations, $item);
         }
-        return view('seeReservationsPerson.reservations', ['reservations' => $reservations]);
+        return view('GeneralViews.Reserves.active', ['reservations' => $reservations]);
     }
 
     public function loadHistoryReservations()
     {
+        $user_id = Auth::user()->id;
         $reservations = [];
-        return view('seeReservationsPerson.history', ['reservations' => $reservations]);
+        $userItems = Reservation::where('user_id', $user_id)
+            ->where('state', 'FINALIZED')->get();
+        foreach ($userItems as $uItem) {
+            $resource = Resource::where('id', $uItem->resource_id)->first();
+            $image = File::where('resource_id', $resource->id)->first();
+            $classroom = Classroom_type::where('id', $resource->classroom_type_id)->first();
+            $item = [
+                "imagePath" => $image->path,
+                "name" => $resource->name,
+                "salon" => $classroom->name,
+                "inicio" => $uItem->start_time,
+                "fin" => $uItem->end_time
+            ];
+            array_push($reservations, $item);
+        }
+        return view('GeneralViews.Reserves.history', ['reservations' => $reservations]);
     }
 
     public function historyReservations()
     {
         $data = request()->all();
-        $starTime = $data['startTime'];
-        $endTime = $data['endTime'];
-        $user_id = 1;
+        $starTime = date('Y-m-d',strtotime($data['startTime']));
+        $endTime = date('Y-m-d',strtotime($data['endTime']));
+        $user_id = Auth::user()->id;
         $reservations = [];
         if (!empty($starTime) and !empty($endTime)) {
             $userItems = Reservation::where('user_id', $user_id)
@@ -280,14 +302,14 @@ class ReservationController extends Controller
             ];
             array_push($reservations, $item);
         }
-        return view('seeReservationsPerson.history', ['reservations' => $reservations]);
+        return view('GeneralViews.Reserves.history', ['reservations' => $reservations]);
     }
 
     public function cancelReservations()
     {
         $data = request()->all();
         $reservas = isset($data['selected']) ? $data['selected'] : array();
-        $user_id = 10;
+        $user_id = Auth::user()->id;
         if (!empty($data['all']) and $data['all'] == true) {
             $userItems = Reservation::where('user_id', $user_id)->get();
             foreach ($userItems as $item) {
@@ -304,6 +326,6 @@ class ReservationController extends Controller
                 }
             }
         }
-        return redirect(route('person.activeReservations'));
+        return view('GeneralViews.Reserves.active');
     }
 }

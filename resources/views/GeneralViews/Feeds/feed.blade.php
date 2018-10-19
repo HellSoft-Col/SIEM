@@ -13,17 +13,15 @@
         @csrf
         <h1 class=" title-margin text-center my-3">Publicaciones</h1>
         <div class="container">
+            <form method="GET" action="{{url('/feed')}}">
             <div class="row">
-                <div class="col-sm">
+                <div class="col">
                     <label>Palabra clave:</label>
                 </div>
                 <div class="col">
                     <div class="input-group">
                         <input name="keyword" type="text" class="form-control" placeholder="Palabra clave">
                         <div class="input-group-append">
-                            <button class="btn btn-secondary" type="submit">
-                                <i class="fa fa-search"></i>
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -31,7 +29,7 @@
                 <div class="col">
                     <label>Fecha Inicio - Fecha Fin:</label>
                 </div>
-                <div class="col-sm-3">
+                <div class="col">
                     <div class="form-group">
                         <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
                             <input name="start_date" type="text" class="form-control datetimepicker-input"
@@ -45,12 +43,12 @@
                 </div>
 
                 <label>-</label>
-                <div class="col-sm-3">
+                <div class="col">
                     <div class="form-group">
-                        <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
+                        <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
                             <input name="end_date" type="text" class="form-control datetimepicker-input"
-                                   data-target="#datetimepickerStart"/>
-                            <div class="input-group-append" data-target="#datetimepickerStart"
+                                   data-target="#datetimepickerEnd"/>
+                            <div class="input-group-append" data-target="#datetimepickerEnd"
                                  data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
@@ -59,15 +57,16 @@
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        $('#datetimepickerStart').datetimepicker();
+                        $('#datetimepickerEnd').datetimepicker();
                     });
                 </script>
+                <div class="col">
+                    <button class="btn btn-dark d-flex align-self-center js-scroll-trigger">Buscar</button>
+                </div>
+
             </div>
-
-
+            </form>
         </div>
-
-
     </form>
 
     <section id="posts">
@@ -138,6 +137,9 @@
                                     <div class="post-details">
                                         <h3 class="author-name">{{ $publication->user->name }}</h3>
                                         <h5 class="post-description">{{ $publication->description }}</h5>
+                                        <br>
+                                        <br>
+                                        <h5 class="post-description">"Creado el "  {{ date('l jS \of F Y h:i:s A', strtotime($publication->date_time))}}</h5>
                                     </div>
                                 </div>
                             </div>

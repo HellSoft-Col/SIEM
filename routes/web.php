@@ -16,11 +16,14 @@
 
 Route::get('/', function () {
     return view('GeneralViews.guest');
-})->name('homep');
+})->name('homep')
+  ->middleware('guest');
 
+
+/**
 Route::get('/home', function () {
     return view('layout_user');
-});
+});*/
 
 Route::get('/user', function () {
     return 'Usuarios';
@@ -38,9 +41,6 @@ Route::post('/user/update', 'UserController@update')
     ->name('user.update')
     ->middleware('auth');
 
-Route::get('/unauthorized', function () {
-    return view('auth.unauthorized');
-})->name('unauthorized');
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -61,9 +61,9 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 Route::get('/home', 'HomeController@index')->name('home');
 
 /* -----------------------------------------------------------------*/
-Route::get('/person/reservation/active', 'SeeReservationsController@activeReservations')->name('person.activeReservations');
+Route::get('/person/reservation/active', 'ReservationController@activeReservations')->name('person.activeReservations');
 
-Route::get('/person/reservation/history', 'ReservationsController@loadHistoryReservations')->name('person.historyReservations');
+Route::get('/person/reservation/history', 'ReservationController@loadHistoryReservations')->name('person.historyReservations');
 
 Route::get('/person/reservation/history/{startTime}/{endTime}', 'ReservationsController@historyReservations')
     ->name('person.historyReservations');
@@ -83,14 +83,15 @@ Route::put('/person/reservation/create', 'ReservationController@store');
 Route::get('/person/reservation/create', 'ReservationController@create')->name('reservation.create');
 
 /* -----------------------------------------------------------------*/
-
-Route::get('/person/resource/search', 'ResourceController@gosearch')
-    ->middleware('auth');
-Route::put('/person/resource/search', 'ResourceController@search')->name('resource.search');
-Route::get('/events ', 'EventController@index')->name('|');
+Route::get('/events ', 'EventController@index')->name('events.get');
 Route::get('/feed ', 'PublicationController@index')->name('feed.get');
-Route::post('/feed ', 'PublicationController@index')->name('feed.post');
+Route::post('/feed ', 'PublicationController@search')->name('feed.post');
 Route::get('/person/resource/view/{resource}', 'ResourceController@show')
     ->middleware('auth');
 
 Route::post('/person/reservation/create', 'ReservationController@create')->name('create.reservation');
+Route::put('/person/reservation/create', 'ReservationController@store');
+Route::get('/person/reservation/create', 'ReservationController@create')->name('reservation.create');
+Route::get('/person/resource/search', 'ResourceController@gosearch')
+    ->middleware('auth');
+Route::put('/person/resource/search', 'ResourceController@search')->name('resource.search');

@@ -61,6 +61,7 @@
             <form id="reservar_button" class="form" role="form" method="POST"
                   action="{{ route('create.reservation') }}">
                 @csrf
+                <input type="hidden" name="_resource" value="{{$resource->id}}">
                 <div class="d-flex flex-row justify-content-center">
                     <a class="btn btn-dark js-scroll-trigger space-btn" href="#"
                        onclick="event.preventDefault(); document.getElementById('reservar_button').submit();">Reservar</a>

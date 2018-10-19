@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="{{ asset('/css/resourceStyle/content.css') }}">
 @endsection
 @section('options')
-    <a class="dropdown-item" href="#">Publicaciones</a>
-    <a class="dropdown-item" href="#">Eventos</a>
+    <a class="dropdown-item" href="{{url('/feed')}}">Publicaciones</a>
+    <a class="dropdown-item" href="{{url('/events')}}">Eventos</a>
 @endsection
 @section('content')
     <div class="container">
@@ -140,8 +140,7 @@
                         </div>
                     </div>
                     <div class="d-flex flex-row justify-content-center">
-                        <a class="btn btn-dark js-scroll-trigger space" href="#"
-                           onclick="event.preventDefault(); document.getElementById('search_resource').submit();">Buscar</a>
+                        <button type="submit" class="btn btn-dark js-scroll-trigger space" href="{{url('/person/resource/result')}}">Buscar</button>
                     </div>
 
                 </form>
