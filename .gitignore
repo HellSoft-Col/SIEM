@@ -12,3 +12,6 @@ npm-debug.log
 yarn-error.log
 .env
 .phpunit.result.cache
+README.md
+readme.md
+package-lock.json

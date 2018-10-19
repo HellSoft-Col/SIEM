@@ -85,7 +85,13 @@
 }
 
 body {
-    background: black url('/img/piano.jpg') no-repeat;
+    background: black url('/img/piano.jpg');
+    display: block;
+    position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 /* ===================== */

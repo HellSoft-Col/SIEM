@@ -98,7 +98,8 @@
 }
 
 body {
-    background: black url('/img/piano.jpg') no-repeat;
+    background-color: white;
+    background-repeat: no-repeat;
 }
 
 /* ===================== */

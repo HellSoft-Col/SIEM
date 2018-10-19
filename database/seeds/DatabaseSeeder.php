@@ -20,9 +20,11 @@ class DatabaseSeeder extends Seeder
         $this->call(ResourceSeeder::class);
         $this->call(ReservationSeeder::class);
         $this->call(PublicationSeeder::class);
+        $this->call(EventSeeder::class);
         $this->call(PenaltySeeder::class);
         $this->call(FileSeeder::class);
-        $this->call(EventSeeder::class);
+
+
         Model::reguard();
     }
 }

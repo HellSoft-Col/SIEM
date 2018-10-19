@@ -8,6 +8,16 @@ class File extends Model
 {
     //
     protected $table = 'file';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'path','description','type',
+    ];
+
     function event(){
         return $this->belongsTo(Event::class);
     }
@@ -18,5 +28,9 @@ class File extends Model
 
     function resource(){
         return $this->belongsTo(Resource::class);
+    }
+
+    function users(){
+        return $this->hasMany(User::class);
     }
 }

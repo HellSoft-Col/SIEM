@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Models\Publication;
+use Illuminate\Database\Seeder;
 
 class PublicationSeeder extends Seeder
 {
@@ -12,6 +12,16 @@ class PublicationSeeder extends Seeder
      */
     public function run()
     {
-       factory(Publication::class,5)->create();
+        factory(Publication::class, 20)->create();
+        $ids = Publication::all()->pluck('id')->toArray();
+        foreach ($ids as $id) {
+            $file_data = [
+                'path' => '/img/event_oboe_fagot.jpg',
+                'description' => 'generic photo',
+                'type' => 'PUBLICATION',
+                'publication_id' => $id,
+            ];
+            \App\Models\File::create($file_data);
+        }
     }
 }

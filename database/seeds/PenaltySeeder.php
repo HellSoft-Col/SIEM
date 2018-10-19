@@ -12,6 +12,6 @@ class PenaltySeeder extends Seeder
      */
     public function run()
     {
-        factory(Penalty::class)->create();
+        factory(Penalty::class,2)->create();
     }
 }

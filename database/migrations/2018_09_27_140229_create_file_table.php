@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateFileTable extends Migration
 {
@@ -20,7 +20,7 @@ class CreateFileTable extends Migration
             $table->unsignedInteger('event_id')->nullable();
             $table->unsignedInteger('publication_id')->nullable();
             $table->unsignedInteger('resource_id')->nullable();
-            $table->enum('type',['EVENT','PUBLICATION']);
+            $table->enum('type',['EVENT','PUBLICATION','USER']);
             $table->foreign('event_id')->references('id')->on('event');
             $table->foreign('publication_id')->references('id')->on('publication');
             $table->foreign('resource_id')->references('id')->on('resource');

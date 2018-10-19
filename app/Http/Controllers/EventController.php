@@ -14,7 +14,14 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        return view('GeneralViews.Events.events')
+            ->with(['events' => $this->getSomeEvents(20),]);
+    }
+
+    public function indexAuth()
+    {
+        return view('SpecificViews.Person.events')
+            ->with(['events' => $this->getSomeEvents(20),]);
     }
 
     /**
@@ -46,7 +53,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        return view('test_views.evento_detail', compact('events'));
     }
 
     /**
@@ -81,5 +88,18 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         //
+    }
+
+    /**
+     * Retorna cierto numero de elementos
+     *
+     * @param
+     * @return
+     */
+    private function getSomeEvents($limit)
+    {
+        return Event::all()
+            ->where('date_time', '>=', date('Y-m-d H:i:s', time()))
+            ->sortByDesc('date_time')->take($limit);
     }
 }

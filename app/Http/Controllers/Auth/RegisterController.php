@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Carreer;
+use App\Models\User;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Validation\Rule;
 
+/**
+ * @property array carreers
+ */
 class RegisterController extends Controller
 {
     /*
@@ -28,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/user/update ';
 
     /**
      * Create a new controller instance.
@@ -38,6 +43,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->carreers = Carreer::all()->pluck('id')->toArray();
     }
 
     /**
@@ -52,11 +58,15 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'carreer_id' => ['integer', 'required',
+                Rule::in($this->carreers)
+            ],
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
+     *
      *
      * @param  array  $data
      * @return \App\Models\User
@@ -66,7 +76,10 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'username' => explode("@", $data['email'], 2)[0],
+            'carreer_id' => $data['carreer_id'],
             'password' => Hash::make($data['password']),
         ]);
+
     }
 }

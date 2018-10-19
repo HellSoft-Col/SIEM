@@ -12,8 +12,11 @@ class Authenticate extends Middleware
      * @param  \Illuminate\Http\Request  $request
      * @return string
      */
+
+    protected $redirectTo = '/home';
+
     protected function redirectTo($request)
     {
-        return route('login');
+        return route('homep');
     }
 }
