@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Resource;
+use Calendar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Log;
@@ -48,9 +49,27 @@ class ResourceController extends Controller
      */
     public function show(Resource $resource)
     {
+
+
         $now = new \DateTime('now');
         $reservations = $resource->reservationsIn($now->format('m'));
-        return view('GeneralViews.ResourcesViews.view', compact('resource', 'reservations'));
+
+
+        $event_list = [];
+        foreach ($reservations as $key => $reservation) {
+            $event_list[] = Calendar::event(
+                $reservation->user->name,
+                false,
+                new \DateTime($reservation->start_time),
+                new \DateTime($reservation->end_time),
+                null
+            );
+        }
+
+
+        $calendar_details = Calendar::addEvents($event_list);
+
+        return view('GeneralViews.ResourcesViews.view', compact('resource', 'reservations', 'calendar_details'));
     }
 
     /**
@@ -174,7 +193,7 @@ class ResourceController extends Controller
 
         foreach ($aux_resources as $resource){
             //dd($resource)->attributes;
-            if(($this->matchBool($resource,$keyword, $type, $c_type, $characteristics, $operators))){
+            if (($this->matchBool($resource, $keyword, $type, $c_type, $characteristics, $operators))) {
                 array_push($r, $resource);
             }
         }
@@ -186,11 +205,11 @@ class ResourceController extends Controller
         $acum = true;
 
         //dd($characteristics[0]);
-        if ($characteristics[0] != NULL){
+        if ($characteristics[0] != NULL) {
             $acum_charact = $resource->hasCharacteristic($characteristics[0]);
             $iteration = 0;
             foreach ($characteristics as $i_characteristic) {
-                if($i_characteristic != NULL){
+                if ($i_characteristic != NULL) {
                     if ($iteration != 0) {
                         //dd($i_characteristic, $operators[$iteration]);
                         $bool_value = $resource->hasCharacteristic($i_characteristic);
@@ -206,30 +225,29 @@ class ResourceController extends Controller
             $acum = $acum_charact;
         }
 
-        if($keyword != NULL){
+        if ($keyword != NULL) {
             if (strpos(strtoupper($resource->name), strtoupper($keyword)) !== false
                 || strpos(strtoupper($resource->description), strtoupper($keyword)) !== false) {
                 //
-            }
-            else{
+            } else {
                 $acum = $acum && false;
             }
         }
 
-        if ($type != NULL){
-            if($resource->type != $type){
-                $acum =  $acum && false;
+        if ($type != NULL) {
+            if ($resource->type != $type) {
+                $acum = $acum && false;
             }
         }
 
         //dd($resource->type != $type, $resource->type, $type);
-        if($c_type != NULL){
-            if($resource->classroom_type->name != $c_type){
-                $acum =  $acum && false;
+        if ($c_type != NULL) {
+            if ($resource->classroom_type->name != $c_type) {
+                $acum = $acum && false;
             }
         }
 
-        if($resource->state == 'DAMAGED' || $resource->state == 'IN_MAINTENANCE'){
+        if ($resource->state == 'DAMAGED' || $resource->state == 'IN_MAINTENANCE') {
             $acum = $acum && false;
         }
         return $acum;

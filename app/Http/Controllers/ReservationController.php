@@ -6,7 +6,6 @@ use App\Models\Classroom_type;
 use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Mail;
@@ -47,12 +46,10 @@ class ReservationController extends Controller
         $user = Auth::user();
         $resource = Resource::find($request->resource_id);
         $end_time = date('Y-m-d H:i:s', strtotime($request->end_time));
-            //$request->end_time;
-            /**strtotime($request->end_date . " " . $request->end_time);*/;
+        //$request->end_time;/**strtotime($request->end_date . " " . $request->end_time);*/;
         $start_time = date('Y-m-d H:i:s', strtotime($request->start_time));
-            //$request->start_time;
-            /**strtotime($request->start_date . " " . $request->start_time);*/;
-            $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time));
+        //$request->start_time;/**strtotime($request->start_date . " " . $request->start_time);*/;
+        $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time));
         if ($message == "") {
             Reservation::create([
                 'state' => 'ACTIVE',
@@ -326,6 +323,6 @@ class ReservationController extends Controller
                 }
             }
         }
-        return view('GeneralViews.Reserves.active');
+        return redirect()->back();
     }
 }

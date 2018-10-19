@@ -20,13 +20,15 @@
                 <div class="col-sm">
                     <div class="form-check-inline">
                         <label class="form-check-label" for="radio1">
-                            <input type="radio" class="form-check-input" id="radio1" name="optradio" value="{{url('/person/reservation/active')}}"
+                            <input type="radio" class="form-check-input" id="radio1" name="optradio"
+                                   value="{{url('/person/reservation/active')}}"
                                    checked>Activas
                         </label>
                     </div>
                     <div class="form-check-inline">
                         <label class="form-check-label" for="radio2">
-                            <input type="radio" class="form-check-input" id="radio2" name="optradio" value="{{url('/person/reservation/history')}}">Historial
+                            <input type="radio" class="form-check-input" id="radio2" name="optradio"
+                                   value="{{url('/person/reservation/history')}}">Historial
                         </label>
                     </div>
                 </div>
@@ -34,7 +36,7 @@
         </form>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script>
-            $('input[type="radio"]').on('click', function() {
+            $('input[type="radio"]').on('click', function () {
                 window.location = $(this).val();
             });
         </script>
@@ -52,8 +54,9 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="d-flex align-items-right mx-auto">
-                        <button class="btn btn-dark d-flex align-items-right js-scroll-trigger" >Cancelar reservas
-                            seleccionadas</button>
+                        <button class="btn btn-dark d-flex align-items-right js-scroll-trigger">Cancelar reservas
+                            seleccionadas
+                        </button>
                     </div>
                 </div>
             </div>
@@ -61,40 +64,41 @@
         <div class="container-list">
             <ul class="list-unstyled">
                 @if (!empty($reservations))
-                        @foreach($reservations as $reservation)
-                            <li class="media my-6">
-                                <div class="col-md-4">
-                                    <div class="form-check " for="checkOne">
-                                        <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input" id="checkOne" name="selected[]"
-                                                   value="{{$reservation['id']}}">
-                                        </label>
-                                    </div>
+                    @foreach($reservations as $reservation)
+                        <li class="media my-6">
+                            <div class="col-md-4">
+                                <div class="form-check " for="checkOne">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input" id="checkOne" name="selected[]"
+                                               value="{{$reservation['id']}}">
+                                    </label>
                                 </div>
-                                <div class="media-body d-flex align-items-center">
-                                    <div class="row">
-                                        <div class="col text-center">
-                                            <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                            <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
-                                        </div>
-
-                                    </div>
-                                    <div class="col d-flex justify-content-end ">
-                                        <div class="col d-flex justify-content-end">
-                                            <div class="d-flex align-items-center mx-auto">
-                                                <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger" href="#">Ver
-                                                    recurso</a>
-                                            </div>
-                                        </div>
+                            </div>
+                            <div class="media-body d-flex align-items-center">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
+                                        <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}
+                                            <br>{{$reservation['fin']}}</p>
                                     </div>
 
                                 </div>
-                            </li>
-                        @endforeach
-                    </form>
-                @else
-                    <h1>No posee reservas activas en este momento</h1>
-                @endif
+                                <div class="col d-flex justify-content-end ">
+                                    <div class="col d-flex justify-content-end">
+                                        <div class="d-flex align-items-center mx-auto">
+                                            <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger" href="#">Ver
+                                                recurso</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+            @endforeach
+        </form>
+        @else
+            <h1>No posee reservas activas en este momento</h1>
+            @endif
             </ul>
         </div>
     </div>

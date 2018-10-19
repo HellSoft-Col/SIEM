@@ -47,9 +47,9 @@ class Resource extends Model
     {
         $r = true;
         $aux_reservations = $this->reservations()->where('state', 'ACTIVE')->get();
-        foreach ($aux_reservations as $reservation){
-            if(!(($start_time<=$reservation->start_time && $end_time<=$reservation->start_time)||
-                ($start_time>=$reservation->end_time && $end_time<=$reservation->end_time))){
+        foreach ($aux_reservations as $reservation) {
+            if (!(($start_time <= $reservation->start_time && $end_time <= $reservation->start_time) ||
+                ($start_time >= $reservation->end_time && $end_time <= $reservation->end_time))) {
                 $r = false;
             }
         }
@@ -67,9 +67,9 @@ class Resource extends Model
     {
         $r = [];
         $start = date("YYYY-mm-dd hh:mm:ss", mktime(0, 0, 0, $month, 1, date("YYYY")));
-        $end = date("YYYY-mm-dd hh:mm:ss", mktime(0, 0, 0, $month, 0, date("YYYY")));
+
         foreach ($this->reservations as $reservation) {
-            if ($reservation->start_time >= $start && $reservation->end_time <= $end) {
+            if ($reservation->start_time >= $start) {
                 array_push($r, $reservation);
             }
         }

@@ -57,7 +57,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'siemHellsoft2018@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'name' => env('MAIL_FROM_NAME', 'example'),
     ],
 
     /*
@@ -71,7 +71,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
 
     /*
     |--------------------------------------------------------------------------
@@ -84,9 +84,9 @@ return [
     |
     */
 
-    'username' => env('MAIL_USERNAME', 'siemHellsoft2018@gmail.com'),
+    'username' => env('MAIL_USERNAME', 'null'),
 
-    'password' => env('MAIL_PASSWORD', 'siem2018'),
+    'password' => env('MAIL_PASSWORD', 'null'),
 
     /*
     |--------------------------------------------------------------------------

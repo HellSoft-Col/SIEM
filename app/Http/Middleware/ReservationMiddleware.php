@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
-class ModeratorMiddleware
+class ReservationMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,13 +15,9 @@ class ModeratorMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check()) {
-            if (Auth::user()->role === "MODERATOR") {
-                return $next($request);
-            }
-
+        if (strpos(str_replace(url('/'), '', url()->previous()), 'person/resource/view')) {
+            return $next($request);
         }
-
-        return abort(403, 'Necesita permisos de moderador para acceder.');
+        return abort(403, 'No hay contenido');
     }
 }

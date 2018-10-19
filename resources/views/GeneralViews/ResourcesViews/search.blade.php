@@ -11,7 +11,7 @@
     <a class="dropdown-item" href="{{url('/events')}}">Eventos</a>
 @endsection
 @section('content')
-    <div class="container">
+    <div class="container" style="margin-top: 50px;">
         <div class="card card-outline-secondary">
             <div class="card-header">
                 <h3 class="mb-0">Búsqueda de recursos</h3>
@@ -140,7 +140,9 @@
                         </div>
                     </div>
                     <div class="d-flex flex-row justify-content-center">
-                        <button type="submit" class="btn btn-dark js-scroll-trigger space" href="{{url('/person/resource/result')}}">Buscar</button>
+                        <button type="submit" class="btn btn-dark js-scroll-trigger space"
+                                href="{{url('/person/resource/result')}}">Buscar
+                        </button>
                     </div>
 
                 </form>

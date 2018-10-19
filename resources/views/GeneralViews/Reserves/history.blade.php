@@ -25,7 +25,8 @@
                 <div class="col-sm">
                     <div class="form-check-inline">
                         <label class="form-check-label" for="radio1">
-                            <input type="radio" class="form-check-input" id="radio1" name="optradio" value="{{url('/person/reservation/active')}}">
+                            <input type="radio" class="form-check-input" id="radio1" name="optradio"
+                                   value="{{url('/person/reservation/active')}}">
                             Activas
                         </label>
                     </div>
@@ -40,7 +41,7 @@
         </form>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script>
-            $('input[type="radio"]').on('click', function() {
+            $('input[type="radio"]').on('click', function () {
                 window.location = $(this).val();
             });
         </script>
@@ -56,7 +57,8 @@
                         <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input"
                                    data-target="#datetimepickerStart" name="startTime" value="{{old('startTime')}}"/>
-                            <div class="input-group-append" data-target="#datetimepickerStart" data-toggle="datetimepicker">
+                            <div class="input-group-append" data-target="#datetimepickerStart"
+                                 data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
@@ -75,7 +77,8 @@
                         <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input"
                                    data-target="#datetimepickerEnd" name="endTime" value="{{old('endTime')}}"/>
-                            <div class="input-group-append" data-target="#datetimepickerEnd" data-toggle="datetimepicker">
+                            <div class="input-group-append" data-target="#datetimepickerEnd"
+                                 data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
@@ -99,21 +102,26 @@
                     @foreach($reservations as $reservation)
                         <li class="media my-4">
                             <div class="col-md-4">
-                                <img class="mr-3" src="{{asset($reservation['imagePath'])}}" alt="Generic placeholder image" style="with:290px;height:171px;>
-                            <div class="media-body d-flex align-items-center">
+                                <img class="mr-3" src="{{asset($reservation['imagePath'])}}"
+                                     alt="Generic placeholder image" style="with:290px;height:171px;>
+                            <div class=" media-body d-flex align-items-center">
                             </div>
-                                <div class="row" >
-                                    <div class="col text-center">
-                                        <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                        <p class="container-description mr-auto">{{$reservation['salon']}}<br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
-                                    </div>
+                            <div class="row">
+                                <div class="col text-center">
+                                    <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
+                                    <p class="container-description mr-auto">{{$reservation['salon']}}
+                                        <br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
                                 </div>
+                            </div>
                             <div class="col d-flex">
                                 <div class="col d-flex justify-content-center">
                                     <div class="d-flex align-items-center">
                                         <div class="d-flex align-items-center mx-auto">
-                                            <button type="submit" class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                                recurso</button>
+                                            <button type="submit"
+                                                    class="btn btn-dark d-flex align-items-center js-scroll-trigger"
+                                                    href="#">Ver
+                                                recurso
+                                            </button>
                                         </div>
                                     </div>
                                 </div>

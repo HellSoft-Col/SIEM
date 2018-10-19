@@ -52,7 +52,6 @@ $(window).ready(function () {
 
     var init = function () {
         popup();
-        readProductData();
     };
 
     var isDone = true;
@@ -112,12 +111,6 @@ $(window).ready(function () {
             $('.image-large ul').toggle();
         });
     };
-    var readProductData = function () {
-        $.getJSON("winners.json", function (result) {
-            $.each(result, function (val) {
-                console.log(val.key);
-            });
-        });
-    };
+
     init();
 });

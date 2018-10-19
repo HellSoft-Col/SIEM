@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.layout_user')
 @section('includes')
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
@@ -9,14 +9,14 @@
 @endsection
 @section('content')
 
-    <form method="POST" action="{{ url('feed') }}">
+    <form method="POST" action="{{ url('/user/feed') }}">
         @csrf
-        <h1 class=" title-margin text-center my-3">Publicaciones</h1>
+        <h1 class=" title-margin text-center my-3" style="color: black;">Publicaciones</h1>
         <div class="container">
-            <form method="GET" action="{{url('/feed')}}">
+            <form method="GET" action="{{url('/user/feed')}}">
                 <div class="row">
                     <div class="col">
-                        <label>Palabra clave:</label>
+                        <label style="color: black;">Palabra clave:</label>
                     </div>
                     <div class="col">
                         <div class="input-group">
@@ -27,7 +27,7 @@
                     </div>
 
                     <div class="col">
-                        <label>Fecha Inicio - Fecha Fin:</label>
+                        <label style="color: black;">Fecha Inicio - Fecha Fin:</label>
                     </div>
                     <div class="col">
                         <div class="form-group">
@@ -42,7 +42,7 @@
                         </div>
                     </div>
 
-                    <label>-</label>
+                    <label style="color: black;">-</label>
                     <div class="col">
                         <div class="form-group">
                             <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">

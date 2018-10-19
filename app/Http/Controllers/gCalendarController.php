@@ -1,14 +1,18 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Carbon\Carbon;
 use Google_Client;
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
 use Google_Service_Calendar_EventDateTime;
 use Illuminate\Http\Request;
+
 class gCalendarController extends Controller
 {
     protected $client;
+
     public function __construct()
     {
         $client = new Google_Client();
@@ -18,6 +22,7 @@ class gCalendarController extends Controller
         $client->setHttpClient($guzzleClient);
         $this->client = $client;
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,6 +41,7 @@ class gCalendarController extends Controller
             return redirect()->route('oauthCallback');
         }
     }
+
     public function oauth()
     {
         session_start();
@@ -51,6 +57,7 @@ class gCalendarController extends Controller
             return redirect()->route('cal.index');
         }
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -60,6 +67,7 @@ class gCalendarController extends Controller
     {
         return view('calendar.createEvent');
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -91,6 +99,7 @@ class gCalendarController extends Controller
             return redirect()->route('oauthCallback');
         }
     }
+
     /**
      * Display the specified resource.
      *
@@ -113,6 +122,7 @@ class gCalendarController extends Controller
             return redirect()->route('oauthCallback');
         }
     }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -123,6 +133,7 @@ class gCalendarController extends Controller
     {
         //
     }
+
     /**
      * Update the specified resource in storage.
      *
@@ -165,6 +176,7 @@ class gCalendarController extends Controller
             return redirect()->route('oauthCallback');
         }
     }
+
     /**
      * Remove the specified resource from storage.
      *

@@ -18,6 +18,12 @@ class EventController extends Controller
             ->with(['events' => $this->getSomeEvents(20),]);
     }
 
+    public function indexAuth()
+    {
+        return view('SpecificViews.Person.events')
+            ->with(['events' => $this->getSomeEvents(20),]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -93,7 +99,7 @@ class EventController extends Controller
     private function getSomeEvents($limit)
     {
         return Event::all()
-            ->where('date_time','>=', date('Y-m-d H:i:s', time()))
+            ->where('date_time', '>=', date('Y-m-d H:i:s', time()))
             ->sortByDesc('date_time')->take($limit);
     }
 }

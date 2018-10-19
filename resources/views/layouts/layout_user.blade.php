@@ -21,7 +21,7 @@
 
 <nav class="navbar nav-masthead navbar-dark sticky-top" style="background-color: #000000;" id="mainNav">
 
-    <a class="nav navbar-nav navbar-logo mr-auto js-scroll-trigger" href="#">
+    <a class="nav navbar-nav navbar-logo mr-auto js-scroll-trigger" href="{{ url('') }}">
         <img id="logo" src="{!! asset('/svg/logo_white.svg') !!}" height="55" alt="Logo Siem">
     </a>
     <div class="inset" style="margin-right: 10px;">
@@ -34,9 +34,10 @@
            aria-expanded="false" v-pre>{{Auth::user()->name}}<span class="caret"></span></a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="{{ url('/home') }}">Inicio</a>
+            <a class="dropdown-item" href="{{ url('/user/events') }}">Eventos</a>
+            <a class="dropdown-item" href="{{ url('/user/feed') }}">Publicaciones</a>
             <a class="dropdown-item" href="{{ route('logout') }}"
-               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 {{ __('Logout') }}
             </a>
 

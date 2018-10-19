@@ -3,9 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
 
-class ModeratorMiddleware
+class SearchMiddleware
 {
     /**
      * Handle an incoming request.
@@ -16,13 +15,9 @@ class ModeratorMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check()) {
-            if (Auth::user()->role === "MODERATOR") {
-                return $next($request);
-            }
-
+        if (str_replace(url('/'), '', url()->previous()) == "/person/resource/search") {
+            return $next($request);
         }
-
-        return abort(403, 'Necesita permisos de moderador para acceder.');
+        return abort(403, 'No hay contenido');
     }
 }
