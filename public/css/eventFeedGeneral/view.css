@@ -1,0 +1,421 @@
+/*Now the styles*/
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: black;
+    font-family: arial, verdana, tahoma;
+}
+
+label {
+    font-size: 17px;
+    color: white;
+}
+
+.space {
+    margin-top: 150px;
+    margin-bottom: 30px;
+
+}
+
+.space-btn {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.crouselpro {
+    margin: 15px;
+    padding: 15px;
+}
+
+.title-margin {
+    margin-bottom: 15px;
+    margin-top: 150px;
+    padding-bottom: 15px;
+    font-size: 40px;
+    color: white;
+}
+
+.title-margin-reverse {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    font-size: 30px;
+    color: black;
+}
+
+/*Time to apply widths for accordian to work
+Width of image = 640px
+total images = 5
+so width of hovered image = 640px
+width of un-hovered image = 40px - you can set this to anything
+so total container width = 640 + 40*4 = 800px;
+default width = 800/5 = 160px;
+*/
+
+.accordian {
+    width: 805px;
+    height: 320px;
+    overflow: hidden;
+
+    /*Time for some styling*/
+    margin: 100px auto;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.35);
+}
+
+/*A small hack to prevent flickering on some browsers*/
+.accordian ul {
+    width: 1200px;
+    /*This will give ample space to the last item to move
+    instead of falling down/flickering during hovers.*/
+}
+
+.accordian li {
+    position: relative;
+    display: block;
+    width: 160px;
+    float: left;
+
+    border-left: 1px solid #888;
+
+    box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 25px 10px rgba(0, 0, 0, 0.5);
+
+    /*Transitions to give animation effect*/
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    /*If you hover on the images now you should be able to
+    see the basic accordian*/
+}
+
+/*Reduce with of un-hovered elements*/
+.accordian ul:hover li {
+    width: 40px;
+}
+
+/*Lets apply hover effects now*/
+/*The LI hover style should override the UL hover style*/
+.accordian ul li:hover {
+    width: 640px;
+}
+
+.accordian li img {
+    display: block;
+}
+
+/*Image title styles*/
+.image_title {
+    background: rgba(0, 0, 0, 0.5);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 640px;
+
+}
+
+.image_title a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 20px;
+    font-size: 16px;
+}
+
+.row-striped:nth-of-type(odd) {
+    background-color: #efefef;
+    border-left: 4px #ffffff solid;
+}
+
+.row-striped:nth-of-type(even) {
+    background-color: #ffffff;
+    border-left: 4px #efefef solid;
+}
+
+.row-striped {
+    padding: 15px 0;
+}
+
+/**/
+body {
+    background-color: #000;
+}
+
+#posts {
+    text-align: center;
+    font-size: 0;
+}
+
+#posts .post {
+    position: relative;
+    width: 100%;
+    height: 500px;
+    margin: 0;
+    border: 3px solid #000;
+    display: inline-block;
+    background-size: cover;
+    background-position: center center;
+    transition: all 300ms ease-out;
+}
+
+#posts .post h2 {
+    color: #fff;
+    position: absolute;
+    bottom: 80px;
+    margin: 0;
+    font-size: 2vw;
+    line-height: 0.8;
+    font-family: 'MuseoSansRounded-900', 'Arial Black', sans-serif;
+    padding: 0 60px;
+    text-transform: uppercase;
+    text-align: left;
+    z-index: 1000;
+}
+
+#posts .post p {
+    color: #fff;
+    position: absolute;
+    bottom: 40px;
+    margin: 0;
+    font-size: 1.5vw;
+    line-height: 0.8;
+    padding: 0 60px;
+    text-transform: capitalize;
+    text-align: left;
+    z-index: 1000;
+}
+
+#posts .post:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    background: #000;
+    opacity: 0.5;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=50);
+    filter: alpha(opacity=50);
+    transition: all 300ms ease-out;
+    content: '';
+    z-index: 1;
+}
+
+#posts .post:hover:before {
+    opacity: 0.2;
+    -ms-filter: progid:DXImageTransform.Microsoft.Alpha(opacity=20);
+    filter: alpha(opacity=20);
+}
+
+/* === MEDIA QUERIES === */
+
+/* MOBILE FIRST */
+/* XS */
+/* SM */
+@media (min-width: 34em) {
+    #posts .post {
+        width: 50%;
+    }
+}
+
+/* MD */
+@media (min-width: 48em) {
+    #posts .post {
+        width: 25%;
+    }
+}
+
+/* LG */
+@media (min-width: 62em) {
+    #posts .post {
+        width: 33.33333333%;
+    }
+}
+
+/* XL */
+@media (min-width: 75em) {
+    #posts .post {
+        width: 25%;
+    }
+}
+
+/************************************************************************************************************/
+.product_view .modal-dialog {
+    max-width: 800px;
+    width: 100%;
+}
+
+.pre-cost {
+    text-decoration: line-through;
+    color: #a5a5a5;
+}
+
+.space-ten {
+    padding: 10px 0;
+}
+
+.mini-carousel, .carousel {
+    float: left;
+}
+
+.mini-carousel {
+    margin: 22px 0 0 10px;
+    float: left;
+    width: 97px;
+    height: 354px;
+    overflow: hidden;
+    display: block;
+    white-space: nowrap;
+    position: relative;
+    top: 0px;
+}
+
+.mini-carousel ul {
+    float: left;
+    width: 97px;
+    display: block;
+    top: 0;
+    position: relative;
+}
+
+.mini-carousel ul li {
+    float: left;
+    margin-bottom: 10px;
+    width: 97px;
+    height: 115px;
+    top: 0;
+    position: relative;
+}
+
+.carousel {
+    float: left;
+    position: relative;
+    left: 3px;
+    top: 6px;
+    padding-left: 9px;
+    display: block;
+}
+
+.image-large {
+    float: left;
+    top: 10px;
+    width: 290px;
+    overflow: hidden;
+    display: block;
+    left: 0;
+    padding-top: 50px;
+}
+
+.image-large ul {
+    margin: 0 0 0 0;
+    list-style: none;
+    width: 1180px;
+    height: 370px;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel ul li {
+    float: left;
+    margin: 0;
+}
+
+a.prev {
+    position: absolute;
+    top: 170px;
+    left: 8px;
+    height: 35px;
+    width: 36px;
+}
+
+a.next {
+    position: absolute;
+    top: 170px;
+    right: 0;
+    width: 36px;
+    height: 36px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.zoom {
+    padding-top: 50px;
+    transition: transform .1s;
+    width: 290px;
+    height: 370px;
+    margin: 0 auto;
+}
+
+.zoom:hover {
+    -ms-transform: scale(1.5); /* IE 9 */
+    -webkit-transform: scale(1.5); /* Safari 3-8 */
+    transform: scale(1.5);
+}
+
+/************************************************************************************************************/
+.detail {
+    width: 315px;
+    float: left;
+    margin: 40px 31px 40px 31px;
+
+}
+
+.post-details {
+    margin-bottom: 20px;
+    float: left;
+}
+
+.author-name {
+    margin-bottom: 20px;
+}
+
+.post-description {
+    margin-bottom: 20px;
+}
+
+.orange {
+    margin-bottom: 15px;
+    width: 100%;
+    background-color: #d35400;
+    color: #FFF;
+    padding: 9px 21%;
+    text-align: center;
+    border-radius: 10px;
+    text-transform: uppercase;
+}
+
+.grey {
+    margin-top: 20px;
+    float: left;
+    width: 220px;
+    padding: 3%;
+    background-color: #CCC;
+    color: #FFF;
+    text-align: center;
+    text-transform: uppercase;
+    border-radius: 10px;
+}
+
+.option-dropdowns {
+    margin-bottom: 20px;
+}
+
+.buttons {
+    margin-bottom: 20px;
+}
+
+a.view-more-detail {
+    float: left;
+    width: 81%;
+    background-color: #356890;
+    padding: 5% 5%;
+    text-transform: uppercase;
+    text-align: center;
+    color: #FFF;
+}
