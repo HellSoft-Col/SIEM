@@ -12,6 +12,16 @@ class CharacteristicSeeder extends Seeder
      */
     public function run()
     {
-        factory(Characteristic::class,20)->create();
+        //factory(Characteristic::class,20)->create();
+        $arrays = ['Sonido','Piano','TornaMesa','Proyector','Correa','Silla','Banco','Boquilla','Consola de mezcla','Microfono'];
+        foreach ($arrays as $element){
+            $elementdata = [
+                'name' => $element,
+                'description' => "Caracteristica importante",
+            ];
+            Characteristic::create($elementdata);
+        }
     }
 }
+
+

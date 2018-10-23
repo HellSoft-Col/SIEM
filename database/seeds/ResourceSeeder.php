@@ -13,6 +13,8 @@ class ResourceSeeder extends Seeder
 
         $characteristics = \App\Models\Characteristic::all();
         $resources = Resource::all();
+        $names = ["dummy/resources/image_resource.jpg", "dummy/resources/logo_siem.png", "dummy/resources/piano.jpg", "dummy/resources/sala_test.jpg"] ;
+
 
         foreach ($resources as $resource){
             for ($i = 0 ; $i < $faker->numberBetween(0,2) ;$i++ ){
@@ -23,7 +25,7 @@ class ResourceSeeder extends Seeder
         $ids = Resource::all()->pluck('id')->toArray();
         foreach ($ids as $id) {
             $file_data = [
-                'path' => '/img/event_oboe_fagot.jpg',
+                'path' => $faker->randomElement($names),
                 'description' => 'generic photo',
                 'type' => 'PUBLICATION',
                 'resource_id' => $id,
@@ -33,3 +35,5 @@ class ResourceSeeder extends Seeder
 
     }
 }
+
+

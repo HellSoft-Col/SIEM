@@ -2,6 +2,7 @@
 
 use App\Models\Publication;
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
 
 class PublicationSeeder extends Seeder
 {
@@ -10,13 +11,15 @@ class PublicationSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
         factory(Publication::class, 20)->create();
         $ids = Publication::all()->pluck('id')->toArray();
+        $names = ["dummy/posts/post1.jpg", "dummy/posts/post2.jpg", "dummy/posts/post3.jpg", "dummy/posts/post4.jpg", "dummy/posts/post_violin.jpg", "dummy/posts/sala.jpg"] ;
+
         foreach ($ids as $id) {
             $file_data = [
-                'path' => '/img/event_oboe_fagot.jpg',
+                'path' => $faker->randomElement($names),
                 'description' => 'generic photo',
                 'type' => 'PUBLICATION',
                 'publication_id' => $id,
@@ -25,3 +28,4 @@ class PublicationSeeder extends Seeder
         }
     }
 }
+
