@@ -94,3 +94,17 @@ Route::get('/person/reservation/create', 'ReservationController@create')->name('
 Route::get('/person/resource/search', 'ResourceController@gosearch')
     ->middleware('auth');
 Route::put('/person/resource/search', 'ResourceController@search')->name('resource.search');
+
+/*-----------------------3ra Entrega---------------------------------*/
+
+Route::put('/resource/create', 'ResourceController@create')->name('resource.create');
+Route::post('/resource/edit', 'ResourceController@edit')->name('resource.edit');
+Route::post('/resource/delete', 'ResourceController@delete')->name('resource.delete');
+
+Route::get('/person/reservations', 'ReservationController@personReservations');
+
+Route::get('/person/penalties', 'PenaltiesController@penalties');
+
+Route::get('/resource/view', 'ResourceController@view')->name('resource.view');
+Route::get('/resource/view/{ID}/reservations', 'ResourceController@reservationsByResource')->name('resource.reservations');
+
