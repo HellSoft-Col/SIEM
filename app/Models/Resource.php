@@ -21,9 +21,9 @@ class Resource extends Model
             ->withPivot(['quantity']);
     }
 
-    function classroom_type()
+    function resource_type()
     {
-        return $this->belongsTo(Classroom_type::class);
+        return $this->belongsTo(ResourceType::class);
     }
 
     function hasCharacteristic($characteristicName)

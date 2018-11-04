@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\Classroom_type;
+use App\Models\ResourceType;
 use App\Models\Resource;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -24,7 +24,7 @@ class ReservationsModuleTest extends TestCase
             'remember_token' => str_random(10),
         ]);
 
-        $ct = factory(Classroom_type::class)->create([
+        $ct = factory(ResourceType::class)->create([
             'name' => 'estudio',
         ]);
 
@@ -33,7 +33,7 @@ class ReservationsModuleTest extends TestCase
             'description' => 'Tercer piso - 301',
             'type' => 'CLASSROOM',
             'state' => 'AVAILABLE',
-            'classroom_type_id' => $ct->id,
+            'resource_type_id' => $ct->id,
         ]);
 
         $this->put('/person/reservation/create', [

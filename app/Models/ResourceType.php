@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Classroom_type extends Model
+class ResourceType extends Model
 {
-    protected $table = 'classroom_type';
+    protected $table = 'resource_type';
 
     function resources(){
         return $this->hasMany(Resource::class);

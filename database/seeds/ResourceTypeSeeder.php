@@ -1,9 +1,9 @@
-    <?php
+        <?php
 
-use App\Models\Classroom_type;
+use App\Models\ResourceType;
 use Illuminate\Database\Seeder;
 
-class Classroom_typeSeeder extends Seeder
+class ResourceTypeSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,6 +12,6 @@ class Classroom_typeSeeder extends Seeder
      */
     public function run()
     {
-        factory(Classroom_type::class,4)->create();
+        factory(ResourceType::class,4)->create();
     }
 }
