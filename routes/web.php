@@ -60,14 +60,14 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 Route::get('/home', 'HomeController@index')->name('home');
 
 /* -----------------------------------------------------------------*/
-Route::get('/person/reservation/active', 'SeeReservationsController@activeReservations')->name('person.activeReservations');
+Route::get('/person/reservation/active', 'ReservationController@activeReservations')->name('person.activeReservations');
 
-Route::get('/person/reservation/history', 'ReservationsController@loadHistoryReservations')->name('person.historyReservations');
+Route::get('/person/reservation/history', 'ReservationController@loadHistoryReservations')->name('person.historyReservations');
 
-Route::get('/person/reservation/history/{startTime}/{endTime}', 'ReservationsController@historyReservations')
+Route::get('/person/reservation/history/{startTime}/{endTime}', 'ReservationController@historyReservations')
     ->name('person.historyReservations');
 
-Route::post('/person/reservation/delete', 'ReservationsController@cancelReservations')->name('person.cancelReservations');
+Route::post('/person/reservation/delete', 'ReservationController@cancelReservations')->name('person.cancelReservations');
 
 
 /**
@@ -97,14 +97,27 @@ Route::put('/person/resource/search', 'ResourceController@search')->name('resour
 
 /*-----------------------3ra Entrega---------------------------------*/
 
-Route::put('/resource/create', 'ResourceController@create')->name('resource.create');
-Route::post('/resource/edit', 'ResourceController@edit')->name('resource.edit');
-Route::post('/resource/delete', 'ResourceController@delete')->name('resource.delete');
+Route::get('/resource/create/sala', 'ResourceController@createSala')->name('resource.createSala');
+Route::get('/resource/create/instrumento', 'ResourceController@createInstrumento')->name('resource.createInstrumento');
+Route::put('/resource/create', 'ResourceController@storeSala');
+Route::put('/resource/create', 'ResourceController@storeInstrumento');
+Route::get('/resource/edit/{ID}', 'ResourceController@editResource');
+Route::get('/resource/edit', 'ResourceController@editViewSala')->name('resource.editSala');
+Route::get('/resource/edit', 'ResourceController@editViewInstrumento')->name('resource.editInstrumento');
+Route::post('/resource/edit', 'ResourceController@update');
+Route::delete('/resource/delete/{ID}', 'ResourceController@destroy')->name('resource.delete');
 
-Route::get('/person/reservations', 'ReservationController@personReservations');
+Route::get('/person/reservations/{ID}/active', 'ReservationController@personActiveReservations');
+Route::get('/person/reservations/{ID}/history', 'ReservationController@loadPersonHistoryReservations');
+Route::get('/person/reservation/history/{startTime}/{endTime}/{ID}', 'ReservationController@personHistoryReservations');
+Route::post('/person/reservation/deleteAdminMonitor', 'ReservationController@cancelReservationsAdminMonitor')
+    ->name('person.cancelReservations');
 
-Route::get('/person/penalties', 'PenaltiesController@penalties');
+Route::get('/person/penalties/actives', 'PenaltiesController@activePenalties');
+Route::get('/person/penalties/history', 'PenaltiesController@loadHistoryPenalties');
+Route::get('/person/penalties/history/{startTime}/{endTime}/{ID}', 'PenaltiesController@historyPenalties');
+Route::post('/person/penalties/delete', 'PenaltiesController@endPenalties');
 
-Route::get('/resource/view', 'ResourceController@view')->name('resource.view');
+Route::get('/resource/view/{ID}', 'ResourceController@view')->name('resource.view');
 Route::get('/resource/view/{ID}/reservations', 'ResourceController@reservationsByResource')->name('resource.reservations');
 

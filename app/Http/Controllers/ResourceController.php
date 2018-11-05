@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Characteristic;
+use App\Models\Classroom_type;
+use App\Models\File;
 use App\Models\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
 
 class ResourceController extends Controller
 {
@@ -23,9 +27,20 @@ class ResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createSala()
     {
-        //
+        $types = Classroom_type::all();
+        return view('GeneralViews.ResourcesViews.createSala',compact('types'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createInstrumento()
+    {
+        return view('GeneralViews.ResourcesViews.createInstrumento');
     }
 
     /**
@@ -34,9 +49,70 @@ class ResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeSala(Request $request)
     {
-        //
+        $type = 'CLASSROOM';
+        $tClass = Classroom_type::where('name',$request->tSalon)->first();
+        $r = Resource::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'type' => $type,
+            'state' => 'AVAILABLE',
+            'classroom_type_id' => $tClass->id
+        ]);
+        if($request->other){
+            Characteristic::create([
+                'name' => $request->other
+            ]);
+        }
+        //PENDIENTE CARACTERISTICAS
+        /*if($request->images != null){
+            $photos = $request->images;
+            foreach ($photos as $photo)  {
+                $url = Storage::disk('public')->put(Resource::resource()->name. 'Folder', $photo);
+                dd($url);
+                File::create([
+                    'path' => $url,
+                    'resource_id' => $r->id
+                ]);
+            }
+        }*///PENDIENTE FOTOS
+        return view('GeneralViews.ResourcesViews.createSala');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeInstrumento(Request $request)
+    {
+        $type = 'INSTRUMENT';
+        $r = Resource::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'type' => $type,
+            'state' => 'AVAILABLE',
+        ]);
+        if($request->other){
+            Characteristic::create([
+                'name' => $request->other
+            ]);
+        }
+        //PENDIENTE CARACTERISTICAS
+        /*if($request->images != null){
+            $photos = $request->images;
+            foreach ($photos as $photo)  {
+                $url = Storage::disk('public')->put(Resource::resource()->name. 'Folder', $photo);
+                dd($url);
+                File::create([
+                    'path' => $url,
+                    'resource_id' => $r->id
+                ]);
+            }
+        }*///PENDIENTE FOTOS
+        return view('GeneralViews.ResourcesViews.createInstrumento');
     }
 
     /**
@@ -58,9 +134,52 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function edit(Resource $resource)
+    public function editResource(Request $request)
     {
-        //
+        $resource = Resource::where('id',$request->ID)->first();
+        if (strcmp($resource->type,'CLASSROOM') == 0) {
+            return $this->editViewSala($resource);
+        }
+        return $this->editViewInstrumento($resource);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Resource  $resource
+     * @return \Illuminate\Http\Response
+     */
+    public function editViewSala(Resource $resource)
+    {
+        $id = $resource->id;
+        $name = $resource->name;
+        $type = Classroom_type::where('id',$resource->classroom_type_id)->first();
+        $tSalon = $type->name;
+        $types = Classroom_type::all();
+        $state = $resource->state;
+        $images = $resource->files;
+        $characteristic = $resource->characteristics;
+        $description = $resource->description;
+        return view('GeneralViews.ResourcesViews.editSala', compact('id','name', 'tSalon', 'types',
+            'state', 'images', 'characteristic', 'description') );
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Resource  $resource
+     * @return \Illuminate\Http\Response
+     */
+    public function editViewInstrumento(Resource $resource)
+    {
+        $id = $resource->id;
+        $name = $resource->name;
+        $state = $resource->state;
+        $images = $resource->files;
+        $characteristic = $resource->characteristics;
+        $description = $resource->description;
+        return view('GeneralViews.ResourcesViews.editInstrumento', compact('id','name', 'state',
+            'images', 'characteristic', 'description') );
     }
 
     /**
@@ -70,9 +189,19 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Resource $resource)
+    public function update(Request $request)
     {
-        //
+        $resource = Resource::where('id',$request->id)->first();
+        $resource->name = $request->name;
+        $resource->state = $request->state;
+        $resource->description = $request->description;
+        if ($request->has('tSalon')){
+            $type = Classroom_type::where('name',$request->tSalon)->first();
+            $resource->classroom_type_id = $type->id;
+        }
+        //pendiente caracteristicas
+        $resource->save();
+        return view('home'); //Cambiar a busqueda de recursos
     }
 
     /**
@@ -81,9 +210,11 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Resource $resource)
+    public function destroy(Request $request)
     {
-        //
+        $resource = Resource::find($request->id);
+        $resource->delete();
+        return view('home');//cambiar
     }
 
     /**
@@ -223,5 +354,9 @@ class ResourceController extends Controller
             $acum = false;
         }
         return $acum;
+    }
+
+    public function view(Request $request){
+
     }
 }
