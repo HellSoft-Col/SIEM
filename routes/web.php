@@ -120,4 +120,5 @@ Route::post('/person/penalties/delete', 'PenaltiesController@endPenalties');
 
 Route::get('/resource/view/{ID}', 'ResourceController@view')->name('resource.view');
 Route::get('/resource/view/{ID}/reservations', 'ResourceController@reservationsByResource')->name('resource.reservations');
+Route::post('/resource/deleteReservations', 'ResourceController@cancelReservations');
 

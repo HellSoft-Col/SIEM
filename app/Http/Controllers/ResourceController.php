@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Characteristic;
 use App\Models\Classroom_type;
 use App\Models\File;
+use App\Models\Reservation;
 use App\Models\Resource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
@@ -357,6 +359,65 @@ class ResourceController extends Controller
     }
 
     public function view(Request $request){
+        $resource = Resource::find($request['ID']);
+        $rs = $resource->reservations;
+        $reservations = [];
+        foreach ($rs as $r){
+            $user = User::find($r->user_id);
+            $item = [
+              'name' => $r->name,
+              'nameUser' => $user->name,
+              'startTime' => $r->start_time,
+              'endTime' => $r->end_time
+            ];
+            array_push($reservations,$item);
+        }
+        return view('GeneralViews.ResourcesViews.viewResAdmin',compact('resource','reservations'));
+    }
 
+    public function reservationsByResource(Request $request){
+        $resource = Resource::find($request['ID']);
+        $rs = $resource->reservations->where('state','ACTIVE');
+        $reservations = [];
+        foreach ($rs as $r){
+            $user = User::find($r->user_id);
+            $item = [
+                'id' => $r->id,
+                'name' => $r->name,
+                'nameUser' => $user->name,
+                'startTime' => $r->start_time,
+                'endTime' => $r->end_time
+            ];
+            array_push($reservations,$item);
+        }
+        return view('GeneralViews.ResourcesViews.reservations',compact('resource','reservations'));
+    }
+
+    /**
+     * Cancela las reservas seleccionadas por el usuario actual
+     *
+     * @param
+     * @return
+     */
+    public function cancelReservations()
+    {
+        $data = request()->all();
+        $reservas = isset($data['selected']) ? $data['selected'] : array();
+
+        if (!empty($data['all']) and strcmp($data['all'][0],'all') === 0 ) {
+            $rReserv = Reservation::where('resource_id',$data['id'])
+                        ->where('state','ACTIVE')->get();
+            foreach ($rReserv as $item) {
+                $item->state = 'CANCELED';
+                $item->save();
+            }
+        } else {
+            foreach ($reservas as $value) {
+                $item = Reservation::where('id',$value)->first();
+                $item->state = 'CANCELED';
+                $item->save();
+            }
+        }
+        return redirect(url()->previous());
     }
 }
