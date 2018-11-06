@@ -7,17 +7,16 @@
     <a class="dropdown-item" href="{{url('/events')}}">Eventos</a>
 @endsection
 @section('content')
-
     <div class="container result">
         <div class="d-flex flex-row ">
             <div class="d-flex align-items-center mx-auto">
                 <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                   href="{{url('/person/resource/search')}}">Nueva búsqueda
+                   href="{{url('/person/search')}}">Nueva búsqueda
                 </a>
             </div>
             <div class="col-lg-11">
                 <div class="d-flex flex-row justify-content-center">
-                    <h2 class="title-margin">Resultados recursos</h2>
+                    <h2 class="title-margin">Resultados personas</h2>
                 </div>
             </div>
         </div>
@@ -27,44 +26,28 @@
         <hr>
         <div class="container-list">
             <ul class="list-unstyled">
-                @forelse($resources as $resource)
                     <li class="media my-4">
-                        @forelse($resource->files as $file)
                             <div class="col-md-4">
-                                <img class="mr-3" src="{{asset($file->path)}}" alt="Generic placeholder image"
+                                <img class="mr-3" src="{{asset('/img/andres.PNG')}}" alt="Generic placeholder image"
                                      style="with:290px;height:171px;">
                             </div>
-                            @break
-                        @empty
-                        @endforelse
-
                         <div class="media-body d-flex align-items-center">
                             <div class="row ">
                                 <div class="col ">
-                                    <h5 class="mt-0 mb-1">{{$resource->name}}</h5>
-                                    <p class="container-description">{{$resource->description}}</p>
+                                    <h5 class="mt-0 mb-1">Andrés Cocunubo</h5>
+                                    <p class="container-description">Estudiante de Estudios musicales <br> 7mo Semestre <br>ID:20158795</p>
                                 </div>
-                                <div class="col d-flex">
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center mx-auto">
-
-                                            <a type="submit"
-                                               class="btn btn-dark d-flex align-items-center js-scroll-trigger"
-                                               href="{{ url("/person/resource/view/{$resource->id}") }}">
-                                                Reservar
-                                            </a>
-
-                                        </div>
-                                    </div>
+                                <div class="col-auto d-flex flex-column">
+                                        <button class="btn btn-dark btn-sm m-1" type="submit">Ver persona</button>
+                                        <button class="btn btn-dark btn-sm m-1" type="submit">Gestionar reservas</button>
+                                        <button class="btn btn-dark btn-sm m-1" type="submit">Editar persona</button>
+                                        <button class="btn btn-dark btn-sm m-1" type="submit">Eliminar persona</button>
                                 </div>
-
                             </div>
+
                         </div>
                     </li>
                     <hr>
-                @empty
-
-                @endforelse
             </ul>
         </div>
     </div>

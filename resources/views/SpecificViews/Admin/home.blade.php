@@ -17,15 +17,13 @@
                      style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
                     <div class="div-table-row">
                         <div class="div-table-col">
-                            <a href="https://rh.javeriana.edu.co/psp/HR9/EMPLOYEE/HRMS/c/UJ_INSCRIPCIONES_AUTOSERVICIO.UJ_AUTO_BIENVENIDO.GBL?FolderPath=PORTAL_ROOT_OBJECT.UJ_INSCRIPCIONES.UJ_AUTO_BIENVENIDO_GBL_1"
-                               target="_blank">
+                            <a href="{{url('/person/resource/search')}}">
                                 <img src="{{asset('/svg/icons/resources.svg')}}" height="55">
                             </a>
                         </div>
                         <div class="div-table-col">
                             <div class="media-body">
-                                <a href="https://rh.javeriana.edu.co/psp/HR9/EMPLOYEE/HRMS/c/UJ_INSCRIPCIONES_AUTOSERVICIO.UJ_AUTO_BIENVENIDO.GBL?FolderPath=PORTAL_ROOT_OBJECT.UJ_INSCRIPCIONES.UJ_AUTO_BIENVENIDO_GBL_1"
-                                   target="_blank">
+                                <a href="{{url('/person/resource/search')}}">
                                     <h5 class="media-heading ">Recursos</h5>
                                 </a>
                                 <!-- ngRepeat: otroenlace in enlace.otrosEnlaces -->
@@ -39,15 +37,13 @@
                      style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
                     <div class="div-table-row">
                         <div class="div-table-col">
-                            <a href="https://rh.javeriana.edu.co/psp/HR9/EMPLOYEE/HRMS/c/UJ_INSCRIPCIONES_AUTOSERVICIO.UJ_AUTO_BIENVENIDO.GBL?FolderPath=PORTAL_ROOT_OBJECT.UJ_INSCRIPCIONES.UJ_AUTO_BIENVENIDO_GBL_1"
-                               target="_blank">
+                            <a href="{{url('/person/search')}}">
                                 <img src="{{asset('/svg/icons/persons.svg')}}" height="55">
                             </a>
                         </div>
                         <div class="div-table-col">
                             <div class="media-body">
-                                <a href="https://rh.javeriana.edu.co/psp/HR9/EMPLOYEE/HRMS/c/UJ_INSCRIPCIONES_AUTOSERVICIO.UJ_AUTO_BIENVENIDO.GBL?FolderPath=PORTAL_ROOT_OBJECT.UJ_INSCRIPCIONES.UJ_AUTO_BIENVENIDO_GBL_1"
-                                   target="_blank">
+                                <a href="{{url('/person/search')}}">
                                     <h5 class="media-heading ">Personas</h5>
                                 </a>
                                 <!-- ngRepeat: otroenlace in enlace.otrosEnlaces -->

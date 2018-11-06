@@ -104,4 +104,11 @@ Route::get('/resource', function () {
  * Route::get('/home', function () {
  * return view('layout_user');
  * });*/
+//***************************************************************************************************************
+Route::get('/person/search',function(){
+    return view('/GeneralViews/Persons/search');
+});
+Route::get('/person/search/result',function(){
+    return view('/GeneralViews/Persons/result');
+});
 

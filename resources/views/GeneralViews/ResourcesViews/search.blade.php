@@ -12,6 +12,17 @@
 @endsection
 @section('content')
     <div class="container" style="margin-top: 50px;">
+        <!-- Poner if para el admin para que muestre el div de ese row-->
+        <div class="row">
+            <div class="col">
+                <div class="d-flex flex-row-reverse">
+                    <a class="btn btn-dark js-scroll-trigger"
+                       href=" ">Añadir recurso
+                    </a>
+
+                </div>
+            </div>
+        </div>
         <div class="card card-outline-secondary">
             <div class="card-header">
                 <h3 class="mb-0">Búsqueda de recursos</h3>
@@ -139,6 +150,7 @@
 
                         </div>
                     </div>
+                    <!-- Poner if para el admin y el monitor vean la pantalla de resultados que le corresponde a cada uno-->
                     <div class="d-flex flex-row justify-content-center">
                         <button type="submit" class="btn btn-dark js-scroll-trigger space"
                                 href="{{url('/person/resource/result')}}">Buscar
