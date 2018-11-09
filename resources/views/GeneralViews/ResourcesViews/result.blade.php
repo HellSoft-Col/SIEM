@@ -12,7 +12,7 @@
         <div class="d-flex flex-row ">
             <div class="d-flex align-items-center mx-auto">
                 <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                   href="{{url('/person/resource/search')}}">Nueva búsqueda
+                   href="{{url('/resource/search')}}">Nueva búsqueda
                 </a>
             </div>
             <div class="col-lg-11">
@@ -50,7 +50,7 @@
 
                                             <a type="submit"
                                                class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                                               href="{{ url("/person/resource/view/{$resource->id}") }}">
+                                               href="{{ url("/resource/view/{$resource->id}") }}">
                                                 Reservar
                                             </a>
 

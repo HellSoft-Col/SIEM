@@ -27,7 +27,7 @@ class ResourceController extends Controller
      */
     public function create()
     {
-        //
+        return view('SpecificViews.Admin.Resource.create');
     }
 
     /**

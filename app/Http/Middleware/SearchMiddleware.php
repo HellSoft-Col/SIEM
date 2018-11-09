@@ -15,7 +15,7 @@ class SearchMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (str_replace(url('/'), '', url()->previous()) == "/person/resource/search") {
+        if (str_replace(url('/'), '', url()->previous()) == "/resource/search") {
             return $next($request);
         }
         return abort(403, 'No hay contenido');
