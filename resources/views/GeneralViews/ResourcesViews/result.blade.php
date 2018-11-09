@@ -67,7 +67,7 @@
                                 @elseif(Auth::user()->role == 'ADMIN')
                                 <div class="col-auto d-flex flex-column">
                                     <a class="btn btn-dark btn-sm m-1" href="{{url("/resource/view/{$resource->id}")}}">Ver recurso</a>
-                                    <button class="btn btn-dark btn-sm m-1" href="">Gestionar reservas</button>
+                                    <a class="btn btn-dark btn-sm m-1" href="{{url('/resource/view/'.$resource->id.'/reservations')}}">Gestionar reservas</a>
                                     <button class="btn btn-dark btn-sm m-1" href="">Editar recurso</button>
                                     <button class="btn btn-dark btn-sm m-1" href="">Eliminar recurso</button>
                                 </div>

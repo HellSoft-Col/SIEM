@@ -4,6 +4,7 @@
           href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="{{ asset('/js/date/date.js') }}" type="text/javascript"></script>
     <link rel="stylesheet" href="{{ asset('/css/eventFeedGeneral/carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('/css/eventFeedGeneral/view.css') }}">
 @endsection
@@ -41,7 +42,13 @@
                             </div>
                         </div>
                     </div>
-
+                    <script type="text/javascript">
+                        $(function () {
+                            $('#datetimepickerStart').datetimepicker({
+                                format:'YYYY-MM-DD'
+                            });
+                        });
+                    </script>
                     <label>-</label>
                     <div class="col">
                         <div class="form-group">
@@ -57,7 +64,9 @@
                     </div>
                     <script type="text/javascript">
                         $(function () {
-                            $('#datetimepickerEnd').datetimepicker();
+                            $('#datetimepickerEnd').datetimepicker({
+                                format:'YYYY-MM-DD'
+                            });
                         });
                     </script>
                     <div class="col">

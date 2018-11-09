@@ -62,16 +62,15 @@
 
             </carousel-3d>
             <p class="text-center">{{ $resource->description }}</p>
+            @if(Auth::user()->role == 'ADMIN' || Auth::user()->role == 'MODERATOR' )
+                <div class="d-flex flex-row justify-content-center">
+                    <a class="btn btn-dark js-scroll-trigger space-btn" href="{{url('/resource/view/'.$resource->id.'/reservations')}}">Ver reservas</a>
+                </div>
+            @endif
             <form id="reservar_button" class="form" role="form" method="POST"
                   action="{{ route('create.reservation') }}">
                 @csrf
                 <input type="hidden" name="_resource" value="{{$resource->id}}">
-                @if(Auth::user()->role == 'ADMIN' || Auth::user()->role == 'MODERATOR' )
-                <div class="d-flex flex-row justify-content-center">
-                    <a class="btn btn-dark js-scroll-trigger space-btn" href="#"
-                       onclick="event.preventDefault(); document.getElementById('reservar_button').submit();">Ver reservas</a>
-                </div>
-                @endif
                 <div class="d-flex flex-row justify-content-center">
                     <a class="btn btn-dark js-scroll-trigger space-btn" href="#"
                        onclick="event.preventDefault(); document.getElementById('reservar_button').submit();">Reservar</a>

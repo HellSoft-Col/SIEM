@@ -128,11 +128,6 @@ Route::put('/reservation/edit/{reservation}', 'ReservationController@update')->m
 //Route::get('/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('admin');
 
 
-
-
-Route::get('/reservation/edit',function(){
-    return view('/GeneralViews/Reserves/edit');
-});
 Route::get('/moderator/resource/hand-over',function(){
     return view('/SpecificViews/Moderator/hand-over');
 });

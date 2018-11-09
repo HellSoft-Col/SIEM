@@ -33,12 +33,12 @@
         <div class="row">
             <div class="col-auto d-flex flex-column">
                 <form method="" action="">
-                    <button class="btn btn-dark btn-sm m-1" type="submit">Ver reservas</button>
+                    <a class="btn btn-dark btn-sm m-1" href="{{url('/person/reservations/'.$user->id.'/active')}}">Ver reservas</a>
                 </form>
                 <form method="" action="">
-                    <button class="btn btn-dark btn-sm m-1" type="submit">Ver multas</button>
+                    <button class="btn btn-dark btn-sm m-1" href="">Ver multas</button>
                 </form>
-                <button class="btn btn-dark btn-sm m-1" type="submit">Ver publicaciones</button>
+                <button class="btn btn-dark btn-sm m-1" href="">Ver publicaciones</button>
             </div>
         </div>
 

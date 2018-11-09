@@ -437,7 +437,7 @@ class ResourceController extends Controller
             ];
             array_push($reservations,$item);
         }
-        return view('TestViewsCocu.reservations',compact('resource','reservations'));
+        return view('GeneralViews.ResourcesViews.reserves',compact('resource','reservations','user'));
     }
 
     /**

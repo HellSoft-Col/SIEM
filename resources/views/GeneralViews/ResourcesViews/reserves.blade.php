@@ -18,15 +18,17 @@
         <div class="d-flex justify-content-center">
             <div class="col-lg-11">
                 <div class="d-flex flex-row justify-content-center">
-                    <h2 class="title-margin">Reservas {{$resource->name}}</h2>
+                    <h2 class="title-margin">Reservas {{$resource['name']}}</h2>
                 </div>
             </div>
         </div>
-        <form method="POST" action="{{url('/person/reservation/delete')}}">
+        <hr>
+        <form method="POST" action="{{url('/resource/deleteReservations')}}">
             {{csrf_field()}}
             <div class="row">
                 <p>Estos son los resultados de la búsqueda</p>
             </div>
+            <hr>
             <div class="row">
                 <div class="col-sm">
                     <div class="form-check" for="checkAll">
@@ -62,29 +64,24 @@
                                     <div class="row">
                                         <div class="col text-center">
                                             <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                            <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}
-                                                <br>{{$reservation['fin']}}</p>
+                                            <p>{{$reservation['nameUser']}}<br>{{$reservation['startTime']}}<br>{{$reservation['endTime']}}</p>
                                         </div>
 
                                     </div>
-                                    <div class="col d-flex justify-content-end ">
-                                        <div class="col d-flex justify-content-end">
-                                            <div class="d-flex align-items-center mx-auto">
-                                                <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger" href="#">Ver
-                                                    recurso</a>
-                                            </div>
-                                        </div>
+                                    <div class="col-auto d-flex flex-column">
+                                        <a class="btn btn-dark btn-sm m-1" href="{{url("/person/view/{$user->id}")}}">Ver usuario</a>
+                                        <a class="btn btn-dark btn-sm m-1" href="{{url("/reservation/edit/{$reservation['id']}")}}">Editar reserva</a>
                                     </div>
 
                                 </div>
                             </li>
-                        @endforeach
+            @endforeach
         </form>
-                     @else
-                        <h1>No posee reservas activas en este momento</h1>
-                    @endif
-                </ul>
-            </div>
+        @else
+            <h1>El recurso no posee reservas activas en el momento.</h1>
+            @endif
+            </ul>
+    </div>
     </div>
 
 @endsection
