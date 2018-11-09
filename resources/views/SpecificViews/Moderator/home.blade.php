@@ -16,15 +16,13 @@
                      style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
                     <div class="div-table-row">
                         <div class="div-table-col">
-                            <a href="https://rh.javeriana.edu.co/psp/HR9/EMPLOYEE/HRMS/c/UJ_INSCRIPCIONES_AUTOSERVICIO.UJ_AUTO_BIENVENIDO.GBL?FolderPath=PORTAL_ROOT_OBJECT.UJ_INSCRIPCIONES.UJ_AUTO_BIENVENIDO_GBL_1"
-                               target="_blank">
+                            <a href="{{url('/moderator/resource/hand-over')}}">
                                 <img src="{{asset('/svg/icons/hanging-over-the-key.svg')}}" height="55">
                             </a>
                         </div>
                         <div class="div-table-col">
                             <div class="media-body">
-                                <a href="https://rh.javeriana.edu.co/psp/HR9/EMPLOYEE/HRMS/c/UJ_INSCRIPCIONES_AUTOSERVICIO.UJ_AUTO_BIENVENIDO.GBL?FolderPath=PORTAL_ROOT_OBJECT.UJ_INSCRIPCIONES.UJ_AUTO_BIENVENIDO_GBL_1"
-                                   target="_blank">
+                                <a href="{{url('/moderator/resource/hand-over')}}">
                                     <h5 class="media-heading">Entregar recurso</h5>
                                 </a>
                                 <!-- ngRepeat: otroenlace in enlace.otrosEnlaces -->
@@ -110,7 +108,7 @@
                         <div class="div-table-col">
                             <a href="https://rh.javeriana.edu.co/psp/HR9/EMPLOYEE/HRMS/c/UJ_INSCRIPCIONES_AUTOSERVICIO.UJ_AUTO_BIENVENIDO.GBL?FolderPath=PORTAL_ROOT_OBJECT.UJ_INSCRIPCIONES.UJ_AUTO_BIENVENIDO_GBL_1"
                                target="_blank">
-                                <img src="{{asset('/img/svg/icons/events.svg')}}" height="55">
+                                <img src="{{asset('/svg/icons/events.svg')}}" height="55">
                             </a>
                         </div>
                         <div class="div-table-col">

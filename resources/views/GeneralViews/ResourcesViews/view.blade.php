@@ -66,6 +66,11 @@
                   action="{{ route('create.reservation') }}">
                 @csrf
                 <input type="hidden" name="_resource" value="{{$resource->id}}">
+                <!-- Poner if, este botón solo aparece en la vista de recursos del monitor o del admin, poner ruta en reservation contrller
+                <div class="d-flex flex-row justify-content-center">
+                    <a class="btn btn-dark js-scroll-trigger space-btn" href="#"
+                       onclick="event.preventDefault(); document.getElementById('reservar_button').submit();">Ver reservas</a>
+                </div>-->
                 <div class="d-flex flex-row justify-content-center">
                     <a class="btn btn-dark js-scroll-trigger space-btn" href="#"
                        onclick="event.preventDefault(); document.getElementById('reservar_button').submit();">Reservar</a>

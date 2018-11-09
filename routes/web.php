@@ -111,4 +111,10 @@ Route::get('/person/search',function(){
 Route::get('/person/search/result',function(){
     return view('/GeneralViews/Persons/result');
 });
+Route::get('/reservation/edit',function(){
+    return view('/GeneralViews/Reserves/edit');
+});
+Route::get('/moderator/resource/hand-over',function(){
+    return view('/SpecificViews/Moderator/hand-over');
+});
 

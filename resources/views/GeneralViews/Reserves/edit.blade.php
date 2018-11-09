@@ -10,14 +10,14 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container" style="margin-top: 50px;">
         <div class="card card-outline-secondary">
             <div class="card-header d-flex justify-content-center">
-                <h3 class="mb-0">Crear reserva</h3>
+                <h3 class="mb-0">Editar reserva </h3>
             </div>
             <div class="card-body">
                 <form class="form" role="form" autocomplete="off" method="POST"
-                      action="{{ url('/person/reservation/create') }}">
+                      action="{{ url('/reservation/edit') }}">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     <div class="form-group row">
@@ -57,7 +57,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <script type="text/javascript">
                             $(function () {
                                 $('#datetimepickerEnd').datetimepicker({
@@ -67,15 +66,28 @@
                         </script>
 
                     </div>
-                    <input type="hidden" name="resource_id" value="{{$resource_id}}">
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label form-control-label" for="resource">Recurso:</label>
+                        <div class="col-lg-9">
+                            <select name="resource" id="resource" class="form-control" size="0">
+                                <option value=""></option>
+                                <option hidden class="sala"
+                                        value=""></option>
+
+                                <option value="">--</option>
+                                <option hidden class="instrumento"
+                                        value=""></option>
+
+                                <option value="">--</option>
+
+                            </select>
+                        </div>
+                    </div>
                     <div class="d-flex flex-row justify-content-center">
-                        <button type="submit" class="btn btn-dark js-scroll-trigger space" href="#">Realizar Reserva
+                        <button type="submit" class="btn btn-dark js-scroll-trigger space" href="#">Guardar
                         </button>
                     </div>
                 </form>
-                <div class="message-create">
-                    <p>{{$message}}</p>
-                </div>
 
             </div>
         </div>
@@ -84,7 +96,8 @@
 @endsection
 @section('scripts')
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="{{ asset('/js/date/date.js') }}" type="text/javascript"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="{{ asset('/js/date/date.js') }}" type="text/javascript"></script>
+
 @endsection

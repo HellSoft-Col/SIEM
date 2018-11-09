@@ -87,7 +87,7 @@
                     </div>
                     <!-- Poner if para el monitor para que no muestre el div del rol-->
                     <div class="form-group row d-flex justify-content-center">
-                        <label class="col-lg-2 col-form-label form-control-label d-flex flex-row" for="semester">Rol:</label>
+                        <label class="col-lg-2 col-form-label form-control-label d-flex flex-row" for="role">Rol:</label>
                         <div class="col-lg-6">
                             <select name="role" id="role" class="form-control" size="0">
                                 <option value=""></option>
@@ -104,9 +104,9 @@
                         </div>
                     </div>
                     <div class="form-group row d-flex justify-content-center">
-                        <label class="col-lg-2 col-form-label form-control-label d-flex flex-row" for="semester">Tipo:</label>
+                        <label class="col-lg-2 col-form-label form-control-label d-flex flex-row" for="type">Tipo:</label>
                         <div class="col-lg-6">
-                            <select name="role" id="role" class="form-control" size="0">
+                            <select name="type" id="type" class="form-control" size="0">
                                 <option value=""></option>
                                 <option hidden class="sala"
                                         value=""></option>
@@ -121,7 +121,7 @@
                         </div>
                     </div>
                     <div class="form-group row d-flex justify-content-center">
-                        <label class="col-lg-2 col-form-label form-control-label d-flex flex-row" for="semester"></label>
+                        <label class="col-lg-2 col-form-label form-control-label d-flex flex-row" for=""></label>
                         <div class="col-lg-6 ">
                             <div class="row ">
                                 <div class="col form-check">

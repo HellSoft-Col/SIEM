@@ -57,7 +57,18 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <!-- Poner if, si es monitor estos son los botones para el resultado de la búsqueda
+                                <div class="col-auto d-flex flex-column">
+                                    <button class="btn btn-dark btn-sm m-1" type="submit href="">Ver recurso</button>
+                                    <button class="btn btn-dark btn-sm m-1" type="submit">Gestionar reservas</button>
+                                </div>-->
+                                <!-- Poner if, si es admin estos son los botones para el resultado de la búsqueda
+                                <div class="col-auto d-flex flex-column">
+                                    <button class="btn btn-dark btn-sm m-1" type="submit">Ver recurso</button>
+                                    <button class="btn btn-dark btn-sm m-1" type="submit">Gestionar reservas</button>
+                                    <button class="btn btn-dark btn-sm m-1" type="submit">Editar recurso</button>
+                                    <button class="btn btn-dark btn-sm m-1" type="submit">Eliminar recurso</button>
+                                </div>-->
                             </div>
                         </div>
                     </li>
