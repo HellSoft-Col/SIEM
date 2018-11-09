@@ -99,8 +99,8 @@ Route::put('/person/resource/search', 'ResourceController@search')->name('resour
 
 Route::get('/resource/create/sala', 'ResourceController@createSala')->name('resource.createSala');
 Route::get('/resource/create/instrumento', 'ResourceController@createInstrumento')->name('resource.createInstrumento');
-Route::put('/resource/create', 'ResourceController@storeSala');
-Route::put('/resource/create', 'ResourceController@storeInstrumento');
+Route::put('/resource/create/sala', 'ResourceController@storeSala');
+Route::put('/resource/create/instrumento', 'ResourceController@storeInstrumento');
 Route::get('/resource/edit/{ID}', 'ResourceController@editResource');
 Route::get('/resource/edit', 'ResourceController@editViewSala')->name('resource.editSala');
 Route::get('/resource/edit', 'ResourceController@editViewInstrumento')->name('resource.editInstrumento');
@@ -113,10 +113,10 @@ Route::get('/person/reservation/history/{startTime}/{endTime}/{ID}', 'Reservatio
 Route::post('/person/reservation/deleteAdminMonitor', 'ReservationController@cancelReservationsAdminMonitor')
     ->name('person.cancelReservations');
 
-Route::get('/person/penalties/actives', 'PenaltiesController@activePenalties');
-Route::get('/person/penalties/history', 'PenaltiesController@loadHistoryPenalties');
-Route::get('/person/penalties/history/{startTime}/{endTime}/{ID}', 'PenaltiesController@historyPenalties');
-Route::post('/person/penalties/delete', 'PenaltiesController@endPenalties');
+Route::get('/person/penalties/{ID}/actives', 'PenaltyController@activePenalties');
+Route::get('/person/penalties/{ID}/history', 'PenaltyController@loadHistoryPenalties');
+Route::get('/person/penalties/history/{startTime}/{endTime}/{ID}', 'PenaltyController@historyPenalties');
+Route::post('/person/penalties/delete', 'PenaltyController@endPenalties');
 
 Route::get('/resource/view/{ID}', 'ResourceController@view')->name('resource.view');
 Route::get('/resource/view/{ID}/reservations', 'ResourceController@reservationsByResource')->name('resource.reservations');

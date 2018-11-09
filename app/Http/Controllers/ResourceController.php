@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 
 class ResourceController extends Controller
 {
@@ -32,7 +33,7 @@ class ResourceController extends Controller
     public function createSala()
     {
         $types = Classroom_type::all();
-        return view('GeneralViews.ResourcesViews.createSala',compact('types'));
+        return view('TestViewsCocu.createSala',compact('types'));
     }
 
     /**
@@ -42,7 +43,7 @@ class ResourceController extends Controller
      */
     public function createInstrumento()
     {
-        return view('GeneralViews.ResourcesViews.createInstrumento');
+        return view('TestViewsCocu.createInstrumento');
     }
 
     /**
@@ -68,18 +69,18 @@ class ResourceController extends Controller
             ]);
         }
         //PENDIENTE CARACTERISTICAS
-        /*if($request->images != null){
+        if($request->images != null){
             $photos = $request->images;
             foreach ($photos as $photo)  {
-                $url = Storage::disk('public')->put(Resource::resource()->name. 'Folder', $photo);
-                dd($url);
+                $url = Storage::disk('local')->put($r->name. 'Folder', $photo);
                 File::create([
                     'path' => $url,
                     'resource_id' => $r->id
                 ]);
             }
-        }*///PENDIENTE FOTOS
-        return view('GeneralViews.ResourcesViews.createSala');
+        }
+        $types = Classroom_type::all();
+        return view('TestViewsCocu.createSala',compact("types"));
     }
 
     /**
@@ -113,8 +114,19 @@ class ResourceController extends Controller
                     'resource_id' => $r->id
                 ]);
             }
-        }*///PENDIENTE FOTOS
-        return view('GeneralViews.ResourcesViews.createInstrumento');
+        }*/
+        if($request->images != null){
+            $photos = $request->images;
+            foreach ($photos as $photo)  {
+                $url = Storage::disk('local')->put($r->name. 'Folder', $photo);
+                File::create([
+                    'path' => $url,
+                    'resource_id' => $r->id
+                ]);
+            }
+        }
+        $types = Classroom_type::all();
+        return view('TestViewsCocu.createInstrumento');
     }
 
     /**
@@ -162,7 +174,7 @@ class ResourceController extends Controller
         $images = $resource->files;
         $characteristic = $resource->characteristics;
         $description = $resource->description;
-        return view('GeneralViews.ResourcesViews.editSala', compact('id','name', 'tSalon', 'types',
+        return view('TestViewsCocu.editSala', compact('id','name', 'tSalon', 'types',
             'state', 'images', 'characteristic', 'description') );
     }
 
@@ -180,7 +192,7 @@ class ResourceController extends Controller
         $images = $resource->files;
         $characteristic = $resource->characteristics;
         $description = $resource->description;
-        return view('GeneralViews.ResourcesViews.editInstrumento', compact('id','name', 'state',
+        return view('TestViewsCocu.editInstrumento', compact('id','name', 'state',
             'images', 'characteristic', 'description') );
     }
 
@@ -372,7 +384,7 @@ class ResourceController extends Controller
             ];
             array_push($reservations,$item);
         }
-        return view('GeneralViews.ResourcesViews.viewResAdmin',compact('resource','reservations'));
+        return view('TestViewsCocu.viewResAdmin',compact('resource','reservations'));
     }
 
     public function reservationsByResource(Request $request){
@@ -390,7 +402,7 @@ class ResourceController extends Controller
             ];
             array_push($reservations,$item);
         }
-        return view('GeneralViews.ResourcesViews.reservations',compact('resource','reservations'));
+        return view('TestViewsCocu.reservations',compact('resource','reservations'));
     }
 
     /**

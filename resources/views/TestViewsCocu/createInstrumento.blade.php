@@ -11,7 +11,7 @@ Añadir
         window.location = $(this).val();
     });
 </script>
-<form method="POST" action="{{url('/resource/create')}}">
+<form method="POST" action="{{url('/resource/create/instrumento')}}">
     @csrf
     {{ method_field('PUT') }}
     <label>Galería</label><br>

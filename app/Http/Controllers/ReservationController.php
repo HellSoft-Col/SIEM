@@ -378,7 +378,7 @@ class ReservationController extends Controller
             ];
             array_push($reservations, $item);
         }
-        return view('GeneralViews.Reserves.historyAdminMonitor', ['user' => $user,
+        return view('TestViewsCocu.historyAdminMonitor', ['user' => $user,
             'reservations' => $reservations]);
     }
 
@@ -394,6 +394,7 @@ class ReservationController extends Controller
         $endTime = strtotime($data['endTime']);
         //$starTime = date('Y-m-d',strtotime($data['startTime']));
         //$endTime = date('Y-m-d',strtotime($data['endTime']));
+        $user = User::find($request['ID']);
         $user_id = $request['ID'];
         $reservations = [];
         $userItems = Reservation::where('user_id', $user_id)->get();
@@ -412,7 +413,8 @@ class ReservationController extends Controller
                 array_push($reservations, $item);
             }
         }
-        return redirect(url()->previous());
+        return view('TestViewsCocu.historyAdminMonitor', ['user' => $user,
+            'reservations' => $reservations]);
     }
 
     /**
@@ -438,7 +440,7 @@ class ReservationController extends Controller
             ];
             array_push($reservations, $item);
         }
-        return view('GeneralViews.Reserves.activeAdminMonitor', [
+        return view('TestViewsCocu.activeAdminMonitor', [
             'user' => $user,
             'reservations' => $reservations]);
     }
