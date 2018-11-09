@@ -9,6 +9,14 @@ class Resource extends Model
     //
     protected $table = 'resource';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'description', 'type','state','classroom_type_id'
+    ];
 
     function reservations(){
         return $this->hasMany(Reservation::class);

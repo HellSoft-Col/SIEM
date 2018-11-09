@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Penalty;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PenaltyController extends Controller
@@ -82,4 +83,109 @@ class PenaltyController extends Controller
     {
         //
     }
+
+    /**
+     * Muestra las multas activas de un usuario.
+     *
+     * @param  \App\Models\Penalty  $penalty
+     * @return \Illuminate\Http\Response
+     */
+    public function activePenalties (Request $request)
+    {
+        $user = User::find($request['ID']);
+        $reservations = $user->reservations;
+        $penalties = [];
+
+        foreach ($reservations as $r) {
+            $p = Penalty::where('reservation_id',$r->id)->where('active',1)->first();
+            if ($p != null){
+                array_push($penalties,$p);
+            }
+        }
+        return view('TestViewsCocu.activePenalties',compact('user','penalties'));
+    }
+
+    /**
+     * Muestra las multas historicas de un usuario.
+     *
+     * @param  \App\Models\Penalty  $penalty
+     * @return \Illuminate\Http\Response
+     */
+    public function loadHistoryPenalties(Request $request)
+    {
+        $user = User::find($request['ID']);
+        $reservations = $user->reservations;
+        $penalties = [];
+
+        foreach ($reservations as $r) {
+            $p = Penalty::where('reservation_id',$r->id)->where('active',0)->first();
+            if ($p != null){
+                array_push($penalties,$p);
+            }
+        }
+        return view('TestViewsCocu.historyPenalties', ['user' => $user,
+            'penalties' => $penalties]);
+    }
+
+    /**
+     * Muestra las reservas historicas del usuario actual filtrado por fechas para el admin o monitor
+     *
+     * @param
+     * @return
+     */
+    public function  personHistoryPenalties (Request $request){
+        $data = request()->all();
+        $starTime = strtotime($data['startTime']);
+        $endTime = strtotime($data['endTime']);
+        //$starTime = date('Y-m-d',strtotime($data['startTime']));
+        //$endTime = date('Y-m-d',strtotime($data['endTime']));
+        $user = User::find($request['ID']);
+        $user_id = $request['ID'];
+        $penalties = [];
+        $userItems = Reservation::where('user_id', $user_id)->get();
+        foreach ($userItems as $uItem) {
+            //if ($this->matchBool($uItem,$starTime,$endTime)) {  PENDIENTE FECHAS
+                $p = Penalty::where('reservation_id',$uItem->id)->where('active',0)->first();
+                if ($p != null){
+                    array_push($penalties,$p);
+                }
+            //}
+        }
+        return view('TestViewsCocu.historyPenalties', ['user' => $user,
+            'penalties' => $penalties]);
+    }
+
+    /**
+     * Finaliza las multas seleccionadas por el administrador o monitor.
+     *
+     * @param
+     * @return
+     */
+    public function endPenalties(Request $request){
+        $data = request()->all();
+        $penalties = isset($data['selected']) ? $data['selected'] : array();
+        $user_id = $request->id;
+        $user = User::find($user_id);
+        if (!empty($data['all']) and $data['all'] == true) {
+            $reservations = $user->reservations;
+            foreach ($reservations as $r) {
+                $p = Penalty::where('reservation_id',$r->id)->where('active',1)->first();
+                if ($p != null){
+                    $p->active = 0;
+                    $p->save();
+                }
+            }
+        } else {
+            foreach ($penalties as $value) {
+                $userItems = Penalty::where('id', $value)->get();
+                foreach ($userItems as $item) {
+                    $item->active = 0;
+                    $item->save();
+                }
+            }
+        }
+        $url = url()->previous();
+        return redirect($url);
+    }
+
 }
