@@ -96,7 +96,7 @@ Route::get('/person/resource/search', 'ResourceController@gosearch')
 Route::put('/person/resource/search', 'ResourceController@search')->name('resource.search');
 
 /*-----------------------3ra Entrega---------------------------------*/
-
+// URLS Cocunubo
 Route::get('/resource/create/sala', 'ResourceController@createSala')->name('resource.createSala');
 Route::get('/resource/create/instrumento', 'ResourceController@createInstrumento')->name('resource.createInstrumento');
 Route::put('/resource/create/sala', 'ResourceController@storeSala');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Characteristic;
+use App\Models\CharacteristicResource;
 use App\Models\Classroom_type;
 use App\Models\File;
 use App\Models\Reservation;
@@ -63,12 +64,22 @@ class ResourceController extends Controller
             'state' => 'AVAILABLE',
             'classroom_type_id' => $tClass->id
         ]);
-        if($request->other){
-            Characteristic::create([
-                'name' => $request->other
+        //PENDIENTE CARACTERISTICAS  -> descripcion
+        $chars = isset($request['chars']) ? $request['chars'] : array();
+        foreach ($chars as $value) {
+            $charsDb = Characteristic::where('name',$value)->first();
+            if ($charsDb == null){
+                $charsDb = Characteristic::create([
+                    'name' => $value
+                ]);
+            }
+            CharacteristicResource::create([
+                'resource_id' => $r->id,
+                'characteristic_id' => $charsDb->id,
+                'quantity' => $request->quantity
             ]);
         }
-        //PENDIENTE CARACTERISTICAS
+
         if($request->images != null){
             $photos = $request->images;
             foreach ($photos as $photo)  {
@@ -98,23 +109,21 @@ class ResourceController extends Controller
             'type' => $type,
             'state' => 'AVAILABLE',
         ]);
-        if($request->other){
-            Characteristic::create([
-                'name' => $request->other
-            ]);
-        }
         //PENDIENTE CARACTERISTICAS
-        /*if($request->images != null){
-            $photos = $request->images;
-            foreach ($photos as $photo)  {
-                $url = Storage::disk('public')->put(Resource::resource()->name. 'Folder', $photo);
-                dd($url);
-                File::create([
-                    'path' => $url,
-                    'resource_id' => $r->id
+        $chars = isset($request['chars']) ? $request['chars'] : array();
+        foreach ($chars as $value) {
+            $charsDb = Characteristic::where('name',$value)->first();
+            if ($charsDb == null){
+                $charsDb = Characteristic::create([
+                    'name' => $value
                 ]);
             }
-        }*/
+            CharacteristicResource::create([
+                'resource_id' => $r->id,
+                'characteristic_id' => $charsDb->id,
+                'quantity' => $request->quantity
+            ]);
+        }
         if($request->images != null){
             $photos = $request->images;
             foreach ($photos as $photo)  {
@@ -125,7 +134,6 @@ class ResourceController extends Controller
                 ]);
             }
         }
-        $types = Classroom_type::all();
         return view('TestViewsCocu.createInstrumento');
     }
 

@@ -25,12 +25,12 @@ Añadir
         @endforeach
     </select><br>
     <label>Característica</label><br>
-    <select id="characteristic">
-        <option value="C1">"C1"</option> <button onclick="">X</button>
-        <option value="C2">"C2"</option>
-    </select><br>
+    <select id="characteristic" name="chars[]">
+    </select>
+    <input type="number" name="quantity"><button  type="submit">X</button><br>
     <label>Otra, ¿Cuál?</label><br>
-    <input type="text" name="other"><br>
+    <input type="text" name="other">
+    <button type="submit" >Añadir característica</button><br>
     <label>Descripción</label><br>
     <textarea name="description" rows="10" cols="30" value="{{old('description')}}"></textarea><br>
     <button type="submit">Crear</button>
