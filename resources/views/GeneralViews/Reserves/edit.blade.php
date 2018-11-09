@@ -17,7 +17,7 @@
             </div>
             <div class="card-body">
                 <form class="form" role="form" autocomplete="off" method="POST"
-                      action="{{ url('/reservation/edit') }}">
+                      action="{{ url("/reservation/edit/{$reservation->id}") }}">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     <div class="form-group row">
@@ -25,7 +25,7 @@
                             Inicio:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
-                                <input name="start_time" value="{{old('start_time')}}" type="text"
+                                <input name="start_time" value="{{$reservation->start_time}}" type="text"
                                        class="form-control datetimepicker-input"
                                        data-target="#datetimepickerStart" required/>
                                 <div class="input-group-append" data-target="#datetimepickerStart"
@@ -36,7 +36,7 @@
                             <script type="text/javascript">
                                 $(function () {
                                     $('#datetimepickerStart').datetimepicker({
-                                        format:'YYYY/MM/DD HH:00'
+                                        format:'YYYY-MM-DD HH:00'
                                     });
                                 });
                             </script>
@@ -48,7 +48,7 @@
                             Fin:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
-                                <input name="end_time" value="{{old('end_time')}} " type="text"
+                                <input name="end_time" value="{{$reservation->end_time}} " type="text"
                                        class="form-control datetimepicker-input"
                                        data-target="#datetimepickerEnd" required/>
                                 <div class="input-group-append" data-target="#datetimepickerEnd"
@@ -60,7 +60,7 @@
                         <script type="text/javascript">
                             $(function () {
                                 $('#datetimepickerEnd').datetimepicker({
-                                    format:'YYYY/MM/DD HH:00'
+                                    format:'YYYY-MM-DD HH:00'
                                 });
                             });
                         </script>
@@ -70,16 +70,10 @@
                         <label class="col-lg-2 col-form-label form-control-label" for="resource">Recurso:</label>
                         <div class="col-lg-9">
                             <select name="resource" id="resource" class="form-control" size="0">
-                                <option value=""></option>
-                                <option hidden class="sala"
-                                        value=""></option>
-
-                                <option value="">--</option>
-                                <option hidden class="instrumento"
-                                        value=""></option>
-
-                                <option value="">--</option>
-
+                                @forelse($resources as $resource)
+                                    <option value="{{$resource->id}}">{{$resource->name}}</option>
+                                @empty
+                                @endforelse
                             </select>
                         </div>
                     </div>
@@ -88,6 +82,9 @@
                         </button>
                     </div>
                 </form>
+                <div class="message-create">
+                    <p>{{$message}}</p>
+                </div>
 
             </div>
         </div>

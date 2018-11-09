@@ -138,6 +138,7 @@ class UserController extends Controller
     {
         return view('GeneralViews.Persons.search');
     }
+
     public function searchPerson(Request $request)
     {
         $name = $request->name;

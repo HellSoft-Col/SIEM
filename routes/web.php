@@ -61,13 +61,13 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 
 
 Route::get('/resource/view/{resource}', 'ResourceController@show')
-    ->middleware('person');
+    ->middleware('admin');
 
-Route::post('/person/reservation/create', 'ReservationController@create')->name('create.reservation')
-    ->middleware('reservation')->middleware('person');
+Route::post('/reservation/create', 'ReservationController@create')->name('create.reservation')
+    ->middleware('admin');
 
-Route::put('/person/reservation/create', 'ReservationController@store')->middleware('person');
-Route::get('/person/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('person');
+Route::put('/reservation/create', 'ReservationController@store')->middleware('admin');
+Route::get('/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('admin');
 
 Route::get('/person/reservation/active', 'ReservationController@activeReservations')
     ->name('person.activeReservations')
@@ -122,6 +122,10 @@ Route::post('/person/search/result', 'UserController@searchPerson')
 Route::get('/person/view/{user}', 'UserController@show')
     ->middleware('admin');
 
+Route::get('/reservation/edit/{reservation}', 'ReservationController@edit')
+    ->middleware('admin');
+Route::put('/reservation/edit/{reservation}', 'ReservationController@update')->middleware('admin');
+//Route::get('/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('admin');
 
 
 

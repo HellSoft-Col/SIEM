@@ -7,12 +7,11 @@
     <a class="dropdown-item" href="{{url('/events')}}">Eventos</a>
 @endsection
 @section('content')
-
     <div class="container result">
         <div class="d-flex flex-row">
             <div class="d-flex justify-content-start">
                 <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                   href="{{url('/person/resource/search')}}">Nueva búsqueda
+                   href="{{url('/resource/search')}}">Nueva búsqueda
                 </a>
             </div>
         </div>
@@ -46,31 +45,33 @@
                                     <h5 class="mt-0 mb-1">{{$resource->name}}</h5>
                                     <p class="container-description">{{$resource->description}}</p>
                                 </div>
+                                @if(Auth::user()->role == 'USER')
                                 <div class="col d-flex">
                                     <div class="d-flex align-items-center">
                                         <div class="d-flex align-items-center mx-auto">
 
                                             <a type="submit"
                                                class="btn btn-dark d-flex align-items-center js-scroll-trigger"
-                                               href="{{ url("/person/resource/view/{$resource->id}") }}">
+                                               href="{{ url("/resource/view/{$resource->id}") }}">
                                                 Reservar
                                             </a>
 
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Poner if, si es monitor estos son los botones para el resultado de la búsqueda
+                                @elseif(Auth::user()->role == 'MODERATOR')
                                 <div class="col-auto d-flex flex-column">
-                                    <button class="btn btn-dark btn-sm m-1" type="submit href="">Ver recurso</button>
+                                    <button class="btn btn-dark btn-sm m-1" href="{{url("/resource/view/{$resource->id}")}}">Ver recurso</button>
                                     <button class="btn btn-dark btn-sm m-1" type="submit">Gestionar reservas</button>
-                                </div>-->
-                                <!-- Poner if, si es admin estos son los botones para el resultado de la búsqueda
+                                </div>
+                                @elseif(Auth::user()->role == 'ADMIN')
                                 <div class="col-auto d-flex flex-column">
-                                    <button class="btn btn-dark btn-sm m-1" type="submit">Ver recurso</button>
-                                    <button class="btn btn-dark btn-sm m-1" type="submit">Gestionar reservas</button>
-                                    <button class="btn btn-dark btn-sm m-1" type="submit">Editar recurso</button>
-                                    <button class="btn btn-dark btn-sm m-1" type="submit">Eliminar recurso</button>
-                                </div>-->
+                                    <a class="btn btn-dark btn-sm m-1" href="{{url("/resource/view/{$resource->id}")}}">Ver recurso</a>
+                                    <button class="btn btn-dark btn-sm m-1" href="">Gestionar reservas</button>
+                                    <button class="btn btn-dark btn-sm m-1" href="">Editar recurso</button>
+                                    <button class="btn btn-dark btn-sm m-1" href="">Eliminar recurso</button>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </li>

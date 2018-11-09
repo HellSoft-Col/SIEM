@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use App\Models\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Mail;
 
 class ReservationController extends Controller
@@ -142,7 +143,23 @@ class ReservationController extends Controller
      */
     public function edit(Reservation $reservation)
     {
-        //
+        $resources = [];
+        $message = "";
+        if($reservation->resource->type == 'CLASSROOM'){
+            $resources = DB::table('resource')
+                ->where('resource.type', '=', 'CLASSROOM')->get();
+        }
+        else if($reservation->resource->type == 'INSTRUMENT'){
+            $resources = DB::table('resource')
+                ->where('resource.type', '=', 'INSTRUMENT')->get();
+        }
+        return view('GeneralViews.Reserves.edit',
+            [
+                'reservation' => $reservation,
+                'resources' => $resources,
+                'message' => $message
+            ]
+        );
     }
 
     /**
@@ -154,7 +171,26 @@ class ReservationController extends Controller
      */
     public function update(Request $request, Reservation $reservation)
     {
-        //
+        $start_date = $request->start_time;
+        $end_date = $request->end_time;
+        $resource_id = $request->resource;
+        $resources = [];
+        $message = "";
+        if($reservation->resource->type == 'CLASSROOM'){
+            $resources = DB::table('resource')
+                ->where('resource.type', '=', 'CLASSROOM')->get();
+        }
+        else if($reservation->resource->type == 'INSTRUMENT'){
+            $resources = DB::table('resource')
+                ->where('resource.type', '=', 'INSTRUMENT')->get();
+        }
+        return view('GeneralViews.Reserves.edit',
+            [
+                'reservation' => $reservation,
+                'resources' => $resources,
+                'message' => $message
+            ]
+        );
     }
 
     /**

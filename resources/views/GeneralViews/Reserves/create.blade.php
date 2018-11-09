@@ -17,7 +17,7 @@
             </div>
             <div class="card-body">
                 <form class="form" role="form" autocomplete="off" method="POST"
-                      action="{{ url('/person/reservation/create') }}">
+                      action="{{ url('/reservation/create') }}">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     <div class="form-group row">
@@ -36,7 +36,7 @@
                             <script type="text/javascript">
                                 $(function () {
                                     $('#datetimepickerStart').datetimepicker({
-                                        format:'YYYY/MM/DD HH:00'
+                                        format:'YYYY-MM-DD HH:00'
                                     });
                                 });
                             </script>
@@ -61,7 +61,7 @@
                         <script type="text/javascript">
                             $(function () {
                                 $('#datetimepickerEnd').datetimepicker({
-                                    format:'YYYY/MM/DD HH:00'
+                                    format:'YYYY-MM-DD HH:00'
                                 });
                             });
                         </script>
