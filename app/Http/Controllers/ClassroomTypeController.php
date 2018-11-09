@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classroom_type;
+use App\Models\ResourceType;
 use Illuminate\Http\Request;
 
 class ClassroomTypeController extends Controller
@@ -41,10 +41,10 @@ class ClassroomTypeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Classroom_type  $classroom_type
+     * @param  \App\Models\ResourceType  $resource_type
      * @return \Illuminate\Http\Response
      */
-    public function show(Classroom_type $classroom_type)
+    public function show(ResourceType $resource_type)
     {
         //
     }
@@ -52,10 +52,10 @@ class ClassroomTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Classroom_type  $classroom_type
+     * @param  \App\Models\ResourceType  $resource_type
      * @return \Illuminate\Http\Response
      */
-    public function edit(Classroom_type $classroom_type)
+    public function edit(ResourceType $resource_type)
     {
         //
     }
@@ -64,10 +64,10 @@ class ClassroomTypeController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Classroom_type  $classroom_type
+     * @param  \App\Models\ResourceType  $resource_type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Classroom_type $classroom_type)
+    public function update(Request $request, ResourceType $resource_type)
     {
         //
     }
@@ -75,10 +75,10 @@ class ClassroomTypeController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Classroom_type  $classroom_type
+     * @param  \App\Models\ResourceType  $resource_type
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Classroom_type $classroom_type)
+    public function destroy(ResourceType $resource_type)
     {
         //
     }

@@ -51,7 +51,11 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        return view('GeneralViews.Persons.view',
+            [
+                'user' => $user,
+            ]
+            );
     }
 
     /**
@@ -127,5 +131,31 @@ class UserController extends Controller
             'role' => 'required|string',
             'semester' => 'required|numeric',
         ]);
+    }
+
+    /*******************************************************************/
+    public function goSearchPerson()
+    {
+        return view('GeneralViews.Persons.search');
+    }
+    public function searchPerson(Request $request)
+    {
+        $name = $request->name;
+        $last_name = $request->last_name;
+        $username = $request->username;
+        $identification = $request->identification;
+        $id = $request->id;
+        $semester = $request->semester;
+        $role = $request->role;
+        //Atributo type puede llegar en null;
+        $type = $request->type;
+        $radioActivePenalty = $request->activePenalty;
+        $radioActiveReserves = $request->activeReserves;
+
+        $people = User::all();
+        return view('GeneralViews.Persons.result',
+            [
+                'people' => $people,
+            ]);
     }
 }

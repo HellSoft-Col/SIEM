@@ -18,11 +18,16 @@ Route::get('/', function () {
     return view('GeneralViews.guest');
 })->name('homep')->middleware('guest');
 
+Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
+
 Route::get('/events ', 'EventController@index')->name('events.get')->middleware('guest');
+Route::get('user/events ', 'EventController@indexAuth')->name('events.get')->middleware('auth');
+
 Route::get('/feed ', 'PublicationController@index')->name('feed.get')->middleware('guest');
+Route::post('/feed ', 'PublicationController@search')->name('feed.post');
 
 Route::get('user/feed ', 'PublicationController@indexAuth')->name('feed.get')->middleware('auth');
-Route::get('user/events ', 'EventController@indexAuth')->name('events.get')->middleware('auth');
+Route::post('/user/feed ', 'PublicationController@searchuser')->name('feed.user.post')->middleware('auth');
 
 
 Route::get('/user/update',function () {
@@ -37,11 +42,9 @@ Route::post('/user/update', 'UserController@update')
 
 Route::get('register', function (){
     $carreers = \App\Models\Carreer::all();
-    return view('auth.register',["carreers" => $carreers]);
+    return view('   auth.register', ["carreers" => $carreers]);
 })->name('register');
 Route::post('register', 'Auth\RegisterController@register');
-
-Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 
 // Authentication Routes...
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -54,13 +57,10 @@ Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail'
 Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
-
 /* -----------------------------------------------------------------*/
 
-Route::post('/feed ', 'PublicationController@search')->name('feed.post');
-Route::post('/user/feed ', 'PublicationController@searchuser')->name('feed.user.post')->middleware('auth');
 
-Route::get('/person/resource/view/{resource}', 'ResourceController@show')
+Route::get('/resource/view/{resource}', 'ResourceController@show')
     ->middleware('person');
 
 Route::post('/person/reservation/create', 'ReservationController@create')->name('create.reservation')
@@ -68,20 +68,15 @@ Route::post('/person/reservation/create', 'ReservationController@create')->name(
 
 Route::put('/person/reservation/create', 'ReservationController@store')->middleware('person');
 Route::get('/person/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('person');
-Route::get('/person/resource/search', 'ResourceController@gosearch')
-    ->middleware('person');
-
-Route::put('/person/resource/search', 'ResourceController@search')->name('resource.search')
-    ->middleware('search')->middleware('person');
-
-/* -----------------------------------------------------------------*/
 
 Route::get('/person/reservation/active', 'ReservationController@activeReservations')
     ->name('person.activeReservations')
     ->middleware('person');
+
 Route::get('/person/reservation/history', 'ReservationController@loadHistoryReservations')
     ->name('person.historyReservations')
     ->middleware('person');
+
 Route::get('/person/reservation/history/{startTime}/{endTime}', 'ReservationController@historyReservations')
     ->name('person.historyReservations')
     ->middleware('person');
@@ -91,6 +86,19 @@ Route::post('/person/reservation/delete', 'ReservationController@cancelReservati
     ->middleware('person');
 
 /* -----------------------------------------------------------------*/
+
+Route::get('/admin/resource/create', 'ResourceController@create')
+    ->name('resource.create')
+    ->middleware('admin');
+
+Route::get('/resource/search', 'ResourceController@gosearch')
+    ->middleware('auth');
+
+Route::put('/resource/search', 'ResourceController@search')->name('resource.search')
+    ->middleware('search')->middleware('auth');
+
+/* -----------------------------------------------------------------*/
+
 
 /* Route::get('/events/{event}', 'EventController@show')->where('id', '[0-9]+'); */
 
@@ -105,12 +113,19 @@ Route::get('/resource', function () {
  * return view('layout_user');
  * });*/
 //***************************************************************************************************************
-Route::get('/person/search',function(){
-    return view('/GeneralViews/Persons/search');
-});
-Route::get('/person/search/result',function(){
-    return view('/GeneralViews/Persons/result');
-});
+Route::get('/person/search', 'UserController@goSearchPerson')
+    ->middleware('admin');
+
+Route::post('/person/search/result', 'UserController@searchPerson')
+    ->middleware('admin');
+
+Route::get('/person/view/{user}', 'UserController@show')
+    ->middleware('admin');
+
+
+
+
+
 Route::get('/reservation/edit',function(){
     return view('/GeneralViews/Reserves/edit');
 });

@@ -17,6 +17,7 @@ class CreateCharacteristicTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
+            $table->enum('type',['CLASSROOM','INSTRUMENT']);
             $table->timestamps();
         });
     }

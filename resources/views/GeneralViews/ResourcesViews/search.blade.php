@@ -13,6 +13,7 @@
 @section('content')
     <div class="container" style="margin-top: 50px;">
         <!-- Poner if para el admin para que muestre el div de ese row-->
+        @if(Auth::user()->role == 'ADMIN')
         <div class="row">
             <div class="col">
                 <div class="d-flex flex-row-reverse">
@@ -24,6 +25,7 @@
             </div>
         </div>
         <br>
+        @endif
         <div class="card card-outline-secondary">
             <div class="card-header">
                 <h3 class="mb-0">Búsqueda de recursos</h3>

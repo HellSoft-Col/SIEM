@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClassroomTypeTable extends Migration
+class CreateResourceTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateClassroomTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('classroom_type', function (Blueprint $table) {
+        Schema::create('resource_type', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->enum('type',['CLASSROOM','INSTRUMENT']);
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateClassroomTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('classroom_type');
+        Schema::dropIfExists('resource_type');
     }
 }

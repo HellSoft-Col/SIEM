@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classroom_type;
+use App\Models\ResourceType;
 use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
@@ -235,7 +235,7 @@ class ReservationController extends Controller
         $userItems = Reservation::where('user_id', $user_id)->where('state', 'ACTIVE')->get();
         foreach ($userItems as $uItem) {
             $resource = Resource::where('id', $uItem->resource_id)->first();
-            $classroom = Classroom_type::where('id', $resource->classroom_type_id)->first();
+            $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
                 "id" => $uItem->id,
                 "name" => $resource->name,
@@ -257,7 +257,7 @@ class ReservationController extends Controller
         foreach ($userItems as $uItem) {
             $resource = Resource::where('id', $uItem->resource_id)->first();
             $image = File::where('resource_id', $resource->id)->first();
-            $classroom = Classroom_type::where('id', $resource->classroom_type_id)->first();
+            $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
                 "imagePath" => $image->path,
                 "name" => $resource->name,
@@ -289,7 +289,7 @@ class ReservationController extends Controller
         foreach ($userItems as $uItem) {
             $resource = Resource::where('id', $uItem->resource_id)->first();
             $image = File::where('resource_id', $resource->id)->first();
-            $classroom = Classroom_type::where('id', $resource->classroom_type_id)->first();
+            $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
                 "imagePath" => $image->path,
                 "name" => $resource->name,

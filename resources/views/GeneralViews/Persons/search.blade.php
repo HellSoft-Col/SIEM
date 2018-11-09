@@ -34,9 +34,8 @@
                 <h3 class="mb-0">Búsqueda </h3>
             </div>
             <div class="card-body">
-                <form id="search_person" class="form" role="form" method="POST" action="">
+                <form id="search_person" class="form" role="form" method="POST" action="{{ url('/person/search/result')}}">
                     @csrf
-                    {{ method_field('PUT') }}
                     <div class="form-group row d-flex justify-content-center">
                         <label class="col-lg-2 col-form-label form-control-label d-flex flex-row" for="name">Nombre:</label>
                         <div class="col-lg-6">
@@ -125,11 +124,11 @@
                         <div class="col-lg-6 ">
                             <div class="row ">
                                 <div class="col form-check">
-                                    <input type="checkbox" class="form-check-input" id="activePenalty">
+                                    <input type="checkbox" class="form-check-input" id="activePenalty" name="activePenalty">
                                     <label class="form-check-label" for="activePenalty">Multas activas</label>
                                 </div>
                                 <div class="col form-check">
-                                    <input type="checkbox" class="form-check-input" id="activeReserves">
+                                    <input type="checkbox" class="form-check-input" id="activeReserves" name="activeReserves">
                                     <label class="form-check-label d-flex justify-content-end" for="activeReserves">Reservas activas</label>
                                 </div>
                             </div>
@@ -138,9 +137,7 @@
                     <br>
 
                     <div class="d-flex flex-row justify-content-center">
-                        <button type="submit" class="btn btn-dark js-scroll-trigger space"
-                                href="{{ url('/person/search/result') }}">Buscar
-                        </button>
+                        <button type="submit" class="btn btn-dark js-scroll-trigger space">Buscar</button>
                     </div>
 
                 </form>

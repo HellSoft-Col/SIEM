@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
         $this->call(CarreerSeeder::class);
         $this->call(UsersSeeder::class);
-        $this->call(Classroom_typeSeeder::class);
+        $this->call(ResourceTypeSeeder::class);
         $this->call(CharacteristicSeeder::class);
         $this->call(ResourceSeeder::class);
         $this->call(ReservationSeeder::class);

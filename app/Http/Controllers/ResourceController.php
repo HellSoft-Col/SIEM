@@ -27,7 +27,7 @@ class ResourceController extends Controller
      */
     public function create()
     {
-        //
+        return view('SpecificViews.Admin.Resource.create');
     }
 
     /**
@@ -114,13 +114,13 @@ class ResourceController extends Controller
     public function gosearch()
     {
         $rtypes = DB::table('resource')
-            ->join('classroom_type', 'resource.classroom_type_id', '=', 'classroom_type.id')
+            ->join('resource_type', 'resource.resource_type_id', '=', 'resource_type.id')
             ->where('resource.type', '=', 'CLASSROOM')
-            ->distinct()->get(['classroom_type.name']);
+            ->distinct()->get(['resource_type.name']);
         $rtypes_instrument = DB::table('resource')
-            ->join('classroom_type', 'resource.classroom_type_id', '=', 'classroom_type.id')
+            ->join('resource_type', 'resource.resource_type_id', '=', 'resource_type.id')
             ->where('resource.type', '=', 'INSTRUMENT')
-            ->distinct()->get(['classroom_type.name']);
+            ->distinct()->get(['resource_type.name']);
 
         $rcaracteristics = DB::table('resource')
             ->join('characteristic_resource', 'characteristic_resource.resource_id', '=', 'resource.id')
@@ -242,7 +242,7 @@ class ResourceController extends Controller
 
         //dd($resource->type != $type, $resource->type, $type);
         if ($c_type != NULL) {
-            if ($resource->classroom_type->name != $c_type) {
+            if ($resource->resource_type->name != $c_type) {
                 $acum = $acum && false;
             }
         }

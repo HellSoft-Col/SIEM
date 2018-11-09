@@ -28,28 +28,32 @@
         <hr>
         <div class="container-list">
             <ul class="list-unstyled">
+                @forelse($people as $person)
                     <li class="media my-4 justify-content-center">
                             <div class="col-md-4 d-flex justify-content-start">
-                                <img class="mr-3" src="{{asset('/img/andres.PNG')}}" alt="Generic placeholder image"
+                                <img class="mr-3" src="{{asset($person->file->path)}}" alt="Generic placeholder image"
                                      style="with:290px;height:171px;">
                             </div>
                         <div class="d-flex align-items-center">
                             <div class="row ">
                                 <div class="col container-description">
-                                    <h5 >Andrés Cocunubo</h5>
-                                    <p>Estudiante de Estudios musicales <br> 7mo Semestre <br>ID:20158795</p>
+                                    <h5 >{{$person->name}}</h5>
+                                    <p>Estudiante de:{{$person->carreer->name}} <br> {{$person->semester}} Semestre: <br>ID: {{$person->identification}}</p>
                                 </div>
-                                <div class="col-auto d-flex flex-column-reverse">
-                                        <button class="btn btn-dark btn-sm m-1" type="submit">Ver persona</button>
-                                        <button class="btn btn-dark btn-sm m-1" type="submit">Gestionar reservas</button>
-                                        <button class="btn btn-dark btn-sm m-1" type="submit">Editar persona</button>
-                                        <button class="btn btn-dark btn-sm m-1" type="submit">Eliminar persona</button>
+                                <div class="col-auto d-flex flex-column">
+                                        <a class="btn btn-dark btn-sm m-1" href="{{url("/person/view/{$person->id}")}}">Ver persona</a>
+                                        <button class="btn btn-dark btn-sm m-1" href="">Gestionar reservas</button>
+                                        <button class="btn btn-dark btn-sm m-1" href="">Editar persona</button>
+                                        <button class="btn btn-dark btn-sm m-1" href="">Eliminar persona</button>
                                 </div>
                             </div>
 
                         </div>
                     </li>
                     <hr>
+                @empty
+                    <h2>En el momento no se encontraron resultados</h2>
+                @endforelse
             </ul>
         </div>
     </div>

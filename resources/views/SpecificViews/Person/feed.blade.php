@@ -75,7 +75,7 @@
         @foreach($publications as $publication)
             @foreach($publication->files as $file)
                 <a href="#" title="{{ $publication->header }}" class="post pop" data-toggle="modal"
-                   data-target="#{{ 'id' . ((string) $x) }}" style="background-image: url('{{ $file->path }}');">
+                   data-target="#{{ 'id' . ((string) $x) }}" style="background-image: url({{ asset($file->path) }});">
                     <h2>{{ $publication->header }}</h2>
                     <p class="lead">{{ $publication->user->name }}</p></a>
                 @php($x+=1)
