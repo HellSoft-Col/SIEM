@@ -139,7 +139,7 @@
 
                     <div class="d-flex flex-row justify-content-center">
                         <button type="submit" class="btn btn-dark js-scroll-trigger space"
-                                href="{{url('/person/search/result')}}">Buscar
+                                href="{{ url('/person/search/result') }}">Buscar
                         </button>
                     </div>
 

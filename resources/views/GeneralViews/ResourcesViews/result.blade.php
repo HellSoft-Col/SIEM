@@ -9,12 +9,14 @@
 @section('content')
 
     <div class="container result">
-        <div class="d-flex flex-row ">
-            <div class="d-flex align-items-center mx-auto">
+        <div class="d-flex flex-row">
+            <div class="d-flex justify-content-start">
                 <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
                    href="{{url('/person/resource/search')}}">Nueva búsqueda
                 </a>
             </div>
+        </div>
+        <div class="d-flex justify-content-center">
             <div class="col-lg-11">
                 <div class="d-flex flex-row justify-content-center">
                     <h2 class="title-margin">Resultados recursos</h2>

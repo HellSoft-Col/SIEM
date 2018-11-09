@@ -7,7 +7,7 @@
 
         <div class="row space">
             <div class="col-lg-12 space">
-                <h2>Enlaces y Servicios de interés</h2>
+                <h1>Enlaces y Servicios de interés</h1>
             </div>
         </div>
 
