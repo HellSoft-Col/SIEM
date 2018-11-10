@@ -8,10 +8,15 @@
 @endsection
 @section('content')
     <div class="container">
-        <div class="d-flex flex-row">
+        <div class=" row d-flex flex-row">
             <div class="d-flex justify-content-start">
                 <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
                    href="{{url()->previous()}}">Volver
+                </a>
+            </div>
+            <div class=" col d-flex justify-content-end">
+                <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
+                   href="{{ route('create.reservation') }}">Crear reserva
                 </a>
             </div>
         </div>
@@ -86,12 +91,10 @@
                                             <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
                                             <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
                                         </div>
-                                        <div class="col-3 itemright d-flex align-items-center">
-                                            <div class="d-flex align-items-center mx-auto">
-                                                <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger" href="#">Ver
-                                                    recurso</a>
-                                            </div>
-                                        </div>
+                                    </div>
+                                    <div class="col-auto d-flex flex-column">
+                                        <a class="btn btn-dark btn-sm m-1" href="{{url("/person/view/{$user->id}")}}">Ver usuario</a>
+                                        <a class="btn btn-dark btn-sm m-1" href="{{url("/reservation/edit/{$reservation['id']}")}}">Editar reserva</a>
                                     </div>
                                 </div>
                             </li>

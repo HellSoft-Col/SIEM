@@ -11,7 +11,7 @@
         <div class="d-flex flex-row">
             <div class="d-flex justify-content-start">
                 <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                   href="{{url('/person/search/result')}}">Volver
+                   href="{{url()->previous()}}">Volver
                 </a>
             </div>
         </div>
