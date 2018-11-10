@@ -339,6 +339,7 @@ class ReservationController extends Controller
             $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
                 "id" => $uItem->id,
+                "id_resource" => $resource->id,
                 "name" => $resource->name,
                 "salon" => $classroom->name,
                 "inicio" => $uItem->start_time,
@@ -366,6 +367,7 @@ class ReservationController extends Controller
             $image = File::where('resource_id', $uItem->id)->first();
             $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
+                "id_resource" => $resource->id,
                 "imagePath" => $image->path,
                 "name" => $resource->name,
                 "salon" => $classroom->name,
@@ -399,6 +401,7 @@ class ReservationController extends Controller
                 $image = File::where('resource_id', $uItem->id)->first();
                 $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
                 $item = [
+                    "id_resource" => $resource->id,
                     "imagePath" => $image->path,
                     "name" => $resource->name,
                     "salon" => $classroom->name,
@@ -459,6 +462,7 @@ class ReservationController extends Controller
             $image = File::where('resource_id', $uItem->id)->first();
             $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
+                "id_resource" => $resource->id,
                 "imagePath" => $image->path,
                 "name" => $resource->name,
                 "salon" => $classroom->name,
@@ -493,6 +497,7 @@ class ReservationController extends Controller
                 $image = File::where('resource_id', $uItem->id)->first();
                 $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
                 $item = [
+                    "id_resource" => $resource->id,
                     "imagePath" => $image->path,
                     "name" => $resource->name,
                     "salon" => $classroom->name,
@@ -502,7 +507,7 @@ class ReservationController extends Controller
                 array_push($reservations, $item);
             }
         }
-        return view('TestViewsCocu.historyAdminMonitor', ['user' => $user,
+        return view('GeneralViews.Persons.reserves_history', ['user' => $user,
             'reservations' => $reservations]);
     }
 
@@ -523,6 +528,7 @@ class ReservationController extends Controller
             $item = [
                 "id" => $uItem->id,
                 "name" => $resource->name,
+                "id_resource" => $resource->id,
                 "salon" => $classroom->name,
                 "inicio" => $uItem->start_time,
                 "fin" => $uItem->end_time

@@ -119,7 +119,7 @@
                                             <br>Inicio: {{$reservation['inicio']}}<br>Fin: {{$reservation['fin']}}</p>
                                     </div>
                                     <div class="col-auto d-flex flex-column">
-                                        <a class="btn btn-dark " href="">Ver recurso</a>
+                                        <a class="btn btn-dark " href="{{url('/resource/view/'.$reservation['id_resource'])}}">Ver recurso</a>
                                     </div>
                                 </div>
                             </div>
