@@ -2,20 +2,12 @@
 @section('includes')
     <link rel="stylesheet" href="{{ asset('/css/reserve/content.css') }}">
 @endsection
-@section('options')
-    <a class="dropdown-item" href="#">Publicaciones</a>
-    <a class="dropdown-item" href="#">Eventos</a>
-@endsection
 @section('content')
     <div class="container">
         <div class=" row d-flex flex-row">
-            <div class="d-flex justify-content-start">
-                <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                   href="{{url()->previous()}}">Volver
-                </a>
-            </div>
-            <div class=" col d-flex justify-content-end">
-                <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
+            <a class="btn m-auto" href="{{url()->previous()}}"><i class="fa fa-arrow-circle-left fa-3x"></i></a>
+            <div class=" col d-flex justify-content-end m-auto">
+                <a class="btn btn-dark d-flex align-items-center js-scroll-trigger"
                    href="{{ route('create.reservation') }}">Crear reserva
                 </a>
             </div>

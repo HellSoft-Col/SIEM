@@ -7,10 +7,6 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="{{ asset('/js/date/date.js') }}" type="text/javascript"></script>
 @endsection
-@section('options')
-    <a class="dropdown-item" href="#">Publicaciones</a>
-    <a class="dropdown-item" href="#">Eventos</a>
-@endsection
 @section('content')
     <div class="container">
         <div class="row">
