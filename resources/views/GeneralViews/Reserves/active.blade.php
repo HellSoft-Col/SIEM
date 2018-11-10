@@ -74,21 +74,15 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="media-body d-flex align-items-center">
+                            <div class="media-body">
                                 <div class="row">
-                                    <div class="col text-center">
-                                        <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                        <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}
-                                            <br>{{$reservation['fin']}}</p>
+                                    <div class="col-lg-9">
+                                        <h5 class="mt-0 mb-1">Recurso: {{$reservation['name']}}</h5>
+                                        <p>Salón: {{$reservation['salon']}}<br>Inicio: {{$reservation['inicio']}}
+                                            <br>Fin: {{$reservation['fin']}}</p>
                                     </div>
-
-                                </div>
-                                <div class="col d-flex justify-content-end ">
-                                    <div class="col d-flex justify-content-end">
-                                        <div class="d-flex align-items-center mx-auto">
-                                            <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger" href="#">Ver
-                                                recurso</a>
-                                        </div>
+                                    <div class="col-auto d-flex flex-column">
+                                        <a class="btn btn-dark " href="">Ver recurso</a>
                                     </div>
                                 </div>
 
