@@ -58,4 +58,5 @@ class User extends Authenticatable
     function file(){
         return $this->belongsTo(File::class , 'file_id');
     }
+
 }

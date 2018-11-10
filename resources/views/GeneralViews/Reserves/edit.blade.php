@@ -10,14 +10,14 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="container" style="margin-top: 50px;">
         <div class="card card-outline-secondary">
             <div class="card-header d-flex justify-content-center">
-                <h3 class="mb-0">Crear reserva</h3>
+                <h3 class="mb-0">Editar reserva </h3>
             </div>
             <div class="card-body">
                 <form class="form" role="form" autocomplete="off" method="POST"
-                      action="{{ url('/reservation/create') }}">
+                      action="{{ url("/reservation/edit/{$reservation->id}") }}">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     <div class="form-group row">
@@ -25,7 +25,7 @@
                             Inicio:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
-                                <input name="start_time" value="{{old('start_time')}}" type="text"
+                                <input name="start_time" value="{{$reservation->start_time}}" type="text"
                                        class="form-control datetimepicker-input"
                                        data-target="#datetimepickerStart" required/>
                                 <div class="input-group-append" data-target="#datetimepickerStart"
@@ -48,7 +48,7 @@
                             Fin:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
-                                <input name="end_time" value="{{old('end_time')}} " type="text"
+                                <input name="end_time" value="{{$reservation->end_time}} " type="text"
                                        class="form-control datetimepicker-input"
                                        data-target="#datetimepickerEnd" required/>
                                 <div class="input-group-append" data-target="#datetimepickerEnd"
@@ -57,7 +57,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <script type="text/javascript">
                             $(function () {
                                 $('#datetimepickerEnd').datetimepicker({
@@ -67,9 +66,19 @@
                         </script>
 
                     </div>
-                    <input type="hidden" name="resource_id" value="{{$resource_id}}">
+                    <div class="form-group row">
+                        <label class="col-lg-2 col-form-label form-control-label" for="resource">Recurso:</label>
+                        <div class="col-lg-9">
+                            <select name="resource" id="resource" class="form-control" size="0">
+                                @forelse($resources as $resource)
+                                    <option value="{{$resource->id}}">{{$resource->name}}</option>
+                                @empty
+                                @endforelse
+                            </select>
+                        </div>
+                    </div>
                     <div class="d-flex flex-row justify-content-center">
-                        <button type="submit" class="btn btn-dark js-scroll-trigger space" href="#">Realizar Reserva
+                        <button type="submit" class="btn btn-dark js-scroll-trigger space" href="#">Guardar
                         </button>
                     </div>
                 </form>
@@ -84,7 +93,8 @@
 @endsection
 @section('scripts')
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="{{ asset('/js/date/date.js') }}" type="text/javascript"></script>
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="{{ asset('/js/date/date.js') }}" type="text/javascript"></script>
+
 @endsection

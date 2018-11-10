@@ -1,6 +1,6 @@
 .title-margin {
-    margin-top: 30px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 30px;
     font-size: 40px
 }
 
@@ -16,7 +16,6 @@
     width: 1170px;
     margin-top: 50px;
 }
-
 .container-result {
     width: 1170px;
     margin-top: 80px;

@@ -6,8 +6,10 @@ use App\Models\ResourceType;
 use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Mail;
 
 class ReservationController extends Controller
@@ -88,11 +90,9 @@ class ReservationController extends Controller
             ];
             $this->sendErrorEmail($email);
         }
-
         $resource_id = $resource->id;
-        return view('GeneralViews.Reserves.create', compact('resource_id', 'message','start_time','end_time'));
+        return view('GeneralViews.Reserves.create', compact('resource_id', 'message'));
     }
-
     /**
      * Send a confirm e-mail to the user.
      *
@@ -142,7 +142,23 @@ class ReservationController extends Controller
      */
     public function edit(Reservation $reservation)
     {
-        //
+        $resources = [];
+        $message = "";
+        if($reservation->resource->type == 'CLASSROOM'){
+            $resources = DB::table('resource')
+                ->where('resource.type', '=', 'CLASSROOM')->get();
+        }
+        else if($reservation->resource->type == 'INSTRUMENT'){
+            $resources = DB::table('resource')
+                ->where('resource.type', '=', 'INSTRUMENT')->get();
+        }
+        return view('GeneralViews.Reserves.edit',
+            [
+                'reservation' => $reservation,
+                'resources' => $resources,
+                'message' => $message
+            ]
+        );
     }
 
     /**
@@ -154,7 +170,26 @@ class ReservationController extends Controller
      */
     public function update(Request $request, Reservation $reservation)
     {
-        //
+        $start_date = $request->start_time;
+        $end_date = $request->end_time;
+        $resource_id = $request->resource;
+        $resources = [];
+        $message = "";
+        if($reservation->resource->type == 'CLASSROOM'){
+            $resources = DB::table('resource')
+                ->where('resource.type', '=', 'CLASSROOM')->get();
+        }
+        else if($reservation->resource->type == 'INSTRUMENT'){
+            $resources = DB::table('resource')
+                ->where('resource.type', '=', 'INSTRUMENT')->get();
+        }
+        return view('GeneralViews.Reserves.edit',
+            [
+                'reservation' => $reservation,
+                'resources' => $resources,
+                'message' => $message
+            ]
+        );
     }
 
     /**
@@ -228,6 +263,12 @@ class ReservationController extends Controller
     }
 
     /**-------------------------------------------------------------------------**/
+     /**
+      * Muestra las reservas activas del usuario actual.
+      *
+      * @param
+      * @return
+      */
     public function activeReservations()
     {
         $user_id = Auth::user()->id;
@@ -248,6 +289,12 @@ class ReservationController extends Controller
         return view('GeneralViews.Reserves.active', ['reservations' => $reservations]);
     }
 
+    /**
+     * Muestra las reservas históricas del usuario actual.
+     *
+     * @param
+     * @return
+     */
     public function loadHistoryReservations()
     {
         $user_id = Auth::user()->id;
@@ -256,7 +303,7 @@ class ReservationController extends Controller
             ->where('state', 'FINALIZED')->get();
         foreach ($userItems as $uItem) {
             $resource = Resource::where('id', $uItem->resource_id)->first();
-            $image = File::where('resource_id', $resource->id)->first();
+            $image = File::where('resource_id', $uItem->id)->first();
             $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
                 "imagePath" => $image->path,
@@ -270,38 +317,46 @@ class ReservationController extends Controller
         return view('GeneralViews.Reserves.history', ['reservations' => $reservations]);
     }
 
+    /**
+     * Muestra las reservas historicas del usuario actual filtrado por fechas
+     *
+     * @param
+     * @return
+     */
     public function historyReservations()
     {
         $data = request()->all();
-        $starTime = date('Y-m-d',strtotime($data['startTime']));
-        $endTime = date('Y-m-d',strtotime($data['endTime']));
+        $starTime = strtotime($data['startTime']);
+        $endTime = strtotime($data['endTime']);
+        //$starTime = date('Y-m-d',strtotime($data['startTime']));
+        //$endTime = date('Y-m-d',strtotime($data['endTime']));
         $user_id = Auth::user()->id;
         $reservations = [];
-        if (!empty($starTime) and !empty($endTime)) {
-            $userItems = Reservation::where('user_id', $user_id)
-                ->where('state', '!=', 'ACTIVE')
-                ->whereDate('start_time', '>=', $starTime)
-                ->whereDate('end_time', '<=', $endTime)->get();
-        } else {
-            $userItems = Reservation::where('user_id', $user_id)
-                ->where('state', '!=', 'ACTIVE')->get();
-        }
+        $userItems = Reservation::where('user_id', $user_id)->get();
         foreach ($userItems as $uItem) {
-            $resource = Resource::where('id', $uItem->resource_id)->first();
-            $image = File::where('resource_id', $resource->id)->first();
-            $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
-            $item = [
-                "imagePath" => $image->path,
-                "name" => $resource->name,
-                "salon" => $classroom->name,
-                "inicio" => $resource->start_time,
-                "fin" => $resource->end_time
-            ];
-            array_push($reservations, $item);
+            if($this->matchBool($uItem,$starTime,$endTime)) {
+                $resource = Resource::where('id', $uItem->resource_id)->first();
+                $image = File::where('resource_id', $uItem->id)->first();
+                $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
+                $item = [
+                    "imagePath" => $image->path,
+                    "name" => $resource->name,
+                    "salon" => $classroom->name,
+                    "inicio" => $resource->start_time,
+                    "fin" => $resource->end_time
+                ];
+                array_push($reservations, $item);
+            }
         }
         return view('GeneralViews.Reserves.history', ['reservations' => $reservations]);
     }
 
+    /**
+     * Cancela las reservas seleccionadas por el usuario actual
+     *
+     * @param
+     * @return
+     */
     public function cancelReservations()
     {
         $data = request()->all();
@@ -323,6 +378,145 @@ class ReservationController extends Controller
                 }
             }
         }
-        return redirect()->back();
+        return view('GeneralViews.Reserves.active');
+    }
+
+    /**
+     * Muestra las reservas históricas del usuario actual.
+     *
+     * @param
+     * @return
+     */
+    public function loadPersonHistoryReservations(Request $request)
+    {
+        $user_id = $request['ID'];
+        $user = User::find($user_id);
+        $reservations = [];
+        $userItems = Reservation::where('user_id', $user_id)
+            ->where('state', 'FINALIZED')->get();
+        foreach ($userItems as $uItem) {
+            $resource = Resource::where('id', $uItem->resource_id)->first();
+            $image = File::where('resource_id', $uItem->id)->first();
+            $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
+            $item = [
+                "imagePath" => $image->path,
+                "name" => $resource->name,
+                "salon" => $classroom->name,
+                "inicio" => $uItem->start_time,
+                "fin" => $uItem->end_time
+            ];
+            array_push($reservations, $item);
+        }
+        return view('GeneralViews.Persons.reserves_history', ['user' => $user,
+            'reservations' => $reservations]);
+    }
+
+    /**
+     * Muestra las reservas historicas del usuario actual filtrado por fechas para el admin o monitor
+     *
+     * @param
+     * @return
+     */
+    public function  personHistoryReservations (Request $request){
+        $data = request()->all();
+        $starTime = strtotime($data['startTime']);
+        $endTime = strtotime($data['endTime']);
+        //$starTime = date('Y-m-d',strtotime($data['startTime']));
+        //$endTime = date('Y-m-d',strtotime($data['endTime']));
+        $user = User::find($request['ID']);
+        $user_id = $request['ID'];
+        $reservations = [];
+        $userItems = Reservation::where('user_id', $user_id)->get();
+        foreach ($userItems as $uItem) {
+            if ($this->matchBool($uItem,$starTime,$endTime)) {
+                $resource = Resource::where('id', $uItem->resource_id)->first();
+                $image = File::where('resource_id', $uItem->id)->first();
+                $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
+                $item = [
+                    "imagePath" => $image->path,
+                    "name" => $resource->name,
+                    "salon" => $classroom->name,
+                    "inicio" => $resource->start_time,
+                    "fin" => $resource->end_time
+                ];
+                array_push($reservations, $item);
+            }
+        }
+        return view('TestViewsCocu.historyAdminMonitor', ['user' => $user,
+            'reservations' => $reservations]);
+    }
+
+    /**
+     * Muestra las reservas activas del usuario escogido por el administrador o monitor.
+     *
+     * @param
+     * @return
+     */
+    public function personActiveReservations(Request $request){
+        $user_id = $request['ID'];
+        $user = User::find($user_id);
+        $reservations = [];
+        $userItems = Reservation::where('user_id', $user_id)->where('state', 'ACTIVE')->get();
+        foreach ($userItems as $uItem) {
+            $resource = Resource::where('id', $uItem->resource_id)->first();
+            $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
+            $item = [
+                "id" => $uItem->id,
+                "name" => $resource->name,
+                "salon" => $classroom->name,
+                "inicio" => $uItem->start_time,
+                "fin" => $uItem->end_time
+            ];
+            array_push($reservations, $item);
+        }
+        return view('GeneralViews.Persons.reserves_active', [
+            'user' => $user,
+            'reservations' => $reservations]);
+    }
+
+    /**
+     * Cancela las reservas seleccionadas por el administrador o monitor.
+     *
+     * @param
+     * @return
+     */
+    public function  cancelReservationsAdminMonitor (Request $request){
+        $data = request()->all();
+        $reservas = isset($data['selected']) ? $data['selected'] : array();
+        $user_id = $request->id;
+        if (!empty($data['all']) and $data['all'] == true) {
+            $userItems = Reservation::where('user_id', $user_id)->get();
+            foreach ($userItems as $item) {
+                $item->state = 'CANCELED';
+                $item->save();
+            }
+        } else {
+            foreach ($reservas as $value) {
+                $userItems = Reservation::where('user_id', $user_id)
+                    ->where('id', $value)->get();
+                foreach ($userItems as $item) {
+                    $item->state = 'CANCELED';
+                    $item->save();
+                }
+            }
+        }
+        $url = url()->previous();
+        return redirect($url);
+    }
+
+    private function matchBool($reservation, $start_date, $end_date)
+    {
+        $acum = true;
+        if ($start_date != NULL) {
+            if (!(strtotime($reservation->date_time) >= $start_date)) {
+                $acum = $acum && false;
+            }
+        }
+        if ($end_date != NULL) {
+            if (!(strtotime($reservation->date_time) <= $end_date)) {
+                $acum = $acum && false;
+            }
+        }
+        return $acum;
     }
 }
