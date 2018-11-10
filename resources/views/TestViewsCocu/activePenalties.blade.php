@@ -31,7 +31,7 @@
                 window.location = $(this).val();
             });
         </script>
-        <form method="POST" action="{{url('/person/penalties/delete')}}">
+        <form method="POST" action="{{url('/person/penalty/conclude')}}">
             {{csrf_field()}}
             <input hidden value="{{$user['id']}}" name="id">
             <div class="row">

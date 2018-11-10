@@ -140,16 +140,14 @@ class PenaltyController extends Controller
         //$starTime = date('Y-m-d',strtotime($data['startTime']));
         //$endTime = date('Y-m-d',strtotime($data['endTime']));
         $user = User::find($request['ID']);
-        $user_id = $request['ID'];
+        $reservations = $user->reservations;
         $penalties = [];
-        $userItems = Reservation::where('user_id', $user_id)->get();
-        foreach ($userItems as $uItem) {
-            //if ($this->matchBool($uItem,$starTime,$endTime)) {  PENDIENTE FECHAS
-                $p = Penalty::where('reservation_id',$uItem->id)->where('active',0)->first();
-                if ($p != null){
-                    array_push($penalties,$p);
-                }
-            //}
+
+        foreach ($reservations as $r) {
+            $p = Penalty::where('reservation_id',$r->id)->where('active',0)->first();
+            if ($p != null and $this->matchBoolPenalty($p,$starTime,$endTime) ){
+                array_push($penalties,$p);
+            }
         }
         return view('TestViewsCocu.historyPenalties', ['user' => $user,
             'penalties' => $penalties]);
@@ -186,6 +184,22 @@ class PenaltyController extends Controller
         }
         $url = url()->previous();
         return redirect($url);
+    }
+
+    private function matchBoolPenalty($penalty, $start_date, $end_date)
+    {
+        $acum = true;
+        if ($start_date != NULL) {
+            if (!(strtotime($penalty->date_time) >= $start_date)) {
+                $acum = $acum && false;
+            }
+        }
+        if ($end_date != NULL) {
+            if (!(strtotime($penalty->penalty_end) <= $end_date)) {
+                $acum = $acum && false;
+            }
+        }
+        return $acum;
     }
 
 }
