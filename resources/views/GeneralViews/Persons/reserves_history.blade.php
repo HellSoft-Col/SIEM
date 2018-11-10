@@ -7,10 +7,6 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="{{ asset('/js/date/date.js') }}" type="text/javascript"></script>
 @endsection
-@section('options')
-    <a class="dropdown-item" href="#">Publicaciones</a>
-    <a class="dropdown-item" href="#">Eventos</a>
-@endsection
 @section('content')
     <div class="container">
         <div class="row">
@@ -91,39 +87,37 @@
                         });
                     });
                 </script>
-                <div class="col d-flex align-self-center">
+                <div class="col-auto d-flex flex-column">
                     <button class="btn btn-dark d-flex align-self-center js-scroll-trigger">Filtrar reservas</button>
                 </div>
             </div>
-
         </form>
+        <hr>
         <div class="container-list">
             <ul class="list-unstyled">
                 @if (!empty($reservations))
                     @foreach($reservations as $reservation)
                         <li class="media my-4">
-                            <img class="mr-3" src="{{asset($reservation['imagePath'])}}" alt="Generic placeholder image" style="with:290px;height:171px;>
+                            <img class="col-md-4 mr-3" src="{{asset($reservation['imagePath'])}}" alt="Generic placeholder image" style="with:290px;height:171px;>
                             <div class="media-body d-flex align-items-center">
-                            <div class="row flexcontainer" >
-                                <div class="col itemcenter">
-                                    <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                    <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
-                                </div>
-                                <div class="col itemright d-flex align-items-center">
-                                    <div class="d-flex align-items-center mx-auto">
-                                        <button type="submit" class="btn btn-dark d-flex align-items-center js-scroll-trigger" href="#">Ver
-                                            recurso</button>
+                            <div class="media-body">
+                                <div class="row" >
+                                    <div class="col-lg-9">
+                                        <h5 class="mt-0 mb-1">Recurso: {{$reservation['name']}}</h5>
+                                        <p>Salón: {{$reservation['salon']}}<br>Inicio: {{$reservation['inicio']}}<br>Fin: {{$reservation['fin']}}</p>
+                                    </div>
+                                    <div class="col-auto d-flex flex-column">
+                                        <a class="btn btn-dark " href="">Ver recurso</a>
                                     </div>
                                 </div>
                             </div>
-        </div>
-        </li>
-        @endforeach
-        @else
-            <h1>No tiene historial de reservas</h1>
-            @endif
+                         </li>
+                    @endforeach
+                @else
+                    <h1>No tiene historial de reservas</h1>
+                @endif
             </ul>
-    </div>
+        </div>
     </div>
 @endsection
 @section('scripts')
