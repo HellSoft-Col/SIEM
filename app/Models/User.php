@@ -55,6 +55,12 @@ class User extends Authenticatable
         return false;
     }
 
+    function hasReservations(){
+        if ($this->reservations()->where('state','ACTIVE')->count()>0){
+            return true;
+        }
+    }
+
     function file(){
         return $this->belongsTo(File::class , 'file_id');
     }

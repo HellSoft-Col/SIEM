@@ -25,7 +25,10 @@
             <div class="col">
                 <div class="col container-description">
                     <h5 >{{$user->name}}</h5>
-                    <p>Estudiante de: {{$user->carreer->name}} <br>  Semestre: {{$user->semester}} <br>ID: {{$user->identification}}</p>
+                    <p>Estudiante de: {{$user->carreer->name}}
+                        <br> Semestre: {{$user->semester}}
+                        <br>ID: {{$user->university_id}}
+                        <br>Cédula: {{$user->identification}}</p>
                 </div>
             </div>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carreer;
 use App\Models\File;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
@@ -136,27 +137,119 @@ class UserController extends Controller
     /*******************************************************************/
     public function goSearchPerson()
     {
-        return view('GeneralViews.Persons.search');
+        $carreers = Carreer::all();
+        return view('GeneralViews.Persons.search',
+            [
+                'carreers' => $carreers
+            ]);
     }
 
     public function searchPerson(Request $request)
     {
         $name = $request->name;
-        $last_name = $request->last_name;
         $username = $request->username;
         $identification = $request->identification;
         $id = $request->id;
         $semester = $request->semester;
         $role = $request->role;
-        //Atributo type puede llegar en null;
         $type = $request->type;
         $radioActivePenalty = $request->activePenalty;
         $radioActiveReserves = $request->activeReserves;
+        $carreer = $request->carreer;
 
-        $people = User::all();
+        $people = $this->match($name, $username, $identification, $id, $semester, $role,
+            $type, $radioActivePenalty, $radioActiveReserves, $carreer);
         return view('GeneralViews.Persons.result',
             [
                 'people' => $people,
             ]);
     }
+
+    private function match($name, $username, $identification, $id, $semester, $role,
+                           $type, $radioActivePenalty, $radioActiveReserves, $carreer)
+    {
+
+        $u = [];
+        $aux_users = User::all();
+
+        foreach ($aux_users as $user){
+            if ($this->matchBool($user, $name, $username, $identification, $id, $semester, $role,
+                $type, $radioActivePenalty, $radioActiveReserves, $carreer)) {
+                array_push($u, $user);
+            }
+        }
+
+        return $u;
+    }
+
+    private function matchBool($user, $name, $username, $identification, $id, $semester, $role,
+                               $type, $radioActivePenalty, $radioActiveReserves, $carreer)
+    {
+        $acum = true;
+
+        if ($name != NULL) {
+            if (strpos(strtoupper($user->name), strtoupper($name)) !== false) {
+                //
+            } else {
+                $acum = $acum && false;
+            }
+        }
+        if ($username != NULL) {
+            if(strtoupper($user->username) != strtoupper($username)){
+                $acum = $acum && false;
+            }
+        }
+
+        if ($identification != NULL) {
+            if($user->identification != $identification){
+                $acum = $acum && false;
+            }
+        }
+
+        if ($id != NULL) {
+            if($user->university_id != $id){
+                $acum = $acum && false;
+            }
+        }
+
+        if ($semester != NULL) {
+            if($user->semester != $semester){
+                $acum = $acum && false;
+            }
+        }
+
+        if ($role != NULL) {
+            if(strtoupper($user->role) != strtoupper($role)){
+                $acum = $acum && false;
+            }
+        }
+
+        if ($carreer != NULL) {
+            if(strtoupper($user->carreer->name) != strtoupper($carreer)){
+                $acum = $acum && false;
+            }
+        }
+
+        if ($type != NULL) {
+            if(strtoupper($user->type) != strtoupper($type)){
+                $acum = $acum && false;
+            }
+        }
+
+        if ($radioActivePenalty != NULL) {
+            if(!($user->hasPenalties())){
+                $acum = $acum && false;
+            }
+        }
+
+
+        if ($radioActiveReserves != NULL) {
+            if(!($user->hasReservations())){
+                $acum = $acum && false;
+            }
+        }
+
+        return $acum;
+    }
 }
+
