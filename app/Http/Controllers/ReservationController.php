@@ -217,6 +217,10 @@ class ReservationController extends Controller
         $anteriority = ($start_time - time()) / 60;
         $error_message = "";
 
+        if($user->hasReserves()){
+            $error_message .= " - Usted posee reservas activas - ";
+        }
+
         if ($resource->type == 'CLASSROOM') {
             if ($user->type == 'STUDENT') {
                 $max_hours = 2;
