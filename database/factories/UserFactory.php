@@ -22,11 +22,13 @@ $factory->define(User::class, function (Faker $faker) {
         'name' => $faker->name,
         'identification' => $faker->unique()->isbn10,
         'university_id' => $faker->unique()->isbn10,
+        'semester' => $faker->numberBetween(1, 10),
         'email' => $faker->unique()->safeEmail,
         'username' => $faker->unique()->userName,
         'role' => $faker->randomElement(['ADMIN','USER','MODERATOR']),
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
         'carreer_id' => $faker->randomElement($carrersIds),
+        'type' => $faker->randomElement(['STUDENT', 'TEACHER']),
         ];
 });
