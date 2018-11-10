@@ -214,7 +214,7 @@ class ReservationController extends Controller
                 'endTime' => $eT,
                 'resource_tipo' => $resource->type,
             ];
-            //$this->sendConfirmEmail($email);
+            $this->sendConfirmEmail($email);
         } else {
             $start_time . date('l jS \of F Y h:i:s A');
             $end_time . date('l jS \of F Y h:i:s A');
@@ -228,7 +228,7 @@ class ReservationController extends Controller
                 'startTime' => $start_time,
                 'endTime' => $end_time
             ];
-            //$this->sendErrorEmail($email);
+            $this->sendErrorEmail($email);
         }
         $reservation = Reservation::find($reservation->id);
         return view('GeneralViews.Reserves.edit',
