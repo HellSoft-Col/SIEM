@@ -23,8 +23,8 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/events ', 'EventController@index')->name('events.get')->middleware('guest');
 Route::get('user/events ', 'EventController@indexAuth')->name('events.get')->middleware('auth');
 
-Route::get('/feed ', 'PublicationController@index')->name('feed.get')->middleware('guest');
-Route::post('/feed ', 'PublicationController@search')->name('feed.post');
+Route::get('/feed', 'PublicationController@index')->name('feed.get')->middleware('guest');
+Route::post('/feed', 'PublicationController@search')->name('feed.post');
 
 Route::get('user/feed ', 'PublicationController@indexAuth')->name('feed.get')->middleware('auth');
 Route::post('/user/feed ', 'PublicationController@searchuser')->name('feed.user.post')->middleware('auth');
@@ -61,13 +61,13 @@ Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('passw
 
 
 Route::get('/resource/view/{resource}', 'ResourceController@show')
-    ->middleware('admin');
+    ->middleware('auth');
 
 Route::post('/reservation/create', 'ReservationController@create')->name('create.reservation')
-    ->middleware('admin');
+    ->middleware('auth');
 
-Route::put('/reservation/create', 'ReservationController@store')->middleware('admin');
-Route::get('/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('admin');
+Route::put('/reservation/create', 'ReservationController@store')->middleware('auth');
+Route::get('/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('auth');
 
 Route::get('/person/reservation/active', 'ReservationController@activeReservations')
     ->name('person.activeReservations')
@@ -87,9 +87,9 @@ Route::post('/person/reservation/delete', 'ReservationController@cancelReservati
 
 /* -----------------------------------------------------------------*/
 
-Route::get('/admin/resource/create', 'ResourceController@create')
+Route::get('/auth/resource/create', 'ResourceController@create')
     ->name('resource.create')
-    ->middleware('admin');
+    ->middleware('auth');
 
 Route::get('/resource/search', 'ResourceController@gosearch')
     ->middleware('auth');
@@ -99,56 +99,43 @@ Route::put('/resource/search', 'ResourceController@search')->name('resource.sear
 
 /* -----------------------------------------------------------------*/
 
-
-/* Route::get('/events/{event}', 'EventController@show')->where('id', '[0-9]+'); */
-
-/*
-Route::get('/resource', function () {
-    return view('GeneralViews.ResourcesViews.view');
-})->middleware('auth');
-*/
-
-/**
- * Route::get('/home', function () {
- * return view('layout_user');
- * });*/
-//***************************************************************************************************************
 Route::get('/person/search', 'UserController@goSearchPerson')
-    ->middleware('admin');
+    ->middleware('moderatorAdmin');
 
 Route::post('/person/search/result', 'UserController@searchPerson')
-    ->middleware('admin');
+    ->middleware('moderatorAdmin');
 
 Route::get('/person/view/{user}', 'UserController@show')
-    ->middleware('admin');
+    ->middleware('moderatorAdmin');
 
 Route::get('/reservation/edit/{reservation}', 'ReservationController@edit')
-    ->middleware('admin');
-Route::put('/reservation/edit/{reservation}', 'ReservationController@update')->middleware('admin');
-//Route::get('/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('admin');
+    ->middleware('moderatorAdmin');
+Route::put('/reservation/edit/{reservation}', 'ReservationController@update')->middleware('moderatorAdmin');
+//Route::get('/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('auth');
 
 
 Route::get('/moderator/resource/hand-over',function(){
     return view('/SpecificViews/Moderator/hand-over');
-});
+})->middleware('moderator');
 
 
 /*-----------------------3ra Entrega---------------------------------*/
-// URLS Cocunubo
-Route::get('/resource/create/sala', 'ResourceController@createSala')->name('resource.createSala');
-Route::get('/resource/create/instrumento', 'ResourceController@createInstrumento')->name('resource.createInstrumento');
-Route::put('/resource/create/sala', 'ResourceController@storeSala');
-Route::put('/resource/create/instrumento', 'ResourceController@storeInstrumento');
-Route::get('/resource/edit/{ID}', 'ResourceController@editResource');
-Route::get('/resource/edit', 'ResourceController@editViewSala')->name('resource.editSala');
-Route::get('/resource/edit', 'ResourceController@editViewInstrumento')->name('resource.editInstrumento');
-Route::post('/resource/edit', 'ResourceController@update');
-Route::delete('/resource/delete/{ID}', 'ResourceController@destroy')->name('resource.delete');
+
+
+Route::get('/admin/resource/create/sala', 'ResourceController@createSala')->name('resource.createSala')->middleware('admin');
+Route::get('/admin/resource/create/instrumento', 'ResourceController@createInstrumento')->name('resource.createInstrumento')->middleware('admin');
+Route::put('/admin/resource/create/sala', 'ResourceController@storeSala')->middleware('admin');
+Route::put('/admin/resource/create/instrumento', 'ResourceController@storeInstrumento')->middleware('admin');
+Route::get('/admin/resource/edit/{ID}', 'ResourceController@editResource')->middleware('admin');
+Route::get('/admin/resource/edit', 'ResourceController@editViewSala')->name('resource.editSala')->middleware('admin');
+Route::get('/admin/resource/edit', 'ResourceController@editViewInstrumento')->name('resource.editInstrumento')->middleware('admin');
+Route::post('/admin/resource/edit', 'ResourceController@update')->middleware('admin');
+Route::delete('/admin/resource/delete/{ID}', 'ResourceController@destroy')->name('resource.delete')->middleware('admin');
 
 Route::get('/person/reservations/{ID}/active', 'ReservationController@personActiveReservations');
 Route::get('/person/reservations/{ID}/history', 'ReservationController@loadPersonHistoryReservations');
 Route::get('/person/reservation/history/{startTime}/{endTime}/{ID}', 'ReservationController@personHistoryReservations');
-Route::post('/person/reservation/deleteAdminMonitor', 'ReservationController@cancelReservationsAdminMonitor')
+Route::post('/person/reservation/deleteauthMonitor', 'ReservationController@cancelReservationsauthMonitor')
     ->name('person.cancelReservations');
 
 Route::get('/person/penalties/{ID}/actives', 'PenaltyController@activePenalties');

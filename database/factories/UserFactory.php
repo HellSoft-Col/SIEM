@@ -1,8 +1,8 @@
 <?php
 
-use Faker\Generator as Faker;
-use App\Models\User;
 use App\Models\Carreer;
+use App\Models\User;
+use Faker\Generator as Faker;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,7 +20,8 @@ $factory->define(User::class, function (Faker $faker) {
     $carrersIds = Carreer::all()->pluck('id')->toArray();
     return [
         'name' => $faker->name,
-        'identification' => $faker->unique()->randomNumber($nbDigits = NULL, $strict = false),
+        'identification' => $faker->unique()->isbn10,
+        'university_id' => $faker->unique()->isbn10,
         'email' => $faker->unique()->safeEmail,
         'username' => $faker->unique()->userName,
         'role' => $faker->randomElement(['ADMIN','USER','MODERATOR']),
