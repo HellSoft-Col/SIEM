@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'person' => \App\Http\Middleware\PersonMiddleware::class,
         'reservation' => \App\Http\Middleware\ReservationMiddleware::class,
         'search' => \App\Http\Middleware\SearchMiddleware::class,
+        'moderatorAdmin' => \App\Http\Middleware\AdminMonitor::class,
     ];
 }

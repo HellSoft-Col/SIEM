@@ -12,6 +12,20 @@
 @endsection
 @section('content')
     <div class="container" style="margin-top: 50px;">
+        <!-- Poner if para el admin para que muestre el div de ese row-->
+        @if(Auth::user()->role == 'ADMIN')
+        <div class="row">
+            <div class="col">
+                <div class="d-flex flex-row-reverse">
+                    <a class="btn btn-dark js-scroll-trigger"
+                       href=" ">Añadir recurso
+                    </a>
+
+                </div>
+            </div>
+        </div>
+        <br>
+        @endif
         <div class="card card-outline-secondary">
             <div class="card-header">
                 <h3 class="mb-0">Búsqueda de recursos</h3>
@@ -91,7 +105,7 @@
                     <div id="options" name="options">
 
                         <div id="char_1" class="row d-flex flex-row justify-content-center">
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <select id="option" class="form-control" size="0" name="option">
                                         <option value="and">AND</option>
@@ -122,14 +136,14 @@
                                 </div>
 
                             </div>
-                            <div class="row">
-                                <div class="form-group col-xs-100">
+                            <div class="row d-flex justify-content-end">
+                                <div class="form-group col">
                                     <div class="d-flex align-items-center mx-auto">
                                         <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
                                            href="#" onclick="addCaracteristic()">Añadir</a>
                                     </div>
                                 </div>
-                                <div class="form-group col-xs-100">
+                                <div class="form-group col d-flex flex-row-reverse ">
                                     <div class="d-flex align-items-center mx-auto">
                                         <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
                                            href="#" onclick="delCaracteristic(this)">Borrar</a>

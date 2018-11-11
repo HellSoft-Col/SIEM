@@ -2,10 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Characteristic;
+use App\Models\CharacteristicResource;
+use App\Models\Classroom_type;
+use App\Models\File;
+use App\Models\Reservation;
 use App\Models\Resource;
+use App\Models\User;
 use Calendar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Log;
 
 class ResourceController extends Controller
@@ -25,9 +32,20 @@ class ResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function createSala()
     {
-        return view('SpecificViews.Admin.Resource.create');
+        $types = Classroom_type::all();
+        return view('TestViewsCocu.createSala',compact('types'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createInstrumento()
+    {
+        return view('TestViewsCocu.createInstrumento');
     }
 
     /**
@@ -36,9 +54,88 @@ class ResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeSala(Request $request)
     {
-        //
+        $type = 'CLASSROOM';
+        $tClass = Classroom_type::where('name',$request->tSalon)->first();
+        $r = Resource::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'type' => $type,
+            'state' => 'AVAILABLE',
+            'classroom_type_id' => $tClass->id
+        ]);
+        //PENDIENTE CARACTERISTICAS  -> descripcion
+        $chars = isset($request['chars']) ? $request['chars'] : array();
+        foreach ($chars as $value) {
+            $charsDb = Characteristic::where('name',$value)->first();
+            if ($charsDb == null){
+                $charsDb = Characteristic::create([
+                    'name' => $value
+                ]);
+            }
+            CharacteristicResource::create([
+                'resource_id' => $r->id,
+                'characteristic_id' => $charsDb->id,
+                'quantity' => $request->quantity
+            ]);
+        }
+
+        if($request->images != null){
+            $photos = $request->images;
+            foreach ($photos as $photo)  {
+                $url = Storage::disk('local')->put($r->name. 'Folder', $photo);
+                File::create([
+                    'path' => $url,
+                    'resource_id' => $r->id
+                ]);
+            }
+        }
+        $types = Classroom_type::all();
+        return view('TestViewsCocu.createSala',compact("types"));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeInstrumento(Request $request)
+    {
+        $type = 'INSTRUMENT';
+        $r = Resource::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'type' => $type,
+            'state' => 'AVAILABLE',
+        ]);
+        //PENDIENTE CARACTERISTICAS
+        $chars = isset($request['chars']) ? $request['chars'] : array();
+        foreach ($chars as $value) {
+            $charsDb = Characteristic::where('name',$value)->first();
+            if ($charsDb == null){
+                $charsDb = Characteristic::create([
+                    'name' => $value
+                ]);
+            }
+            CharacteristicResource::create([
+                'resource_id' => $r->id,
+                'characteristic_id' => $charsDb->id,
+                'quantity' => $request->quantity
+            ]);
+        }
+        if($request->images != null){
+            $photos = $request->images;
+            foreach ($photos as $photo)  {
+                $url = Storage::disk('local')->put($r->name. 'Folder', $photo);
+                File::create([
+                    'path' => $url,
+                    'resource_id' => $r->id
+                ]);
+            }
+        }
+        return view('TestViewsCocu.createInstrumento');
     }
 
     /**
@@ -49,8 +146,6 @@ class ResourceController extends Controller
      */
     public function show(Resource $resource)
     {
-
-
         $now = new \DateTime('now');
         $reservations = $resource->reservationsIn($now->format('m'));
 
@@ -78,9 +173,52 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function edit(Resource $resource)
+    public function editResource(Request $request)
     {
-        //
+        $resource = Resource::where('id',$request->ID)->first();
+        if (strcmp($resource->type,'CLASSROOM') == 0) {
+            return $this->editViewSala($resource);
+        }
+        return $this->editViewInstrumento($resource);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Resource  $resource
+     * @return \Illuminate\Http\Response
+     */
+    public function editViewSala(Resource $resource)
+    {
+        $id = $resource->id;
+        $name = $resource->name;
+        $type = Classroom_type::where('id',$resource->classroom_type_id)->first();
+        $tSalon = $type->name;
+        $types = Classroom_type::all();
+        $state = $resource->state;
+        $images = $resource->files;
+        $characteristic = $resource->characteristics;
+        $description = $resource->description;
+        return view('TestViewsCocu.editSala', compact('id','name', 'tSalon', 'types',
+            'state', 'images', 'characteristic', 'description') );
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Resource  $resource
+     * @return \Illuminate\Http\Response
+     */
+    public function editViewInstrumento(Resource $resource)
+    {
+        $id = $resource->id;
+        $name = $resource->name;
+        $state = $resource->state;
+        $images = $resource->files;
+        $characteristic = $resource->characteristics;
+        $description = $resource->description;
+        return view('TestViewsCocu.editInstrumento', compact('id','name', 'state',
+            'images', 'characteristic', 'description') );
     }
 
     /**
@@ -90,9 +228,19 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Resource $resource)
+    public function update(Request $request)
     {
-        //
+        $resource = Resource::where('id',$request->id)->first();
+        $resource->name = $request->name;
+        $resource->state = $request->state;
+        $resource->description = $request->description;
+        if ($request->has('tSalon')){
+            $type = Classroom_type::where('name',$request->tSalon)->first();
+            $resource->classroom_type_id = $type->id;
+        }
+        //pendiente caracteristicas
+        $resource->save();
+        return view('home'); //Cambiar a busqueda de recursos
     }
 
     /**
@@ -101,9 +249,11 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Resource $resource)
+    public function destroy(Request $request)
     {
-        //
+        $resource = Resource::find($request->id);
+        $resource->delete();
+        return view('home');//cambiar
     }
 
     /**
@@ -113,25 +263,19 @@ class ResourceController extends Controller
      */
     public function gosearch()
     {
-        $rtypes = DB::table('resource')
-            ->join('resource_type', 'resource.resource_type_id', '=', 'resource_type.id')
-            ->where('resource.type', '=', 'CLASSROOM')
-            ->distinct()->get(['resource_type.name']);
-        $rtypes_instrument = DB::table('resource')
-            ->join('resource_type', 'resource.resource_type_id', '=', 'resource_type.id')
-            ->where('resource.type', '=', 'INSTRUMENT')
-            ->distinct()->get(['resource_type.name']);
+        $rtypes = DB::table('resource_type')
+            ->where('resource_type.type', '=', 'CLASSROOM')
+            ->get(['resource_type.name']);
+        $rtypes_instrument = DB::table('resource_type')
+            ->where('resource_type.type', '=', 'INSTRUMENT')
+            ->get(['resource_type.name']);
 
-        $rcaracteristics = DB::table('resource')
-            ->join('characteristic_resource', 'characteristic_resource.resource_id', '=', 'resource.id')
-            ->join('characteristic', 'characteristic_resource.characteristic_id', '=', 'characteristic.id')
-            ->where('resource.type', '=', 'CLASSROOM')
+        $rcaracteristics = DB::table('characteristic')
+            ->where('characteristic.type', '=', 'CLASSROOM')
             ->distinct()->get(['characteristic.name']);
 
-        $rcaracteristics_instrument = DB::table('resource')
-            ->join('characteristic_resource', 'characteristic_resource.resource_id', '=', 'resource.id')
-            ->join('characteristic', 'characteristic_resource.characteristic_id', '=', 'characteristic.id')
-            ->where('resource.type', '=', 'INSTRUMENT')
+        $rcaracteristics_instrument = DB::table('characteristic')
+            ->where('characteristic.type', '=', 'INSTRUMENT')
             ->distinct()->get(['characteristic.name']);
 
         return view('GeneralViews.ResourcesViews.search',
@@ -188,6 +332,7 @@ class ResourceController extends Controller
 
     private function match($keyword, $type, $c_type, $characteristics, $operators)
     {
+
         $r = [];
         $aux_resources = Resource::all();
 
@@ -252,4 +397,69 @@ class ResourceController extends Controller
         }
         return $acum;
     }
+
+    public function view(Request $request){
+        $resource = Resource::find($request['ID']);
+        $rs = $resource->reservations;
+        $reservations = [];
+        foreach ($rs as $r){
+            $user = User::find($r->user_id);
+            $item = [
+              'name' => $r->name,
+              'nameUser' => $user->name,
+              'startTime' => $r->start_time,
+              'endTime' => $r->end_time
+            ];
+            array_push($reservations,$item);
+        }
+        return view('TestViewsCocu.viewResAdmin',compact('resource','reservations'));
+    }
+
+    public function reservationsByResource(Request $request){
+        $resource = Resource::find($request['ID']);
+        $rs = $resource->reservations->where('state','ACTIVE');
+        $reservations = [];
+        foreach ($rs as $r){
+            $user = User::find($r->user_id);
+            $item = [
+                'id' => $r->id,
+                'name' => $r->name,
+                'nameUser' => $user->name,
+                'startTime' => $r->start_time,
+                'endTime' => $r->end_time
+            ];
+            array_push($reservations,$item);
+        }
+        return view('GeneralViews.ResourcesViews.reserves',compact('resource','reservations','user'));
+    }
+
+    /**
+     * Cancela las reservas seleccionadas por el usuario actual
+     *
+     * @param
+     * @return
+     */
+    public function cancelReservations()
+    {
+        $data = request()->all();
+        $reservas = isset($data['selected']) ? $data['selected'] : array();
+
+        if (!empty($data['all']) and strcmp($data['all'][0],'all') === 0 ) {
+            $rReserv = Reservation::where('resource_id',$data['id'])
+                        ->where('state','ACTIVE')->get();
+            foreach ($rReserv as $item) {
+                $item->state = 'CANCELED';
+                $item->save();
+            }
+        } else {
+            foreach ($reservas as $value) {
+                $item = Reservation::where('id',$value)->first();
+                $item->state = 'CANCELED';
+                $item->save();
+            }
+        }
+        return redirect(url()->previous());
+    }
+
 }
+

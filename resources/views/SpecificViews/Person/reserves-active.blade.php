@@ -2,10 +2,6 @@
 @section('includes')
     <link rel="stylesheet" href="{{ asset('/css/reserve/content.css') }}">
 @endsection
-@section('options')
-    <a class="dropdown-item" href="#">Publicaciones</a>
-    <a class="dropdown-item" href="#">Eventos</a>
-@endsection
 @section('content')
     <div class="container">
         <div class="row">
@@ -60,47 +56,45 @@
                     </div>
                 </div>
             </div>
-        <hr>
-        <div class="container-list">
-            <ul class="list-unstyled">
-                @if (!empty($reservations))
-                    @foreach($reservations as $reservation)
-                        <li class="media my-6">
-                            <div class="col-md-4">
-                                <div class="form-check " for="checkOne">
-                                    <label class="form-check-label">
-                                        <input type="checkbox" class="form-check-input" id="checkOne" name="selected[]"
-                                               value="{{$reservation['id']}}">
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="media-body d-flex align-items-center">
-                                <div class="row">
-                                    <div class="col text-center">
-                                        <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                        <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}
-                                            <br>{{$reservation['fin']}}</p>
+            <hr>
+            <div class="container-list">
+                <ul class="list-unstyled">
+                    @if (!empty($reservations))
+                        @foreach($reservations as $reservation)
+                            <li class="media my-6">
+                                <div class="col-md-4">
+                                    <div class="form-check " for="checkOne">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" class="form-check-input" id="checkOne"
+                                                   name="selected[]"
+                                                   value="{{$reservation['id']}}">
+                                        </label>
                                     </div>
-
                                 </div>
-                                <div class="col d-flex justify-content-end ">
-                                    <div class="col d-flex justify-content-end">
-                                        <div class="d-flex align-items-center mx-auto">
-                                            <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger" href="#">Ver
+                                <div class="media-body">
+                                    <div class="row">
+                                        <div class="col-lg-9">
+                                            <h5 class="mt-0 mb-1">Recurso: {{$reservation['name']}}</h5>
+                                            <p>Salón: {{$reservation['salon']}}<br>Inicio: {{$reservation['inicio']}}
+                                                <br>Fin: {{$reservation['fin']}}</p>
+                                        </div>
+                                        <div class="col-auto d-flex flex-column">
+                                            <a class="btn btn-dark "
+                                               href="{{url('/resource/view/'.$reservation['id_resource'])}}">Ver
                                                 recurso</a>
                                         </div>
                                     </div>
-                                </div>
 
-                            </div>
-                        </li>
-            @endforeach
+                                </div>
+                            </li>
+                        @endforeach
+
+                    @else
+                        <h1>No posee reservas activas en este momento</h1>
+                    @endif
+                </ul>
+            </div>
         </form>
-        @else
-            <h1>No posee reservas activas en este momento</h1>
-            @endif
-            </ul>
-        </div>
     </div>
 @endsection
 @section('scripts')
