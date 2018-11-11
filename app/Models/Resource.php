@@ -58,7 +58,7 @@ class Resource extends Model
         foreach ($aux_reservations as $reservation) {
             if($reservation->user->id !== $user->id){
                 if (!(($start_time <= $reservation->start_time && $end_time <= $reservation->start_time) ||
-                    ($start_time >= $reservation->end_time && $end_time <= $reservation->end_time))) {
+                    ($start_time >= $reservation->end_time && $end_time >= $reservation->end_time))) {
                     $r = false;
                 }
             }
