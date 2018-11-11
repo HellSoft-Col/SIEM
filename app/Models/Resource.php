@@ -56,7 +56,7 @@ class Resource extends Model
         $r = true;
         $aux_reservations = $this->reservations()->where('state', 'ACTIVE')->get();
         foreach ($aux_reservations as $reservation) {
-            if($reservation->user->id !== $user->id){
+            if ($reservation->user->id !== $user->id) {
                 if (!(($start_time <= $reservation->start_time && $end_time <= $reservation->start_time) ||
                     ($start_time >= $reservation->end_time && $end_time <= $reservation->end_time))) {
                     $r = false;

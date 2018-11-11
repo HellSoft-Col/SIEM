@@ -45,7 +45,9 @@
                                 </div>
                                 <div class="col-auto d-flex flex-column">
                                         <a class="btn btn-dark btn-sm m-1" href="{{url("/person/view/{$person->id}")}}">Ver persona</a>
-                                        <a class="btn btn-dark btn-sm m-1" href="{{url('/person/reservations/'.$person->id.'/active')}}">Gestionar reservas</a>
+                                    <a class="btn btn-dark btn-sm m-1"
+                                       href="{{url('/person/reservations/'.$person->id.'/active')}}">Gestionar
+                                        reservas</a>
                                         <button class="btn btn-dark btn-sm m-1" href="">Editar persona</button>
                                         <button class="btn btn-dark btn-sm m-1" href="">Eliminar persona</button>
                                 </div>

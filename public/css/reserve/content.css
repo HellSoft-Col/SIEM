@@ -84,14 +84,17 @@ label {
 li {
     margin-bottom: 20px;
 }
+
 .previous {
     background-color: #f1f1f1;
     color: black;
 }
+
 .round {
     border-radius: 50%;
 }
-i{
+
+i {
     color: black;
 }
 

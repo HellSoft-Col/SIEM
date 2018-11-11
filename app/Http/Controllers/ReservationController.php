@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
-use App\Models\User;
 use App\Models\ResourceType;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -54,7 +54,7 @@ class ReservationController extends Controller
         $resource = Resource::find($request->resource_id);
         $end_time = date('Y-m-d H:i:s', strtotime($request->end_time));
         $start_time = date('Y-m-d H:i:s', strtotime($request->start_time));
-        $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time),false);
+        $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time), false);
         if ($message == "") {
             Reservation::create([
                 'state' => 'ACTIVE',
@@ -194,7 +194,7 @@ class ReservationController extends Controller
         }
 
 
-        $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time),true);
+        $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time), true);
         if ($message == "") {
             Reservation::find($reservation->id)->update([
                 'state' => 'ACTIVE',
@@ -271,19 +271,19 @@ class ReservationController extends Controller
         $error_message = "";
         $act_user_role = Auth::user()->role;
 
-        if($resource == NULL){
+        if ($resource == NULL) {
             $error_message .= " -Error encontrando recurso - ";
             return $error_message;
         }
 
-        if(!$update){
-            if($user->hasReservationsOf($resource->type)){
+        if (!$update) {
+            if ($user->hasReservationsOf($resource->type)) {
                 $error_message .= " - Usted posee reservas activas - ";
             }
 
         }
 
-        if($act_user_role === 'USER'){
+        if ($act_user_role === 'USER') {
             if ($resource->type == 'CLASSROOM') {
                 if ($user->type == 'STUDENT') {
                     $max_hours = 2;
@@ -326,7 +326,7 @@ class ReservationController extends Controller
             $error_message .= " - Fechas inconsistentes - ";
         }
 
-        if (!$resource->isAvailableBetween(date('Y-m-d H:i:s', $start_time), date('Y-m-d H:i:s', $end_time),$user)) {
+        if (!$resource->isAvailableBetween(date('Y-m-d H:i:s', $start_time), date('Y-m-d H:i:s', $end_time), $user)) {
             $error_message .= " - No está disponible - ";
         }
         return $error_message;

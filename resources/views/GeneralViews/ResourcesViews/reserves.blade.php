@@ -64,11 +64,16 @@
                                     <div class="row">
                                         <div class="col-lg-9">
                                             <h5 class="mt-0 mb-1">Reserva: {{$reservation['name']}}</h5>
-                                            <p>Usuario: {{$reservation['nameUser']}}<br>Inicio: {{$reservation['startTime']}}<br>Fin: {{$reservation['endTime']}}</p>
+                                            <p>Usuario: {{$reservation['nameUser']}}
+                                                <br>Inicio: {{$reservation['startTime']}}
+                                                <br>Fin: {{$reservation['endTime']}}</p>
                                         </div>
                                         <div class="col-auto d-flex flex-column">
-                                            <a class="btn btn-dark btn-sm m-1" href="{{url("/person/view/{$user->id}")}}">Ver usuario</a>
-                                            <a class="btn btn-dark btn-sm m-1" href="{{url("/reservation/edit/{$reservation['id']}")}}">Editar reserva</a>
+                                            <a class="btn btn-dark btn-sm m-1"
+                                               href="{{url("/person/view/{$user->id}")}}">Ver usuario</a>
+                                            <a class="btn btn-dark btn-sm m-1"
+                                               href="{{url("/reservation/edit/{$reservation['id']}")}}">Editar
+                                                reserva</a>
                                         </div>
 
                                     </div>

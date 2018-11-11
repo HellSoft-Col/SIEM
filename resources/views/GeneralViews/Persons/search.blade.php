@@ -87,7 +87,8 @@
                         </div>
                     </div>
                     <div class="form-group row d-flex justify-content-center">
-                        <label class="col-lg-2 col-form-label form-control-label d-flex flex-row" for="role">Carrera:</label>
+                        <label class="col-lg-2 col-form-label form-control-label d-flex flex-row"
+                               for="role">Carrera:</label>
                         <div class="col-lg-6">
                             <select name="carreer" id="carreer" class="form-control" size="0">
                                 <option value=""></option>
@@ -106,9 +107,9 @@
                                 <option value=""></option>
                                     <option hidden class="sala"
                                             value=""></option>
-                                    <option value="ADMIN">Administrador</option>
-                                    <option value="USER">Persona</option>
-                                    <option value="MODERATOR">Monitor</option>
+                                <option value="ADMIN">Administrador</option>
+                                <option value="USER">Persona</option>
+                                <option value="MODERATOR">Monitor</option>
                             </select>
                         </div>
                     </div>

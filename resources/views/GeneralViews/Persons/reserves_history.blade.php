@@ -37,7 +37,7 @@
         </form>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script>
-            $('input[type="radio"]').on('click', function() {
+            $('input[type="radio"]').on('click', function () {
                 window.location = $(this).val();
             });
         </script>
@@ -53,7 +53,8 @@
                         <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input"
                                    data-target="#datetimepickerStart" name="startTime" value="{{old('startTime')}}"/>
-                            <div class="input-group-append" data-target="#datetimepickerStart" data-toggle="datetimepicker">
+                            <div class="input-group-append" data-target="#datetimepickerStart"
+                                 data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
@@ -62,7 +63,7 @@
                 <script type="text/javascript">
                     $(function () {
                         $('#datetimepickerStart').datetimepicker({
-                            format:'YYYY-MM-DD'
+                            format: 'YYYY-MM-DD'
                         });
                     });
                 </script>
@@ -74,7 +75,8 @@
                         <div class="input-group date" id="datetimepickerEnd" data-target-input="nearest">
                             <input type="text" class="form-control datetimepicker-input"
                                    data-target="#datetimepickerEnd" name="endTime" value="{{old('endTime')}}"/>
-                            <div class="input-group-append" data-target="#datetimepickerEnd" data-toggle="datetimepicker">
+                            <div class="input-group-append" data-target="#datetimepickerEnd"
+                                 data-toggle="datetimepicker">
                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                             </div>
                         </div>
@@ -83,7 +85,7 @@
                 <script type="text/javascript">
                     $(function () {
                         $('#datetimepickerEnd').datetimepicker({
-                            format:'YYYY-MM-DD'
+                            format: 'YYYY-MM-DD'
                         });
                     });
                 </script>
@@ -98,20 +100,26 @@
                 @if (!empty($reservations))
                     @foreach($reservations as $reservation)
                         <li class="media my-4">
-                            <img class="col-md-4 mr-3" src="{{asset($reservation['imagePath'])}}" alt="Generic placeholder image" style="with:290px;height:171px;>
-                            <div class="media-body d-flex align-items-center">
-                            <div class="media-body">
-                                <div class="row" >
-                                    <div class="col-lg-9">
-                                        <h5 class="mt-0 mb-1">Recurso: {{$reservation['name']}}</h5>
-                                        <p>Salón: {{$reservation['salon']}}<br>Inicio: {{$reservation['inicio']}}<br>Fin: {{$reservation['fin']}}</p>
-                                    </div>
-                                    <div class="col-auto d-flex flex-column">
-                                        <a class="btn btn-dark " href="{{url('/resource/view/'.$reservation['id_resource'])}}">Ver recurso</a>
+                            <img class="col-md-4 mr-3" src="{{asset($reservation['imagePath'])}}"
+                                 alt="Generic placeholder image" style="with:290px;height:171px;">
+                            <div class=" media-body d-flex align-items-center">
+                                <div class="media-body">
+                                    <div class="row">
+                                        <div class="col-lg-9">
+                                            <h5 class="mt-0 mb-1">Recurso: {{$reservation['name']}}</h5>
+                                            <p>Salón: {{$reservation['salon']}}<br>Inicio: {{$reservation['inicio']}}
+                                                <br>Fin: {{$reservation['fin']}}
+                                            </p>
+                                        </div>
+                                        <div class="col-auto d-flex flex-column">
+                                            <a class="btn btn-dark "
+                                               href="{{url('/resource/view/'.$reservation['id_resource'])}}">Ver
+                                                recurso</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                         </li>
+                        </li>
                     @endforeach
                 @else
                     <h1>No tiene historial de reservas</h1>

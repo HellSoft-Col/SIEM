@@ -81,12 +81,18 @@
                                     <div class="row">
                                         <div class="col-lg-9">
                                             <h5 class="mt-0 mb-1">Recurso: {{$reservation['name']}}</h5>
-                                            <p>Salón: {{$reservation['salon']}}<br>Inicio: {{$reservation['inicio']}}<br>Fin: {{$reservation['fin']}}</p>
+                                            <p>Salón: {{$reservation['salon']}}<br>Inicio: {{$reservation['inicio']}}
+                                                <br>Fin: {{$reservation['fin']}}</p>
                                         </div>
                                         <div class="col-auto d-flex flex-column">
-                                            <a class="btn btn-dark " href="{{url('/resource/view/'.$reservation['id_resource'])}}">Ver recurso</a>
-                                            <a class="btn btn-dark btn-sm m-1" href="{{url("/person/view/{$user->id}")}}">Ver usuario</a>
-                                            <a class="btn btn-dark btn-sm m-1" href="{{url("/reservation/edit/{$reservation['id']}")}}">Editar reserva</a>
+                                            <a class="btn btn-dark "
+                                               href="{{url('/resource/view/'.$reservation['id_resource'])}}">Ver
+                                                recurso</a>
+                                            <a class="btn btn-dark btn-sm m-1"
+                                               href="{{url("/person/view/{$user->id}")}}">Ver usuario</a>
+                                            <a class="btn btn-dark btn-sm m-1"
+                                               href="{{url("/reservation/edit/{$reservation['id']}")}}">Editar
+                                                reserva</a>
                                         </div>
                                     </div>
                                 </div>

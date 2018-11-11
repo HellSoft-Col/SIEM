@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Carreer;
 use App\Models\File;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -56,7 +55,7 @@ class UserController extends Controller
             [
                 'user' => $user,
             ]
-            );
+        );
     }
 
     /**
@@ -172,7 +171,7 @@ class UserController extends Controller
         $u = [];
         $aux_users = User::all();
 
-        foreach ($aux_users as $user){
+        foreach ($aux_users as $user) {
             if ($this->matchBool($user, $name, $username, $identification, $id, $semester, $role,
                 $type, $radioActivePenalty, $radioActiveReserves, $carreer)) {
                 array_push($u, $user);
@@ -195,56 +194,56 @@ class UserController extends Controller
             }
         }
         if ($username != NULL) {
-            if(strtoupper($user->username) != strtoupper($username)){
+            if (strtoupper($user->username) != strtoupper($username)) {
                 $acum = $acum && false;
             }
         }
 
         if ($identification != NULL) {
-            if($user->identification != $identification){
+            if ($user->identification != $identification) {
                 $acum = $acum && false;
             }
         }
 
         if ($id != NULL) {
-            if($user->university_id != $id){
+            if ($user->university_id != $id) {
                 $acum = $acum && false;
             }
         }
 
         if ($semester != NULL) {
-            if($user->semester != $semester){
+            if ($user->semester != $semester) {
                 $acum = $acum && false;
             }
         }
 
         if ($role != NULL) {
-            if(strtoupper($user->role) != strtoupper($role)){
+            if (strtoupper($user->role) != strtoupper($role)) {
                 $acum = $acum && false;
             }
         }
 
         if ($carreer != NULL) {
-            if(strtoupper($user->carreer->name) != strtoupper($carreer)){
+            if (strtoupper($user->carreer->name) != strtoupper($carreer)) {
                 $acum = $acum && false;
             }
         }
 
         if ($type != NULL) {
-            if(strtoupper($user->type) != strtoupper($type)){
+            if (strtoupper($user->type) != strtoupper($type)) {
                 $acum = $acum && false;
             }
         }
 
         if ($radioActivePenalty != NULL) {
-            if(!($user->hasPenalties())){
+            if (!($user->hasPenalties())) {
                 $acum = $acum && false;
             }
         }
 
 
         if ($radioActiveReserves != NULL) {
-            if(!($user->hasReservations())){
+            if (!($user->hasReservations())) {
                 $acum = $acum && false;
             }
         }

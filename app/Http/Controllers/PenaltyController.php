@@ -144,9 +144,9 @@ class PenaltyController extends Controller
         $penalties = [];
 
         foreach ($reservations as $r) {
-            $p = Penalty::where('reservation_id',$r->id)->where('active',0)->first();
-            if ($p != null and $this->matchBoolPenalty($p,$starTime,$endTime) ){
-                array_push($penalties,$p);
+            $p = Penalty::where('reservation_id', $r->id)->where('active', 0)->first();
+            if ($p != null and $this->matchBoolPenalty($p, $starTime, $endTime)) {
+                array_push($penalties, $p);
             }
         }
         return view('TestViewsCocu.historyPenalties', ['user' => $user,

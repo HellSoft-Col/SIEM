@@ -65,7 +65,7 @@
                 <script type="text/javascript">
                     $(function () {
                         $('#datetimepickerStart').datetimepicker({
-                            format:'YYYY-MM-DD'
+                            format: 'YYYY-MM-DD'
                         });
                     });
                 </script>
@@ -87,7 +87,7 @@
                 <script type="text/javascript">
                     $(function () {
                         $('#datetimepickerEnd').datetimepicker({
-                            format:'YYYY-MM-DD'
+                            format: 'YYYY-MM-DD'
                         });
                     });
                 </script>
@@ -105,18 +105,23 @@
                         <li class="media my-4">
                             <div class="col-md-4">
                                 <img class="mr-3" src="{{asset($reservation['imagePath'])}}"
-                                     alt="Generic placeholder image" style="with:290px;height:171px;>
-                            <div class=" media-body d-flex align-items-center">
+                                     alt="Generic placeholder image" style="with:290px;height:171px;">
                             </div>
-                            <div class="media-body">
-                                <div class="row">
-                                    <div class="col-lg-9">
-                                        <h5 class="mt-0 mb-1">Recurso: {{$reservation['name']}}</h5>
-                                        <p>Salón: {{$reservation['salon']}}
-                                            <br>Inicio: {{$reservation['inicio']}}<br>Fin: {{$reservation['fin']}}</p>
-                                    </div>
-                                    <div class="col-auto d-flex flex-column">
-                                        <a class="btn btn-dark " href="{{url('/resource/view/'.$reservation['id_resource'])}}">Ver recurso</a>
+                            <div class=" media-body d-flex align-items-center">
+
+                                <div class="media-body">
+                                    <div class="row">
+                                        <div class="col-lg-9">
+                                            <h5 class="mt-0 mb-1">Recurso: {{$reservation['name']}}</h5>
+                                            <p>Salón: {{$reservation['salon']}}
+                                                <br>Inicio: {{$reservation['inicio']}}
+                                                <br>Fin: {{$reservation['fin']}}</p>
+                                        </div>
+                                        <div class="col-auto d-flex flex-column">
+                                            <a class="btn btn-dark "
+                                               href="{{url('/resource/view/'.$reservation['id_resource'])}}">Ver
+                                                recurso</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
