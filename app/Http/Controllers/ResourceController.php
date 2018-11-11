@@ -8,13 +8,12 @@ use App\Models\Classroom_type;
 use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
-use Calendar;
 use App\Models\User;
+use Calendar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Log;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
+use Log;
 
 class ResourceController extends Controller
 {
@@ -467,4 +466,6 @@ class ResourceController extends Controller
         }
         return redirect(url()->previous());
     }
+
 }
+

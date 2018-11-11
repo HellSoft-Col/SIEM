@@ -65,7 +65,8 @@
             <ul class="list-unstyled">
                 @if (!empty($reservations))
                     @foreach($reservations as $reservation)
-                        <li class="media my-6">
+
+                        <li class="media my-4">
                             <div class="col-md-4">
                                 <div class="form-check " for="checkOne">
                                     <label class="form-check-label">
@@ -74,24 +75,24 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="media-body d-flex align-items-center">
-                                <div class="row">
-                                    <div class="col text-center">
-                                        <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                        <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}
-                                            <br>{{$reservation['fin']}}</p>
-                                    </div>
-
+                            <div class="row">
+                                <div class="col text-center">
+                                    <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
+                                    <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}
+                                        <br>{{$reservation['fin']}}</p>
                                 </div>
-                                <div class="col d-flex justify-content-end ">
-                                    <div class="col d-flex justify-content-end">
+                            </div>
+                            <div class="col d-flex">
+                                <div class="col d-flex justify-content-center">
+                                    <div class="d-flex align-items-center">
                                         <div class="d-flex align-items-center mx-auto">
-                                            <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger" href="#">Ver
-                                                recurso</a>
+                                            <button type="submit"
+                                                    class="btn btn-dark d-flex align-items-center js-scroll-trigger"
+                                                    href="#">Ver recurso
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </li>
             @endforeach

@@ -21,8 +21,8 @@
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
                     <div class="form-group row">
-                        <label class="col-lg-2 col-form-label form-control-label" for="datetimepickerStart">Fecha Inicio - Hora
-                            Inicio:</label>
+                        <label class="col-lg-2 col-form-label form-control-label" for="datetimepickerStart">Fecha Inicio
+                            - Hora Inicio:</label>
                         <div class="col-lg-9">
                             <div class="input-group date" id="datetimepickerStart" data-target-input="nearest">
                                 <input name="start_time" value="{{old('start_time')}}" type="text"

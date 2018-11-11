@@ -7,10 +7,7 @@
     <script src="{{ asset('/js/date/date.js') }}" type="text/javascript"></script>
     <link rel="stylesheet" href="{{ asset('/css/reserve/content.css') }}">
 @endsection
-@section('options')
-    <a class="dropdown-item" href="#">Publicaciones</a>
-    <a class="dropdown-item" href="#">Eventos</a>
-@endsection
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -40,7 +37,7 @@
                 </div>
             </div>
         </form>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
         <script>
             $('input[type="radio"]').on('click', function () {
                 window.location = $(this).val();
@@ -124,8 +121,7 @@
                                         <div class="d-flex align-items-center mx-auto">
                                             <button type="submit"
                                                     class="btn btn-dark d-flex align-items-center js-scroll-trigger"
-                                                    href="#">Ver
-                                                recurso
+                                                    href="#">Ver recurso
                                             </button>
                                         </div>
                                     </div>

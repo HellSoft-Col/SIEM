@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Models\Reservation;
+use Illuminate\Database\Seeder;
 
 class ReservationSeeder extends Seeder
 {
@@ -12,6 +12,6 @@ class ReservationSeeder extends Seeder
      */
     public function run()
     {
-        factory(Reservation::class,8)->create();
+        factory(Reservation::class, 1000)->create();
     }
 }

@@ -147,3 +147,11 @@ Route::get('/resource/view/{ID}', 'ResourceController@view')->name('resource.vie
 Route::get('/resource/view/{ID}/reservations', 'ResourceController@reservationsByResource')->name('resource.reservations');
 Route::post('/resource/deleteReservations', 'ResourceController@cancelReservations');
 
+
+/*** Crear reserva Admin and monitor **/
+Route::get('/calendar/{resource}', 'CalendarController@show')->where('resource', '[0-9]+')->middleware('auth');
+
+Route::get('/reservation/view/resources/instrument/{user}', 'ReservationController@loadResourcesAdminMonitorInstrument')->where('user', '[0-9]+')->middleware('auth');
+Route::get('/reservation/view/resources/classroom/{user}', 'ReservationController@loadResourcesAdminMonitorClassroom')->where('user', '[0-9]+')->middleware('auth');
+
+

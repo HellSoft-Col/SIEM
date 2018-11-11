@@ -24,5 +24,15 @@ class Reservation extends Model
     function penalty(){
         return $this->hasOne(Penalty::class);
     }
+
+    static function ActiveReservations()
+    {
+        return Reservation::where('state', 'ACTIVE')->get();
+    }
+
+    static function RunningReservations()
+    {
+        return Reservation::where('state', 'RUNNING')->get();
+    }
 }
 

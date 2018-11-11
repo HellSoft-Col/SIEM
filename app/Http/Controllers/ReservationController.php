@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ResourceType;
 use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
+use App\Models\ResourceType;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,7 +33,7 @@ class ReservationController extends Controller
      */
     public function create(Request $request)
     {
-        $resource_id = $request->_resource;
+        $resource_id = $request->resource;
         $message = "";
         return view('GeneralViews.Reserves.create', compact('resource_id', 'message'));
     }
@@ -45,7 +46,11 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        $user = Auth::user();
+        if (Auth::user()->role != 'USER') {
+            $user = User::where('id', $request->user_id);
+        } else {
+            $user = Auth::user();
+        }
         $resource = Resource::find($request->resource_id);
         $end_time = date('Y-m-d H:i:s', strtotime($request->end_time));
         //$request->end_time;/**strtotime($request->end_date . " " . $request->end_time);*/;
@@ -303,10 +308,9 @@ class ReservationController extends Controller
             ->where('state', 'FINALIZED')->get();
         foreach ($userItems as $uItem) {
             $resource = Resource::where('id', $uItem->resource_id)->first();
-            $image = File::where('resource_id', $uItem->id)->first();
             $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
-                "imagePath" => $image->path,
+                "imagePath" => $resource->files[0]->path,
                 "name" => $resource->name,
                 "salon" => $classroom->name,
                 "inicio" => $uItem->start_time,
@@ -519,4 +523,92 @@ class ReservationController extends Controller
         }
         return $acum;
     }
+
+    /**
+     * Obtener las reservas activas para el dia actual
+     *
+     * @param
+     * @return Reservation
+     *
+     */
+
+    private function getActualActiveReservations()
+    {
+        $actualtime = Carbon::now();
+        $reservations = Reservation::ActiveReservations();
+        $actual_res = [];
+
+        foreach ($reservations as $reservation) {
+            if ($reservation->start_time->format('Y-m-d') == $actualtime->format('Y-m-d')) {
+                $actual_res[] = $reservation;
+            }
+        }
+
+        return $actual_res;
+    }
+
+    /**
+     * Obtener las reservas no devueltas
+     *
+     * @param
+     * @return Reservation
+     *
+     */
+    private function getActualRunningReservations()
+    {
+        return Reservation::RunningReservations();
+    }
+
+    /**
+     * Finalizar una reserva dada por id
+     *
+     * @param $reservation_id
+     * @return
+     */
+    private function finalizeReservation($reservation_id)
+    {
+        $reservation = Reservation::where('id', $reservation_id)->get();
+        $reservation->state = 'FINALIZED';
+        $reservation->save();
+    }
+
+    /**
+     *
+     *  Cambiar estado de reserva de 'Activa' a 'corriendo'
+     *
+     * @param $reservation_id
+     * @return
+     */
+    private function HandOverReservation($reservation_id)
+    {
+        $reservation = Reservation::where('id', $reservation_id)->get();
+        $reservation->state = 'RUNNING';
+        $reservation->save();
+    }
+
+
+    /**
+     * Mostrar ventana de seleccion de recursos
+     * @param $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function loadResourcesAdminMonitorInstrument(User $user)
+    {
+
+        $resources = Resource::where('type', 'INSTRUMENT')->get();
+        return view('GeneralViews.ResourcesViews.Availability.view_instrument', ['resources' => $resources, 'user' => $user]);
+    }
+
+
+    /**
+     * Mostrar ventana de seleccion de recursos
+     * @param $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function loadResourcesAdminMonitorClassroom(User $user)
+    {
+        $resources = Resource::where('type', 'CLASSROOM')->get();
+        return view('GeneralViews.ResourcesViews.Availability.view_classroom', ['resources' => $resources, 'user' => $user]);
+    }
+
 }

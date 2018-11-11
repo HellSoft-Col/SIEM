@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateReservationTable extends Migration
 {
@@ -15,7 +15,7 @@ class CreateReservationTable extends Migration
     {
         Schema::create('reservation', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('state',['ACTIVE','CANCELED','FINALIZED']);
+            $table->enum('state', ['ACTIVE', 'CANCELED', 'FINALIZED', 'RUNNING']);
             $table->timestamp('start_time');
             $table->timestamp('end_time');
             $table->unsignedInteger('user_id');
