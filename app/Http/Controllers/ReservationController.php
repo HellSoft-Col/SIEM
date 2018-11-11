@@ -48,9 +48,7 @@ class ReservationController extends Controller
         $user = Auth::user();
         $resource = Resource::find($request->resource_id);
         $end_time = date('Y-m-d H:i:s', strtotime($request->end_time));
-        //$request->end_time;/**strtotime($request->end_date . " " . $request->end_time);*/;
         $start_time = date('Y-m-d H:i:s', strtotime($request->start_time));
-        //$request->start_time;/**strtotime($request->start_date . " " . $request->start_time);*/;
         $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time),false);
         if ($message == "") {
             Reservation::create([
