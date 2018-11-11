@@ -118,6 +118,10 @@ Route::get('/moderator/resource/hand-over',function(){
     return view('/SpecificViews/Moderator/hand-over');
 })->middleware('moderator');
 
+Route::get('/person/posts', function () {
+    return view('/GeneralViews/Persons/posts');
+});
+
 
 /*-----------------------3ra Entrega---------------------------------*/
 

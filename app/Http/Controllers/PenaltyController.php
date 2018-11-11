@@ -102,7 +102,7 @@ class PenaltyController extends Controller
                 array_push($penalties,$p);
             }
         }
-        return view('TestViewsCocu.activePenalties',compact('user','penalties'));
+        return view('GeneralViews.Persons.penalties-active', compact('user', 'penalties'));
     }
 
     /**
@@ -123,7 +123,7 @@ class PenaltyController extends Controller
                 array_push($penalties,$p);
             }
         }
-        return view('TestViewsCocu.historyPenalties', ['user' => $user,
+        return view('GeneralViews.Persons.penalties-history', ['user' => $user,
             'penalties' => $penalties]);
     }
 
@@ -149,7 +149,7 @@ class PenaltyController extends Controller
                 array_push($penalties, $p);
             }
         }
-        return view('TestViewsCocu.historyPenalties', ['user' => $user,
+        return view('GeneralViews.Persons.penalties-history', ['user' => $user,
             'penalties' => $penalties]);
     }
 

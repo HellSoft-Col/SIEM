@@ -357,7 +357,7 @@ class ReservationController extends Controller
             ];
             array_push($reservations, $item);
         }
-        return view('GeneralViews.Reserves.active', ['reservations' => $reservations]);
+        return view('SpecificViews.Person.reserves-active', ['reservations' => $reservations]);
     }
 
     /**
@@ -385,7 +385,7 @@ class ReservationController extends Controller
             ];
             array_push($reservations, $item);
         }
-        return view('GeneralViews.Reserves.history', ['reservations' => $reservations]);
+        return view('SpecificViews.Person.reserves-history', ['reservations' => $reservations]);
     }
 
     /**
@@ -420,7 +420,7 @@ class ReservationController extends Controller
                 array_push($reservations, $item);
             }
         }
-        return view('GeneralViews.Reserves.history', ['reservations' => $reservations]);
+        return view('SpecificViews.Person.reserves-history', ['reservations' => $reservations]);
     }
 
     /**
@@ -450,7 +450,7 @@ class ReservationController extends Controller
                 }
             }
         }
-        return view('GeneralViews.Reserves.active');
+        return view('SpecificViews.Person.reserves-active');
     }
 
     /**
