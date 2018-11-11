@@ -105,7 +105,7 @@
                                         <p>Razón de la multa: {{$penalty['reason']}}<br>Fecha en que finalizó: {{$penalty['penalty_end']}}</p>
                                     </div>
                                     <div class="col-auto d-flex flex-column">
-                                        <a class="btn btn-dark " href="">Ver recurso</a>
+                                        <a class="btn btn-dark " href="{{url('/resource/view/'.$penalty['id_resource'])}}">Ver recurso</a>
                                     </div>
                                 </div>
                             </div>
