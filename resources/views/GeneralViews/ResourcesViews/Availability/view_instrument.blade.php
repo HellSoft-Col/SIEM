@@ -52,8 +52,11 @@
                     @foreach($resources as $resource)
                         <li class="media my-4">
                             <div class="col-md-4">
-                                <img class="mr-3" src="{{asset($resource->files[0]->path)}}"
-                                     alt="Generic placeholder image" style="with:290px;height:171px;">
+                                @foreach($resource->files as $file)
+                                    <img class="mr-3" src="{{asset($file->path)}}"
+                                         alt="Generic placeholder image" style="with:290px;height:171px;">
+                                    @break
+                                @endforeach
                             </div>
                             <div class=" media-body d-flex align-items-center">
                                 <div class="row">
@@ -71,10 +74,17 @@
                                                         href="#" value="{{URL::to('/')}}/calendar/{{$resource->id}}"
                                                         onclick="updateCalendar(this.value)">Disponibilidad
                                                 </button>
-                                                <button type="submit"
-                                                        class="btn btn-dark d-flex align-items-center btn-sm m-1"
-                                                        href="#">Hacer Reserva
-                                                </button>
+
+                                                <form id="reservar_button" class="form" role="form" method="POST"
+                                                      action="{{ route('create.reservation') }}">
+                                                    @csrf
+                                                    <input type="hidden" name="_user" value="{{ $user->id }}">
+                                                    <input type="hidden" name="_resource" value="{{$resource->id}}">
+                                                    <button type="submit"
+                                                            class="btn btn-dark d-flex align-items-center btn-sm m-1"
+                                                            href="#">Hacer Reserva
+                                                    </button>
+                                                </form>
 
                                             </div>
                                         </div>

@@ -48,6 +48,11 @@
                                 <div class="col-lg-3">
                                     <a class="btn btn-dark btn-lg" href="{{url('/person/posts')}}">Ver publicaciones</a>
                                 </div>
+                                <div class="col-lg-3">
+                                    <a class="btn btn-dark btn-lg"
+                                       href="{{url('/reservation/view/resources/classroom/'.$user->id)}}">Hacer
+                                        Reserva</a>
+                                </div>
                             </div>
                         </div>
                     </div>

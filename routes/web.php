@@ -89,7 +89,7 @@ Route::post('/person/reservation/delete', 'ReservationController@cancelReservati
 
 Route::get('/auth/resource/create', 'ResourceController@create')
     ->name('resource.create')
-    ->middleware('auth');
+    ->middleware('admin');
 
 Route::get('/resource/search', 'ResourceController@gosearch')
     ->middleware('auth');
@@ -145,17 +145,16 @@ Route::post('/person/reservation/deleteAdminMonitor', 'ReservationController@can
 Route::get('/person/penalties/{ID}/actives', 'PenaltyController@activePenalties');
 Route::get('/person/penalties/{ID}/history', 'PenaltyController@loadHistoryPenalties');
 Route::get('/person/penalties/history/{startTime}/{endTime}/{ID}', 'PenaltyController@personHistoryPenalties');
-Route::get('/person/penalty/conclude', 'PenaltyController@endPenalties');
+Route::get('/person/penalty/conclude', 'PenaltyController@endPenalties')->middleware('moderatorAdmin');
 
 Route::get('/resource/view/{ID}', 'ResourceController@view')->name('resource.view');
-Route::get('/resource/view/{ID}/reservations', 'ResourceController@reservationsByResource')->name('resource.reservations');
-Route::post('/resource/deleteReservations', 'ResourceController@cancelReservations');
+Route::get('/resource/view/{ID}/reservations', 'ResourceController@reservationsByResource')->name('resource.reservations')->middleware('moderatorAdmin');
+Route::post('/resource/deleteReservations', 'ResourceController@cancelReservations')->middleware('moderatorAdmin');
 
 
 /*** Crear reserva Admin and monitor **/
 Route::get('/calendar/{resource}', 'CalendarController@show')->where('resource', '[0-9]+')->middleware('auth');
-
-Route::get('/reservation/view/resources/instrument/{user}', 'ReservationController@loadResourcesAdminMonitorInstrument')->where('user', '[0-9]+')->middleware('auth');
-Route::get('/reservation/view/resources/classroom/{user}', 'ReservationController@loadResourcesAdminMonitorClassroom')->where('user', '[0-9]+')->middleware('auth');
+Route::get('/reservation/view/resources/instrument/{user}', 'ReservationController@loadResourcesAdminMonitorInstrument')->where('user', '[0-9]+')->middleware('moderatorAdmin');
+Route::get('/reservation/view/resources/classroom/{user}', 'ReservationController@loadResourcesAdminMonitorClassroom')->where('user', '[0-9]+')->middleware('moderatorAdmin');
 
 
