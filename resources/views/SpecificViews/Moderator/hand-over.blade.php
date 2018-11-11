@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <br>
-                <table class="table table-bordered" id="myTable">
+                <table class="table table-bordered text-center" id="myTable">
                     <tbody>
                     <thead class="thead-dark">
                     <tr >
@@ -60,17 +60,20 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                    <button class="btn-dark btn-lg d-flex justify-content-center">Entregar</button>
+                </div>
             </div>
             <div class="col">
                 <h3 class="d-flex justify-content-center">Devolver recurso</h3>
                 <br>
-                <table class="table table-bordered" id="myTable1">
+                <table class="table table-bordered text-center" id="myTable1">
                     <tbody>
                     <thead class="thead-dark">
                     <tr>
-                        <th>Example</th>
-                        <th>Example</th>
-                        <th>Example</th>
+                        <th>Sala-salón</th>
+                        <th>Tiempo-restante</th>
+                        <th>Estado</th>
                     </tr>
                     </thead>
                     <tr class="clickable-row">
@@ -78,6 +81,9 @@
                     </tr>
                     </tbody>
                 </table>
+                <div class="d-flex justify-content-center">
+                    <button class="btn-dark btn-lg d-flex justify-content-center">Devolver</button>
+                </div>
                 <script type="text/javascript">
                     $(function () {
                         $('#myTable').on('click', '.clickable-row', function(event) {

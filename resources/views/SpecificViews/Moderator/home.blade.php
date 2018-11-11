@@ -16,13 +16,13 @@
                      style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
                     <div class="div-table-row">
                         <div class="div-table-col">
-                            <a>
+                            <a href="{{url('/moderator/resource/hand-over')}}">
                                 <img src="{{asset('/svg/icons/hanging-over-the-key.svg')}}" height="55">
                             </a>
                         </div>
                         <div class="div-table-col">
                             <div class="media-body">
-                                <a>
+                                <a href="{{url('/moderator/resource/hand-over')}}">
                                     <h5 class="media-heading">Entregar recurso</h5>
                                 </a>
                             </div>
@@ -35,13 +35,13 @@
                      style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
                     <div class="div-table-row">
                         <div class="div-table-col">
-                            <a>
+                            <a href="{{url('/person/search')}}">
                                 <img src="{{asset('/svg/icons/persons.svg')}}" height="55">
                             </a>
                         </div>
                         <div class="div-table-col">
                             <div class="media-body">
-                                <a>
+                                <a href="{{url('/person/search')}}">
                                     <h5 class="media-heading">Personas</h5>
                                 </a>
                             </div>
@@ -54,13 +54,13 @@
                      style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
                     <div class="div-table-row">
                         <div class="div-table-col">
-                            <a>
+                            <a href="{{url('/resource/search')}}">
                                 <img src="{{asset('/svg/icons/resources.svg')}}" height="55">
                             </a>
                         </div>
                         <div class="div-table-col">
                             <div class="media-body">
-                                <a>
+                                <a href="{{url('/resource/search')}}">
                                     <h5 class="media-heading">Recursos</h5>
                                 </a>
                             </div>
