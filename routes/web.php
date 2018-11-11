@@ -135,13 +135,13 @@ Route::delete('/admin/resource/delete/{ID}', 'ResourceController@destroy')->name
 Route::get('/person/reservations/{ID}/active', 'ReservationController@personActiveReservations');
 Route::get('/person/reservations/{ID}/history', 'ReservationController@loadPersonHistoryReservations');
 Route::get('/person/reservation/history/{startTime}/{endTime}/{ID}', 'ReservationController@personHistoryReservations');
-Route::post('/person/reservation/deleteauthMonitor', 'ReservationController@cancelReservationsauthMonitor')
+Route::post('/person/reservation/deleteAdminMonitor', 'ReservationController@cancelReservationsAdminMonitor')
     ->name('person.cancelReservations');
 
 Route::get('/person/penalties/{ID}/actives', 'PenaltyController@activePenalties');
 Route::get('/person/penalties/{ID}/history', 'PenaltyController@loadHistoryPenalties');
-Route::get('/person/penalties/history/{startTime}/{endTime}/{ID}', 'PenaltyController@historyPenalties');
-Route::post('/person/penalties/delete', 'PenaltyController@endPenalties');
+Route::get('/person/penalties/history/{startTime}/{endTime}/{ID}', 'PenaltyController@personHistoryPenalties');
+Route::get('/person/penalty/conclude', 'PenaltyController@endPenalties');
 
 Route::get('/resource/view/{ID}', 'ResourceController@view')->name('resource.view');
 Route::get('/resource/view/{ID}/reservations', 'ResourceController@reservationsByResource')->name('resource.reservations');

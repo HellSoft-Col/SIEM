@@ -2,16 +2,13 @@
 @section('includes')
     <link rel="stylesheet" href="{{ asset('/css/reserve/content.css') }}">
 @endsection
-@section('options')
-    <a class="dropdown-item" href="#">Publicaciones</a>
-    <a class="dropdown-item" href="#">Eventos</a>
-@endsection
 @section('content')
     <div class="container">
-        <div class="d-flex flex-row">
-            <div class="d-flex justify-content-start">
-                <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                   href="{{url()->previous()}}">Volver
+        <div class=" row d-flex flex-row">
+            <a class="btn m-auto" href="{{url()->previous()}}"><i class="fa fa-arrow-circle-left fa-3x"></i></a>
+            <div class=" col d-flex justify-content-end m-auto">
+                <a class="btn btn-dark d-flex align-items-center js-scroll-trigger"
+                   href="{{ route('create.reservation') }}">Crear reserva
                 </a>
             </div>
         </div>
@@ -72,7 +69,7 @@
                     @if (!empty($reservations))
                         @foreach($reservations as $reservation)
                             <li class="media my-6">
-                                <div class="col-sm-3 d-flex align-items-center mx-auto">
+                                <div class="col-md-4">
                                     <div class="form-check col-2" for="checkOne">
                                         <label class="form-check-label">
                                             <input type="checkbox" class="form-check-input" id="checkOne" name="selected[]"
@@ -80,17 +77,16 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="media-body d-flex align-items-center">
-                                    <div class="row flexcontainer">
-                                        <div class="col itemcenter">
-                                            <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                            <p>{{$reservation['salon']}}<br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
+                                <div class="media-body">
+                                    <div class="row">
+                                        <div class="col-lg-9">
+                                            <h5 class="mt-0 mb-1">Recurso: {{$reservation['name']}}</h5>
+                                            <p>Salón: {{$reservation['salon']}}<br>Inicio: {{$reservation['inicio']}}<br>Fin: {{$reservation['fin']}}</p>
                                         </div>
-                                        <div class="col-3 itemright d-flex align-items-center">
-                                            <div class="d-flex align-items-center mx-auto">
-                                                <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger" href="#">Ver
-                                                    recurso</a>
-                                            </div>
+                                        <div class="col-auto d-flex flex-column">
+                                            <a class="btn btn-dark " href="{{url('/resource/view/'.$reservation['id_resource'])}}">Ver recurso</a>
+                                            <a class="btn btn-dark btn-sm m-1" href="{{url("/person/view/{$user->id}")}}">Ver usuario</a>
+                                            <a class="btn btn-dark btn-sm m-1" href="{{url("/reservation/edit/{$reservation['id']}")}}">Editar reserva</a>
                                         </div>
                                     </div>
                                 </div>

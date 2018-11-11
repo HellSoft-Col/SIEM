@@ -70,6 +70,7 @@
                         <label class="col-lg-2 col-form-label form-control-label" for="resource">Recurso:</label>
                         <div class="col-lg-9">
                             <select name="resource" id="resource" class="form-control" size="0">
+                                <option value="{{$act_resource->id}}">{{$act_resource->name}}</option>
                                 @forelse($resources as $resource)
                                     <option value="{{$resource->id}}">{{$resource->name}}</option>
                                 @empty

@@ -263,25 +263,19 @@ class ResourceController extends Controller
      */
     public function gosearch()
     {
-        $rtypes = DB::table('resource')
-            ->join('resource_type', 'resource.resource_type_id', '=', 'resource_type.id')
-            ->where('resource.type', '=', 'CLASSROOM')
-            ->distinct()->get(['resource_type.name']);
-        $rtypes_instrument = DB::table('resource')
-            ->join('resource_type', 'resource.resource_type_id', '=', 'resource_type.id')
-            ->where('resource.type', '=', 'INSTRUMENT')
-            ->distinct()->get(['resource_type.name']);
+        $rtypes = DB::table('resource_type')
+            ->where('resource_type.type', '=', 'CLASSROOM')
+            ->get(['resource_type.name']);
+        $rtypes_instrument = DB::table('resource_type')
+            ->where('resource_type.type', '=', 'INSTRUMENT')
+            ->get(['resource_type.name']);
 
-        $rcaracteristics = DB::table('resource')
-            ->join('characteristic_resource', 'characteristic_resource.resource_id', '=', 'resource.id')
-            ->join('characteristic', 'characteristic_resource.characteristic_id', '=', 'characteristic.id')
-            ->where('resource.type', '=', 'CLASSROOM')
+        $rcaracteristics = DB::table('characteristic')
+            ->where('characteristic.type', '=', 'CLASSROOM')
             ->distinct()->get(['characteristic.name']);
 
-        $rcaracteristics_instrument = DB::table('resource')
-            ->join('characteristic_resource', 'characteristic_resource.resource_id', '=', 'resource.id')
-            ->join('characteristic', 'characteristic_resource.characteristic_id', '=', 'characteristic.id')
-            ->where('resource.type', '=', 'INSTRUMENT')
+        $rcaracteristics_instrument = DB::table('characteristic')
+            ->where('characteristic.type', '=', 'INSTRUMENT')
             ->distinct()->get(['characteristic.name']);
 
         return view('GeneralViews.ResourcesViews.search',

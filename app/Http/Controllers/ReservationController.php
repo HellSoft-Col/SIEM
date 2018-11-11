@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
-use App\Models\ResourceType;
 use App\Models\User;
+use App\Models\ResourceType;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,10 +53,8 @@ class ReservationController extends Controller
         }
         $resource = Resource::find($request->resource_id);
         $end_time = date('Y-m-d H:i:s', strtotime($request->end_time));
-        //$request->end_time;/**strtotime($request->end_date . " " . $request->end_time);*/;
         $start_time = date('Y-m-d H:i:s', strtotime($request->start_time));
-        //$request->start_time;/**strtotime($request->start_date . " " . $request->start_time);*/;
-        $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time));
+        $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time),false);
         if ($message == "") {
             Reservation::create([
                 'state' => 'ACTIVE',
@@ -147,6 +145,7 @@ class ReservationController extends Controller
      */
     public function edit(Reservation $reservation)
     {
+        $act_resource = $reservation->resource;
         $resources = [];
         $message = "";
         if($reservation->resource->type == 'CLASSROOM'){
@@ -161,6 +160,7 @@ class ReservationController extends Controller
             [
                 'reservation' => $reservation,
                 'resources' => $resources,
+                'act_resource' => $act_resource,
                 'message' => $message
             ]
         );
@@ -175,11 +175,15 @@ class ReservationController extends Controller
      */
     public function update(Request $request, Reservation $reservation)
     {
-        $start_date = $request->start_time;
-        $end_date = $request->end_time;
+        $start_time = $request->start_time;
+        $end_time = $request->end_time;
         $resource_id = $request->resource;
         $resources = [];
         $message = "";
+        $user = $reservation->user;
+        $resource = Resource::find($resource_id);
+
+
         if($reservation->resource->type == 'CLASSROOM'){
             $resources = DB::table('resource')
                 ->where('resource.type', '=', 'CLASSROOM')->get();
@@ -188,8 +192,52 @@ class ReservationController extends Controller
             $resources = DB::table('resource')
                 ->where('resource.type', '=', 'INSTRUMENT')->get();
         }
+
+
+        $message = $this->canReserve($user, $resource, strtotime($start_time), strtotime($end_time),true);
+        if ($message == "") {
+            Reservation::find($reservation->id)->update([
+                'state' => 'ACTIVE',
+                'start_time' => date('Y-m-d H:i:s', strtotime($request->start_time)),
+                'end_time' => date('Y-m-d H:i:s', strtotime($request->end_time)),
+                'user_id' => $user->id,
+                'resource_id' => $resource->id,
+                'moulted' => '0'
+            ]);
+            $sT = date('l jS \of F Y h:i:s A', strtotime($start_time));
+            $eT = date('l jS \of F Y h:i:s A', strtotime($end_time));
+            $message .= "Reserva actualizada";
+            $email = [
+                'nameUser' => $user->name,
+                'emailUser' => $user->email,
+                'message' => $message,
+                'resourceId' => $resource->id,
+                'resourceName' => $resource->name,
+                'startTime' => $sT,
+                'endTime' => $eT,
+                'resource_tipo' => $resource->type,
+            ];
+            //$this->sendConfirmEmail($email);
+        } else {
+            $start_time . date('l jS \of F Y h:i:s A');
+            $end_time . date('l jS \of F Y h:i:s A');
+            $email = [
+                'nameUser' => $user->name,
+                'emailUser' => $user->email,
+                'message' => $message,
+                'resourceId' => $resource->id,
+                'resourceName' => $resource->name,
+                'resource_tipo' => $resource->type,
+                'startTime' => $start_time,
+                'endTime' => $end_time
+            ];
+            //$this->sendErrorEmail($email);
+        }
+        $reservation = Reservation::find($reservation->id);
+        $resource = $reservation->resource;
         return view('GeneralViews.Reserves.edit',
             [
+                'act_resource' => $resource,
                 'reservation' => $reservation,
                 'resources' => $resources,
                 'message' => $message
@@ -214,54 +262,71 @@ class ReservationController extends Controller
      * @param
      * @return
      */
-    private function canReserve($user, $resource, $start_time, $end_time)
+    private function canReserve($user, $resource, $start_time, $end_time, $update)
     {
         $max_hours = 0;
         $min_hours = 1;
         $hours = ($end_time - $start_time) / 3600;
         $anteriority = ($start_time - time()) / 60;
         $error_message = "";
+        $act_user_role = Auth::user()->role;
 
-        if ($resource->type == 'CLASSROOM') {
-            if ($user->type == 'STUDENT') {
-                $max_hours = 2;
-            } else {
-                $max_hours = 4;
-            }
-        } else if ($resource->type == 'INSTRUMENT') {
-            $min_hours = 24;
-            $max_hours = 168;
+        if($resource == NULL){
+            $error_message .= " -Error encontrando recurso - ";
+            return $error_message;
         }
-        date_default_timezone_set('America/Bogota');
+
+        if(!$update){
+            if($user->hasReservationsOf($resource->type)){
+                $error_message .= " - Usted posee reservas activas - ";
+            }
+
+        }
+
+        if($act_user_role === 'USER'){
+            if ($resource->type == 'CLASSROOM') {
+                if ($user->type == 'STUDENT') {
+                    $max_hours = 2;
+                } else {
+                    $max_hours = 4;
+                }
+            } else if ($resource->type == 'INSTRUMENT') {
+                $min_hours = 24;
+                $max_hours = 168;
+            }
+            date_default_timezone_set('America/Bogota');
+
+            if (is_int($hours) && $hours >= $min_hours && $hours <= $max_hours) {
+                if ($resource->type == 'CLASSROOM') {
+                    if ($anteriority >= 30 && $anteriority <= 10080) {
+                        //
+                    } else {
+                        $error_message .= " - No se encuentra en un tiempo valido - ";
+                    }
+                } else if ($resource->type == 'INSTRUMENT') {
+                    if ($anteriority >= 120 && $anteriority <= 10080) {
+                        //
+                    } else {
+                        $error_message .= " - No se encuentra en un tiempo valido - ";
+                    }
+                }
+            } else {
+                $error_message .= " - Bloque incorrecto - ";
+            }
+
+            if ($user->hasPenalties()) {
+                $error_message .= " - El usuario tiene multas - ";
+            }
+        }
         if ($anteriority < 0) {
             $error_message .= " - Fecha en el pasado - ";
         }
+
         if ($hours < 0) {
             $error_message .= " - Fechas inconsistentes - ";
         }
-        if (is_int($hours) && $hours >= $min_hours && $hours <= $max_hours) {
-            if ($resource->type == 'CLASSROOM') {
-                if ($anteriority >= 30 && $anteriority <= 10080) {
-                    //
-                } else {
-                    $error_message .= " - No se encuentra en un tiempo valido - ";
-                }
-            } else if ($resource->type == 'INSTRUMENT') {
-                if ($anteriority >= 120 && $anteriority <= 10080) {
-                    //
-                } else {
-                    $error_message .= " - No se encuentra en un tiempo valido - ";
-                }
-            }
-        } else {
-            $error_message .= " - Bloque incorrecto - ";
-        }
 
-        if ($user->hasPenalties()) {
-            $error_message .= " - El usuario tiene multas - ";
-        }
-        //dd($resource);
-        if (!$resource->isAvailableBetween(date('Y-m-d H:i:s', $start_time), date('Y-m-d H:i:s', $end_time))) {
+        if (!$resource->isAvailableBetween(date('Y-m-d H:i:s', $start_time), date('Y-m-d H:i:s', $end_time),$user)) {
             $error_message .= " - No está disponible - ";
         }
         return $error_message;
@@ -284,6 +349,7 @@ class ReservationController extends Controller
             $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
                 "id" => $uItem->id,
+                "id_resource" => $resource->id,
                 "name" => $resource->name,
                 "salon" => $classroom->name,
                 "inicio" => $uItem->start_time,
@@ -311,6 +377,7 @@ class ReservationController extends Controller
             $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
                 "imagePath" => $resource->files[0]->path,
+                "id_resource" => $resource->id,
                 "name" => $resource->name,
                 "salon" => $classroom->name,
                 "inicio" => $uItem->start_time,
@@ -343,6 +410,7 @@ class ReservationController extends Controller
                 $image = File::where('resource_id', $uItem->id)->first();
                 $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
                 $item = [
+                    "id_resource" => $resource->id,
                     "imagePath" => $image->path,
                     "name" => $resource->name,
                     "salon" => $classroom->name,
@@ -403,6 +471,7 @@ class ReservationController extends Controller
             $image = File::where('resource_id', $uItem->id)->first();
             $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
+                "id_resource" => $resource->id,
                 "imagePath" => $image->path,
                 "name" => $resource->name,
                 "salon" => $classroom->name,
@@ -437,6 +506,7 @@ class ReservationController extends Controller
                 $image = File::where('resource_id', $uItem->id)->first();
                 $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
                 $item = [
+                    "id_resource" => $resource->id,
                     "imagePath" => $image->path,
                     "name" => $resource->name,
                     "salon" => $classroom->name,
@@ -446,7 +516,7 @@ class ReservationController extends Controller
                 array_push($reservations, $item);
             }
         }
-        return view('TestViewsCocu.historyAdminMonitor', ['user' => $user,
+        return view('GeneralViews.Persons.reserves_history', ['user' => $user,
             'reservations' => $reservations]);
     }
 
@@ -467,6 +537,7 @@ class ReservationController extends Controller
             $item = [
                 "id" => $uItem->id,
                 "name" => $resource->name,
+                "id_resource" => $resource->id,
                 "salon" => $classroom->name,
                 "inicio" => $uItem->start_time,
                 "fin" => $uItem->end_time

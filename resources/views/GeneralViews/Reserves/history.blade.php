@@ -91,8 +91,8 @@
                         });
                     });
                 </script>
-                <div class="col d-flex justify-content-start">
-                    <button class="btn btn-dark d-flex align-self-center js-scroll-trigger">Filtar reservas</button>
+                <div class="col-auto d-flex flex-column">
+                    <button class="btn btn-dark d-flex align-self-center js-scroll-trigger">Filtrar reservas</button>
                 </div>
             </div>
             <hr>
@@ -108,26 +108,18 @@
                                      alt="Generic placeholder image" style="with:290px;height:171px;>
                             <div class=" media-body d-flex align-items-center">
                             </div>
-                            <div class="row">
-                                <div class="col text-center">
-                                    <h5 class="mt-0 mb-1">{{$reservation['name']}}</h5>
-                                    <p class="container-description mr-auto">{{$reservation['salon']}}
-                                        <br>{{$reservation['inicio']}}<br>{{$reservation['fin']}}</p>
-                                </div>
-                            </div>
-                            <div class="col d-flex">
-                                <div class="col d-flex justify-content-center">
-                                    <div class="d-flex align-items-center">
-                                        <div class="d-flex align-items-center mx-auto">
-                                            <button type="submit"
-                                                    class="btn btn-dark d-flex align-items-center js-scroll-trigger"
-                                                    href="#">Ver recurso
-                                            </button>
-                                        </div>
+                            <div class="media-body">
+                                <div class="row">
+                                    <div class="col-lg-9">
+                                        <h5 class="mt-0 mb-1">Recurso: {{$reservation['name']}}</h5>
+                                        <p>Salón: {{$reservation['salon']}}
+                                            <br>Inicio: {{$reservation['inicio']}}<br>Fin: {{$reservation['fin']}}</p>
+                                    </div>
+                                    <div class="col-auto d-flex flex-column">
+                                        <a class="btn btn-dark " href="{{url('/resource/view/'.$reservation['id_resource'])}}">Ver recurso</a>
                                     </div>
                                 </div>
                             </div>
-
                         </li>
                     @endforeach
                 @else

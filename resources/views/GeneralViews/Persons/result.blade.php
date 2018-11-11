@@ -38,11 +38,14 @@
                             <div class="row ">
                                 <div class="col container-description">
                                     <h5 >{{$person->name}}</h5>
-                                    <p>Estudiante de:{{$person->carreer->name}} <br> {{$person->semester}} Semestre: <br>ID: {{$person->identification}}</p>
+                                    <p>Estudiante de: {{$person->carreer->name}}
+                                        <br> Semestre: {{$person->semester}}
+                                        <br>ID: {{$person->university_id}}
+                                        <br>Cédula: {{$person->identification}}</p>
                                 </div>
                                 <div class="col-auto d-flex flex-column">
                                         <a class="btn btn-dark btn-sm m-1" href="{{url("/person/view/{$person->id}")}}">Ver persona</a>
-                                        <button class="btn btn-dark btn-sm m-1" href="">Gestionar reservas</button>
+                                        <a class="btn btn-dark btn-sm m-1" href="{{url('/person/reservations/'.$person->id.'/active')}}">Gestionar reservas</a>
                                         <button class="btn btn-dark btn-sm m-1" href="">Editar persona</button>
                                         <button class="btn btn-dark btn-sm m-1" href="">Eliminar persona</button>
                                 </div>

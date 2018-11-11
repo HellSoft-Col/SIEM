@@ -55,6 +55,34 @@ class User extends Authenticatable
         return false;
     }
 
+    function hasReservationsOf($type){
+        $classroom = 0;
+        $instrument = 0;
+        foreach ($this->reservations as $reservation){
+            if($reservation->state === 'ACTIVE' && $reservation->resource->type =='CLASSROOM'){
+                $classroom = $classroom+1;
+            }
+            if($reservation->state === 'ACTIVE' && $reservation->resource->type =='INSTRUMENT'){
+                $instrument = $instrument+1;
+            }
+        }
+        if($type == 'CLASSROOM' && $classroom >= 1){
+            return true;
+        }
+        else if ($type === 'INSTRUMENT' && $instrument >= 1){
+            return true;
+        }
+        return false;
+    }
+
+
+    function hasReservations(){
+        if ($this->reservations()->where('state','ACTIVE')->count()>0){
+            return true;
+        }
+        return false;
+    }
+
     function file(){
         return $this->belongsTo(File::class , 'file_id');
     }
