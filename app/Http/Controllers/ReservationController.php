@@ -214,7 +214,7 @@ class ReservationController extends Controller
                 'endTime' => $eT,
                 'resource_tipo' => $resource->type,
             ];
-            $this->sendConfirmEmail($email);
+            //$this->sendConfirmEmail($email);
         } else {
             $start_time . date('l jS \of F Y h:i:s A');
             $end_time . date('l jS \of F Y h:i:s A');
@@ -228,9 +228,10 @@ class ReservationController extends Controller
                 'startTime' => $start_time,
                 'endTime' => $end_time
             ];
-            $this->sendErrorEmail($email);
+            //$this->sendErrorEmail($email);
         }
         $reservation = Reservation::find($reservation->id);
+        $resource = $reservation->resource;
         return view('GeneralViews.Reserves.edit',
             [
                 'act_resource' => $resource,
@@ -267,12 +268,18 @@ class ReservationController extends Controller
         $error_message = "";
         $act_user_role = Auth::user()->role;
 
+        if($resource == NULL){
+            $error_message .= " -Error encontrando recurso - ";
+            return $error_message;
+        }
+
         if(!$update){
-            if(!$user->hasReservations($resource->type)){
+            if($user->hasReservationsOf($resource->type)){
                 $error_message .= " - Usted posee reservas activas - ";
             }
 
         }
+
         if($act_user_role === 'USER'){
             if ($resource->type == 'CLASSROOM') {
                 if ($user->type == 'STUDENT') {
