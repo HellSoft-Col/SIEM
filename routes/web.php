@@ -132,6 +132,10 @@ Route::get('/moderator/resource/hand-over',function(){
     return view('/SpecificViews/Moderator/hand-over');
 });
 
+Route::get('/person/posts',function(){
+    return view('/GeneralViews/Persons/posts');
+});
+
 
 /*-----------------------3ra Entrega---------------------------------*/
 // URLS Cocunubo

@@ -36,10 +36,10 @@
                                         <a class="btn btn-dark btn-lg" href="{{url('/person/reservations/'.$user->id.'/active')}}">Ver reservas</a>
                                     </div>
                                     <div class="col-lg-3">
-                                        <a class="btn btn-dark btn-lg" href="{{url('/person/reservations/'.$user->id.'/active')}}">Ver multas</a>
+                                        <a class="btn btn-dark btn-lg" href="{{url('/person/penalties/'.$user->id.'/actives')}}">Ver multas</a>
                                     </div>
                                     <div class="col-lg-3">
-                                        <a class="btn btn-dark btn-lg" href="{{url('/person/reservations/'.$user->id.'/active')}}">Ver publicaciones</a>
+                                        <a class="btn btn-dark btn-lg" href="{{url('/person/posts')}}">Ver publicaciones</a>
                                     </div>
                                 </div>
                             </div>

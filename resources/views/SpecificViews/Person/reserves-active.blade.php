@@ -2,10 +2,6 @@
 @section('includes')
     <link rel="stylesheet" href="{{ asset('/css/reserve/content.css') }}">
 @endsection
-@section('options')
-    <a class="dropdown-item" href="#">Publicaciones</a>
-    <a class="dropdown-item" href="#">Eventos</a>
-@endsection
 @section('content')
     <div class="container">
         <div class="row">
