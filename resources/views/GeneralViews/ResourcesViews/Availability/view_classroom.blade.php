@@ -53,34 +53,34 @@
                         <li class="media my-4">
                             <div class="col-md-4">
                                 <img class="mr-3" src="{{asset($resource->files[0]->path)}}"
-                                     alt="Generic placeholder image" style="with:290px;height:171px;>
+                                     alt="Generic placeholder image" style="with:290px;height:171px;">
+                            </div>
                             <div class=" media-body d-flex align-items-center">
-                            </div>
-                            <div class="row">
-                                <div class="col text-center">
-                                    <h5 class="mt-0 mb-1">{{$resource->name}}</h5>
-                                    <p class="container-description mr-auto">{{$resource->description}}</p>
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <h5 class="mt-0 mb-1">{{$resource->name}}</h5>
+                                        <p class="container-description mr-auto">{{$resource->description}}</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col d-flex mx-auto col-auto d-flex ">
-                                <div class="col d-flex justify-content-center flex-column">
-                                    <div class="d-flex align-items-center flex-column">
+                                <div class="col d-flex mx-auto col-auto d-flex ">
+                                    <div class="col d-flex justify-content-center flex-column">
                                         <div class="d-flex align-items-center flex-column">
-                                            <button type="submit"
-                                                    class="btn btn-dark d-flex align-items-center btn-sm m-1"
-                                                    href="#" value="{{URL::to('/')}}/calendar/{{$resource->id}}"
-                                                    onclick="updateCalendar(this.value)">Disponibilidad
-                                            </button>
-                                            <button type="submit"
-                                                    class="btn btn-dark d-flex align-items-center btn-sm m-1"
-                                                    href="#">Hacer Reserva
-                                            </button>
+                                            <div class="d-flex align-items-center flex-column">
+                                                <button type="submit"
+                                                        class="btn btn-dark d-flex align-items-center btn-sm m-1"
+                                                        href="#" value="{{URL::to('/')}}/calendar/{{$resource->id}}"
+                                                        onclick="updateCalendar(this.value)">Disponibilidad
+                                                </button>
+                                                <button type="submit"
+                                                        class="btn btn-dark d-flex align-items-center btn-sm m-1"
+                                                        href="#">Hacer Reserva
+                                                </button>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </li>
                     @endforeach
                 @else
