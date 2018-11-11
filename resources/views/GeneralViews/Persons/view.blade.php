@@ -20,6 +20,7 @@
                     <div class="col-md-4 col-xs-12 col-sm-6 col-lg-4">
                         <img src="{{asset($user->file->path)}}" alt="Generic placeholder image"
                              class="w-100 rounded-circle">
+
                     </div>
                     <div class="col-md-8 col-xs-12 col-sm-6 col-lg-8">
                         <div class="container">
