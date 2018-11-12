@@ -8,6 +8,7 @@ use App\Models\Classroom_type;
 use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
+use App\Models\ResourceType;
 use Calendar;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class ResourceController extends Controller
      */
     public function createRoom()
     {
-        $types = Classroom_type::all();
+        $types = ResourceType::all();
         return view('TestViewsCocu.createRoom',compact('types'));
     }
 
@@ -58,13 +59,13 @@ class ResourceController extends Controller
     public function storeRoom(Request $request)
     {
         $type = 'CLASSROOM';
-        $tClass = Classroom_type::where('name',$request->tSalon)->first();
+        $tClass = ResourceType::where('name',$request->tSalon)->first();
         $r = Resource::create([
             'name' => $request->name,
             'description' => $request->description,
             'type' => $type,
             'state' => 'AVAILABLE',
-            'classroom_type_id' => $tClass->id
+            'resource_type_id' => $tClass->id
         ]);
         //PENDIENTE CARACTERISTICAS  -> descripcion
         $chars = isset($request['chars']) ? $request['chars'] : array();
@@ -92,7 +93,7 @@ class ResourceController extends Controller
                 ]);
             }
         }
-        $types = Classroom_type::all();
+        $types = ResourceType::all();
         return view('TestViewsCocu.createRoom',compact("types"));
     }
 
