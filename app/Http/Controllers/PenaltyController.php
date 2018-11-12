@@ -108,7 +108,7 @@ class PenaltyController extends Controller
                 array_push($penalties,$p);
             }
         }
-        return view('GeneralViews.Persons.penalties-active',compact('user','penalties'));
+        return view('GeneralViews.Persons.penalties-active', compact('user', 'penalties'));
     }
 
     /**
@@ -156,15 +156,15 @@ class PenaltyController extends Controller
         $penalties = [];
 
         foreach ($reservations as $r) {
-            $p = Penalty::where('reservation_id',$r->id)->where('active',0)->first();
-            if ($p != null and $this->matchBoolPenalty($p,$starTime,$endTime) ){
+            $p = Penalty::where('reservation_id', $r->id)->where('active', 0)->first();
+            if ($p != null and $this->matchBoolPenalty($p, $starTime, $endTime)) {
                 $p = [
                     "id" => $p->id,
                     "reason" => $p->reason,
                     "penalty_end" => $p->penalty_end,
                     "id_resource" => $r->resource_id
                 ];
-                array_push($penalties,$p);
+                array_push($penalties, $p);
             }
         }
         return view('GeneralViews.Persons.penalties-history', ['user' => $user,

@@ -1,13 +1,13 @@
 <h1>Recursos</h1>
 Añadir
 <br>
-<form  >
-    <input type="radio" name="Sala"  value="{{url('/resource/create/room')}}" > Sala
+<form>
+    <input type="radio" name="Sala" value="{{url('/resource/create/room')}}"> Sala
     <input type="radio" name="Instrumento" checked="checked" value="{{url('/resource/create/instrument')}}"> Instrumento
 </form>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
-    $('input[type="radio"]').on('click', function() {
+    $('input[type="radio"]').on('click', function () {
         window.location = $(this).val();
     });
 </script>
@@ -21,9 +21,13 @@ Añadir
     <label>Característica</label><br>
     <select id="characteristic" id="characteristic" name="chars[]">
     </select>
-    <input type="number" name="quantity"><button >X</button><br>
+    <input type="number" name="quantity">
+    <button>X</button>
+    <br>
     <label>Otra, ¿Cuál?</label><br>
-    <input type="text" name="other"><button type="submit" >Añadir característica</button><br>
+    <input type="text" name="other">
+    <button type="submit">Añadir característica</button>
+    <br>
     <label>Descripción</label><br>
     <textarea name="description" rows="10" cols="30" value="{{old('description')}}"></textarea><br>
     <button type="submit">Crear</button>
