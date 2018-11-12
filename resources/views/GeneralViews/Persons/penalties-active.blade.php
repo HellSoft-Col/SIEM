@@ -18,15 +18,13 @@
                 <div class="col-sm">
                     <div class="form-check-inline">
                         <label class="form-check-label" for="radio1">
-                            <input type="radio" class="form-check-input" id="radio1" name="optradio"
-                                   value="{{url('/person/penalties/'.$user['id'].'/active')}}"
+                            <input type="radio" class="form-check-input" id="radio1" name="optradio" value="{{url('/person/penalties/'.$user['id'].'/active')}}"
                                    checked>Activas
                         </label>
                     </div>
                     <div class="form-check-inline">
                         <label class="form-check-label" for="radio2">
-                            <input type="radio" class="form-check-input" id="radio2" name="optradio"
-                                   value="{{url('/person/penalties/'.$user['id'].'/history')}}">Historial
+                            <input type="radio" class="form-check-input" id="radio2" name="optradio" value="{{url('/person/penalties/'.$user['id'].'/history')}}">Historial
                         </label>
                     </div>
                 </div>
@@ -35,11 +33,11 @@
         <hr>
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         <script>
-            $('input[type="radio"]').on('click', function () {
+            $('input[type="radio"]').on('click', function() {
                 window.location = $(this).val();
             });
         </script>
-        <form method="POST" action="{{url('/person/penalty/conclude')}}">
+        <form method="GET" action="{{url('/person/penalty/conclude')}}">
             {{csrf_field()}}
             <input hidden value="{{$user['id']}}" name="id">
             <div class="row">
@@ -53,9 +51,8 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="d-flex align-items-right mx-auto">
-                        <button class="btn btn-dark d-flex align-items-right js-scroll-trigger">Finalizar multas
-                            seleccionadas
-                        </button>
+                        <button class="btn btn-dark d-flex align-items-right js-scroll-trigger" >Finalizar multas
+                            seleccionadas</button>
                     </div>
                 </div>
             </div>
@@ -68,8 +65,7 @@
                                 <div class="col-md-4">
                                     <div class="form-check col-2" for="checkOne">
                                         <label class="form-check-label">
-                                            <input type="checkbox" class="form-check-input" id="checkOne"
-                                                   name="selected[]"
+                                            <input type="checkbox" class="form-check-input" id="checkOne" name="selected[]"
                                                    value="{{$penalty['id']}}">
                                         </label>
                                     </div>
@@ -78,11 +74,10 @@
                                     <div class="row">
                                         <div class="col-lg-9">
                                             <h5 class="mt-0 mb-1">Multa {{$penalty['id']}}</h5>
-                                            <p>Razón de la multa: {{$penalty['reason']}}<br>Fecha en que
-                                                finaliza: {{$penalty['penalty_end']}}</p>
+                                            <p>Razón de la multa: {{$penalty['reason']}}<br>Fecha en que finaliza: {{$penalty['penalty_end']}}</p>
                                         </div>
                                         <div class="col-auto d-flex flex-column">
-                                            <a class="btn btn-dark " href="">Ver recurso</a>
+                                            <a class="btn btn-dark " href="{{url('/resource/view/'.$penalty['id_resource'])}}">Ver recurso</a>
                                         </div>
                                     </div>
                                 </div>

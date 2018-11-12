@@ -124,20 +124,17 @@ Route::get('/person/posts', function () {
 
 
 /*-----------------------3ra Entrega---------------------------------*/
+// URLS Cocunubo
 
-
-Route::get('/admin/resource/create/classroom', 'ResourceController@createSala')->name('resource.createSala')->middleware('admin');
-Route::get('/admin/resource/create/instrument', 'ResourceController@createInstrumento')->name('resource.createInstrumento')->middleware('admin');
-
-Route::put('/admin/resource/create/sala', 'ResourceController@storeSala')->middleware('admin');
-Route::put('/admin/resource/create/instrumento', 'ResourceController@storeInstrumento')->middleware('admin');
-
-Route::get('/admin/resource/edit/{ID}', 'ResourceController@editResource')->middleware('admin');
-Route::get('/admin/resource/edit', 'ResourceController@editViewSala')->name('resource.editSala')->middleware('admin');
-Route::get('/admin/resource/edit', 'ResourceController@editViewInstrumento')->name('resource.editInstrumento')->middleware('admin');
-
-Route::post('/admin/resource/edit', 'ResourceController@update')->middleware('admin');
-Route::delete('/admin/resource/delete/{ID}', 'ResourceController@destroy')->name('resource.delete')->middleware('admin');
+Route::get('/admin/resource/create/classroom', 'ResourceController@createRoom')->name('resource.createRoom');
+Route::get('/admin/resource/create/instrument', 'ResourceController@createInstrument')->name('resource.createInstrument');
+Route::put('/admin/resource/create/classroom', 'ResourceController@storeRoom');
+Route::put('/admin/resource/create/instrument', 'ResourceController@storeInstrument');
+Route::get('/admin/resource/edit/{ID}', 'ResourceController@editResource');
+Route::get('/admin/resource/edit', 'ResourceController@editViewRoom')->name('resource.editRoom');
+Route::get('/admin/resource/edit', 'ResourceController@editViewInstrument')->name('resource.editInstrument');
+Route::post('/admin/resource/edit', 'ResourceController@update');
+Route::delete('/admin/resource/delete/{ID}', 'ResourceController@destroy')->name('resource.delete');
 
 Route::get('/person/reservations/{ID}/active', 'ReservationController@personActiveReservations');
 Route::get('/person/reservations/{ID}/history', 'ReservationController@loadPersonHistoryReservations');
@@ -159,5 +156,6 @@ Route::post('/resource/deleteReservations', 'ResourceController@cancelReservatio
 Route::get('/calendar/{resource}', 'CalendarController@show')->where('resource', '[0-9]+')->middleware('auth');
 Route::get('/reservation/view/resources/instrument/{user}', 'ReservationController@loadResourcesAdminMonitorInstrument')->where('user', '[0-9]+')->middleware('moderatorAdmin');
 Route::get('/reservation/view/resources/classroom/{user}', 'ReservationController@loadResourcesAdminMonitorClassroom')->where('user', '[0-9]+')->middleware('moderatorAdmin');
+
 
 
