@@ -12,8 +12,9 @@ use App\Models\User;
 use Calendar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Log;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Storage;
 
 class ResourceController extends Controller
 {
@@ -34,8 +35,9 @@ class ResourceController extends Controller
      */
     public function createRoom()
     {
-        $types = ResourceType::all();
-        return view('SpecificViews.Admin.Resource.create_classroom', compact('types'));
+        $types = ResourceType::where('type' , 'CLASSROOM')->get();
+        $rcharacteristics = Characteristic::where('type' , 'CLASSROOM')->get();
+        return view('SpecificViews.Admin.Resource.create_classroom', compact('types','rcharacteristics'));
     }
 
     /**
@@ -45,7 +47,9 @@ class ResourceController extends Controller
      */
     public function createInstrument()
     {
-        return view('TestViewsCocu.createInstrument');
+        $types = ResourceType::where('type' , 'INSTRUMENT')->get();
+        $rcharacteristics = Characteristic::where('type' , 'INSTRUMENT')->get();
+        return view('TestViewsCocu.createInstrument',compact('types','rcharacteristics'));
     }
 
     /**
@@ -57,13 +61,13 @@ class ResourceController extends Controller
     public function storeRoom(Request $request)
     {
         $type = 'CLASSROOM';
-        $tClass = ResourceType::where('name', $request->tSalon)->first();
+        $tClass = ResourceType::where('name', $request->rtype)->first();
         $r = Resource::create([
             'name' => $request->name,
             'description' => $request->description,
             'type' => $type,
             'state' => 'AVAILABLE',
-            'classroom_type_id' => $tClass->id
+            'resource_type_id' => $tClass->id
         ]);
         //PENDIENTE CARACTERISTICAS  -> descripcion
         $chars = isset($request['chars']) ? $request['chars'] : array();
@@ -193,13 +197,13 @@ class ResourceController extends Controller
         $id = $resource->id;
         $name = $resource->name;
         $type = ResourceType::where('id', $resource->classroom_type_id)->first();
-        $tSalon = $type->name;
+        $rtype = $type->name;
         $types = ResourceType::all();
         $state = $resource->state;
         $images = $resource->files;
         $characteristic = $resource->characteristics;
         $description = $resource->description;
-        return view('TestViewsCocu.editRoom', compact('id', 'name', 'tSalon', 'types',
+        return view('TestViewsCocu.editRoom', compact('id', 'name', 'rtype', 'types',
             'state', 'images', 'characteristic', 'description') );
     }
 
@@ -234,8 +238,8 @@ class ResourceController extends Controller
         $resource->name = $request->name;
         $resource->state = $request->state;
         $resource->description = $request->description;
-        if ($request->has('tSalon')){
-            $type = ResourceType::where('name', $request->tSalon)->first();
+        if ($request->has('rtype')){
+            $type = ResourceType::where('name', $request->rtype)->first();
             $resource->classroom_type_id = $type->id;
         }
         //pendiente caracteristicas

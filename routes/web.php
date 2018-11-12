@@ -136,11 +136,11 @@ Route::get('/admin/resource/edit', 'ResourceController@editViewInstrument')->nam
 Route::post('/admin/resource/edit', 'ResourceController@update');
 Route::delete('/admin/resource/delete/{ID}', 'ResourceController@destroy')->name('resource.delete');
 
-Route::get('/person/reservations/{ID}/active', 'ReservationController@personActiveReservations');
-Route::get('/person/reservations/{ID}/history', 'ReservationController@loadPersonHistoryReservations');
-Route::get('/person/reservation/history/{startTime}/{endTime}/{ID}', 'ReservationController@personHistoryReservations');
+Route::get('/person/reservations/{ID}/active', 'ReservationController@personActiveReservations')->middleware('moderatorAdmin');
+Route::get('/person/reservations/{ID}/history', 'ReservationController@loadPersonHistoryReservations')->middleware('moderatorAdmin');
+Route::get('/person/reservation/history/{startTime}/{endTime}/{ID}', 'ReservationController@personHistoryReservations')->middleware('moderatorAdmin');
 Route::post('/person/reservation/deleteAdminMonitor', 'ReservationController@cancelReservationsAdminMonitor')
-    ->name('person.cancelReservations');
+    ->name('person.cancelReservations')->middleware('moderatorAdmin');
 
 Route::get('/person/penalties/{ID}/actives', 'PenaltyController@activePenalties');
 Route::get('/person/penalties/{ID}/history', 'PenaltyController@loadHistoryPenalties');
