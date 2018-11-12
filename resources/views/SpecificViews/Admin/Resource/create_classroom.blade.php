@@ -101,7 +101,7 @@
                                 <div class="col-sm-2">
                                     <div class="form-group">
                                         <input id="quantity" name="quantity" class="form-control" placeholder="cantidad"
-                                               accept="image/*" multiple value="1">
+                                               value="1">
                                     </div>
 
                                 </div>
@@ -154,9 +154,7 @@
     <div id="char_nueva" class="row d-flex flex-row justify-content-center hidden">
         <div class="col-sm-2">
             <div class="form-group">
-                <input id="quantity" name="quantity" class="form-control"
-                       placeholder="cantidad"
-                       accept="image/*" multiple value="1">
+                <input id="quantity" name="quantity" class="form-control" placeholder="cantidad" value="1">
             </div>
 
         </div>
