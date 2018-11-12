@@ -40,6 +40,7 @@
                     });
                 </script>
                 <br>
+                <br>
                 <form id="search_resource" class="form" role="form" method="POST"
                       action="{{ url('/admin/resource/create/classroom') }}" enctype="multipart/form-data">
                     @csrf
@@ -153,8 +154,9 @@
     <div id="char_nueva" class="row d-flex flex-row justify-content-center hidden">
         <div class="col-sm-2">
             <div class="form-group">
-                <input id="quantity" name="quantity" class="form-control" placeholder="cantidad"
-                       accept="image/*" multiple>
+                <input id="aditionalCharacteristic" name="aditionalCharacteristic" class="form-control"
+                       placeholder="cantidad"
+                       accept="image/*" multiple value="1">
             </div>
 
         </div>
