@@ -106,7 +106,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <select id="aditionalCharacteristic" class="form-control" size="0"
-                                                name="mainCharacteristic">
+                                                name="aditionalCharacteristic">
                                             <option value="0">Seleccione algo</option>
                                             @forelse($rcharacteristics as $rcaracteristic)
                                                 <option
@@ -159,8 +159,8 @@
         </div>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Nombre de la caracteristica" id="name"
-                       name="name">
+                <input type="text" class="form-control" placeholder="Nombre de la caracteristica" id="nueva_char"
+                       name="nueva_char">
             </div>
 
         </div>
