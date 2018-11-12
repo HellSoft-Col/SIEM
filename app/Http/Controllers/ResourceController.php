@@ -60,19 +60,15 @@ class ResourceController extends Controller
     public function storeRoom(Request $request)
     {
         $type = 'CLASSROOM';
-        $i = 0;
+        $i = 1;
         $characteristics = [];
         $quantity = [];
-        foreach ($request->all() as $rValue) {
-            if ($i > 5) {
-                if ($i % 2 != 0) {
-                    array_push($characteristics, $rValue);
-                } else {
-                    array_push($quantity, $rValue);
-                }
-            }
-            $i += 1;
+        while (isset($request['aditionalCharacteristic'.$i])) {
+            array_push($characteristics, $request['aditionalCharacteristic'.$i]);
+            array_push($quantity, $request['quantity'.$i]);
+            $i ++;
         }
+        dd($request->all());
         $tClass = ResourceType::where('id', $request->rtype)->first();
         $r = Resource::create([
             'name' => $request->name,
