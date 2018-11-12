@@ -60,7 +60,20 @@ class ResourceController extends Controller
     public function storeRoom(Request $request)
     {
         $type = 'CLASSROOM';
-        $tClass = ResourceType::where('name', $request->rtype)->first();
+        $i = 0;
+        $characteristics = [];
+        $quantity = [];
+        foreach ($request->all() as $rValue) {
+            if ($i > 5) {
+                if ($i % 2 != 0) {
+                    array_push($characteristics, $rValue);
+                } else {
+                    array_push($quantity, $rValue);
+                }
+            }
+            $i += 1;
+        }
+        $tClass = ResourceType::where('id', $request->rtype)->first();
         $r = Resource::create([
             'name' => $request->name,
             'description' => $request->description,
@@ -68,20 +81,22 @@ class ResourceController extends Controller
             'state' => 'AVAILABLE',
             'resource_type_id' => $tClass->id
         ]);
-        //PENDIENTE CARACTERISTICAS  -> descripcion
-        $chars = isset($request['chars']) ? $request['chars'] : array();
-        foreach ($chars as $value) {
-            $charsDb = Characteristic::where('name',$value)->first();
-            if ($charsDb == null){
+        $i = 0;
+        foreach ($characteristics as $char) {
+            if (is_numeric($char)){
+                $charsDb = Characteristic::where('id',$char)->first();
+            }else{
                 $charsDb = Characteristic::create([
-                    'name' => $value
+                    'name' => $char,
+                    'type' => $type
                 ]);
             }
             CharacteristicResource::create([
                 'resource_id' => $r->id,
                 'characteristic_id' => $charsDb->id,
-                'quantity' => $request->quantity
+                'quantity' => $quantity[$i]
             ]);
+            $i += 1;
         }
 
         if($request->images != null){
