@@ -126,17 +126,16 @@ Route::get('/person/posts', function () {
 /*-----------------------3ra Entrega---------------------------------*/
 // URLS Cocunubo
 
-Route::get('/admin/resource/create/classroom', 'ResourceController@createRoom')->name('resource.createRoom');
-Route::get('/admin/resource/create/instrument', 'ResourceController@createInstrument')->name('resource.createInstrument');
+Route::get('/admin/resource/create/classroom', 'ResourceController@createRoom')->name('resource.createRoom')->middleware('admin');
+Route::get('/admin/resource/create/instrument', 'ResourceController@createInstrument')->name('resource.createInstrument')->middleware('admin');
 
-Route::put('/admin/resource/create/classroom', 'ResourceController@storeRoom');
-Route::put('/admin/resource/create/instrument', 'ResourceController@storeInstrument');
+Route::put('/admin/resource/create/classroom', 'ResourceController@storeRoom')->middleware('admin');
+Route::put('/admin/resource/create/instrument', 'ResourceController@storeInstrument')->middleware('admin');
 
-Route::get('/admin/resource/edit/{ID}', 'ResourceController@editResource');
-Route::get('/admin/resource/edit', 'ResourceController@editViewRoom')->name('resource.editRoom');
-Route::get('/admin/resource/edit', 'ResourceController@editViewInstrument')->name('resource.editInstrument');
-Route::post('/admin/resource/edit', 'ResourceController@update');
-Route::delete('/admin/resource/delete/{ID}', 'ResourceController@destroy')->name('resource.delete');
+Route::get('/admin/resource/edit/{resource}', 'ResourceController@editResource')->where('resource', '[0-9]+')->middleware('admin');
+
+Route::post('/admin/resource/edit', 'ResourceController@update')->middleware('admin');
+Route::delete('/admin/resource/delete/{ID}', 'ResourceController@destroy')->name('resource.delete')->middleware('admin');
 
 Route::get('/person/reservations/{ID}/active', 'ReservationController@personActiveReservations')->middleware('moderatorAdmin');
 Route::get('/person/reservations/{ID}/history', 'ReservationController@loadPersonHistoryReservations')->middleware('moderatorAdmin');

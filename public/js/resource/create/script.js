@@ -3,6 +3,10 @@ var addSect2 = document.getElementById('char_nueva');
 var caracteristicsSection = document.getElementById('options');
 var xi = 2;
 
+function increment() {
+    xi += 1;
+}
+
 function addCaracteristic() {
     var dup = addSect.cloneNode(true);
     dup.id = "char_" + xi;

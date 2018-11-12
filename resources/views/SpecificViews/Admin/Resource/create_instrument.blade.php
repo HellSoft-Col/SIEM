@@ -60,7 +60,7 @@
                         <label class="col-lg-2 col-form-label form-control-label" for="rtype">Detalle de recurso</label>
                         <div class="col-lg-9">
                             <select onchange="onChangeEvent()" id="rtype" class="form-control" size="0" name="rtype">
-                                <option value="0">Seleccione algo</option>
+                                <option value="0" selected disabled hidden>Seleccione algo</option>
                                 @forelse($types as $type)
                                     <option value="{{ $type->id }}">{{$type->name}}</option>
                                 @empty
@@ -100,7 +100,7 @@
                                 <div class="col-sm-2">
                                     <div class="form-group">
                                         <input id="quantity" name="quantity" class="form-control" placeholder="cantidad"
-                                               accept="image/*" multiple value="1">
+                                               value="1">
                                     </div>
 
                                 </div>
@@ -108,12 +108,12 @@
                                     <div class="form-group">
                                         <select id="aditionalCharacteristic" class="form-control" size="0"
                                                 name="aditionalCharacteristic">
-                                            <option value="0">Seleccione algo</option>
+                                            <option value="0" selected disabled hidden>Seleccione algo</option>
                                             @forelse($rcharacteristics as $rcaracteristic)
                                                 <option
                                                     value="{{ $rcaracteristic->id }}">{{$rcaracteristic->name}}</option>
                                             @empty
-                                                <option value="">--</option>
+                                                <option value="0" selected disabled hidden>Seleccione algo</option>
                                             @endforelse
 
                                         </select>
@@ -153,9 +153,7 @@
     <div id="char_nueva" class="row d-flex flex-row justify-content-center hidden">
         <div class="col-sm-2">
             <div class="form-group">
-                <input id="quantity" name="quantity" class="form-control"
-                       placeholder="cantidad"
-                       accept="image/*" multiple value="1">
+                <input id="quantity" name="quantity" class="form-control" placeholder="cantidad" value="1">
             </div>
 
         </div>
@@ -194,4 +192,3 @@
     <script src="{{ asset('/js/date/date.js') }}" type="text/javascript"></script>
     <script src="{{ asset('/js/resource/create/script.js') }}" type="text/javascript"></script>
 @endsection
-

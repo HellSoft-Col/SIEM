@@ -11,7 +11,6 @@ use App\Models\ResourceType;
 use App\Models\User;
 use Calendar;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Log;
 
@@ -176,52 +175,18 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function editResource(Request $request)
+    public function editResource(Resource $resource)
     {
-        $resource = Resource::where('id',$request->ID)->first();
-        if (strcmp($resource->type,'CLASSROOM') == 0) {
-            return $this->editViewRoom($resource);
+        if ($resource->type == 'CLASSROOM') {
+            $types = ResourceType::where('type', 'CLASSROOM')->get();
+            $rcharacteristics = Characteristic::where('type', 'CLASSROOM')->get();
+            return view('SpecificViews.Admin.Resource.edit', compact('types', 'rcharacteristics', 'resource'));
+        } else {
+            $rcharacteristics = Characteristic::where('type', 'INSTRUMENT')->get();
+            $types = ResourceType::where('type', 'INSTRUMENT')->get();
+            return view('SpecificViews.Admin.Resource.edit', compact('types', 'rcharacteristics', 'resource'));
         }
-        return $this->editViewInstrument($resource);
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function editViewRoom(Resource $resource)
-    {
-        $id = $resource->id;
-        $name = $resource->name;
-        $type = ResourceType::where('id', $resource->classroom_type_id)->first();
-        $rtype = $type->name;
-        $types = ResourceType::all();
-        $state = $resource->state;
-        $images = $resource->files;
-        $characteristic = $resource->characteristics;
-        $description = $resource->description;
-        return view('TestViewsCocu.editRoom', compact('id', 'name', 'rtype', 'types',
-            'state', 'images', 'characteristic', 'description') );
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function editViewInstrument(Resource $resource)
-    {
-        $id = $resource->id;
-        $name = $resource->name;
-        $state = $resource->state;
-        $images = $resource->files;
-        $characteristic = $resource->characteristics;
-        $description = $resource->description;
-        return view('TestViewsCocu.editInstrument', compact('id', 'name', 'state',
-            'images', 'characteristic', 'description') );
     }
 
     /**
@@ -266,23 +231,13 @@ class ResourceController extends Controller
      */
     public function gosearch()
     {
-        $rtypes = DB::table('resource_type')
-            ->where('resource_type.type', '=', 'CLASSROOM')
-            ->get(['resource_type.name']);
-        $rtypes_instrument = DB::table('resource_type')
-            ->where('resource_type.type', '=', 'INSTRUMENT')
-            ->get(['resource_type.name']);
+        $rtypes = ResourceType::where('type', 'CLASSROOM')->get();
+        $rtypes_instrument = ResourceType::where('type', 'INSTRUMENT')->get();
 
-        $rcaracteristics = DB::table('characteristic')
-            ->where('characteristic.type', '=', 'CLASSROOM')
-            ->distinct()->get(['characteristic.name']);
+        $rcaracteristics = Characteristic::where('type', 'CLASSROOM')->get();
+        $rcaracteristics_instrument = Characteristic::where('type', 'INSTRUMENT')->get();
 
-        $rcaracteristics_instrument = DB::table('characteristic')
-            ->where('characteristic.type', '=', 'INSTRUMENT')
-            ->distinct()->get(['characteristic.name']);
-
-        return view('GeneralViews.ResourcesViews.search',
-            compact('rtypes', 'rcaracteristics', 'rtypes_instrument', 'rcaracteristics_instrument'));
+        return view('GeneralViews.ResourcesViews.search', compact('rtypes', 'rcaracteristics', 'rtypes_instrument', 'rcaracteristics_instrument'));
     }
 
     /**
