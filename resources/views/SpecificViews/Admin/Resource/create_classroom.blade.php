@@ -101,7 +101,7 @@
                                 <div class="col-sm-2">
                                     <div class="form-group">
                                         <input id="quantity" name="quantity" class="form-control" placeholder="cantidad"
-                                               accept="image/*" multiple>
+                                               accept="image/*" multiple value="1">
                                     </div>
 
                                 </div>
@@ -154,7 +154,7 @@
     <div id="char_nueva" class="row d-flex flex-row justify-content-center hidden">
         <div class="col-sm-2">
             <div class="form-group">
-                <input id="aditionalCharacteristic" name="aditionalCharacteristic" class="form-control"
+                <input id="quantity" name="quantity" class="form-control"
                        placeholder="cantidad"
                        accept="image/*" multiple value="1">
             </div>
@@ -162,8 +162,9 @@
         </div>
         <div class="col-sm-4">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="Nombre de la caracteristica" id="nueva_char"
-                       name="nueva_char">
+                <input type="text" class="form-control" placeholder="Nombre de la caracteristica"
+                       id="aditionalCharacteristic"
+                       name="aditionalCharacteristic">
             </div>
 
         </div>
