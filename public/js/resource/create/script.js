@@ -13,10 +13,8 @@ function addCaracteristic() {
         for (var y in childrens2) {
             childrens3 = childrens2[y].children;
             for (var z in childrens3) {
-                if (childrens3[z].id == "quantity" || childrens3[z].id == "aditionalCharacteristic" || childrens3[z].id == "nueva_char") {
                     childrens3[z].id = childrens3[z].id + xi;
                     childrens3[z].name = childrens3[z].name + xi;
-                }
             }
         }
     }
@@ -35,10 +33,8 @@ function addNewCaracteristic() {
         for (var y in childrens2) {
             childrens3 = childrens2[y].children;
             for (var z in childrens3) {
-                if (childrens3[z].id == "quantity" || childrens3[z].id == "aditionalCharacteristic" || childrens3[z].id == "nueva_char") {
                     childrens3[z].id = childrens3[z].id + xi;
                     childrens3[z].name = childrens3[z].name + xi;
-                }
             }
         }
     }
