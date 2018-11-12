@@ -60,7 +60,7 @@
                         <label class="col-lg-2 col-form-label form-control-label" for="rtype">Detalle de recurso</label>
                         <div class="col-lg-9">
                             <select onchange="onChangeEvent()" id="rtype" class="form-control" size="0"
-                                    name="rcategory">
+                                    name="rtype">
                                 <option value="0">Seleccione algo</option>
                                 @forelse($types as $type)
                                     <option value="{{ $type->id }}">{{$type->name}}</option>
