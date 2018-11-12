@@ -13,8 +13,11 @@ function addCaracteristic() {
         for (var y in childrens2) {
             childrens3 = childrens2[y].children;
             for (var z in childrens3) {
-                    childrens3[z].id = childrens3[z].id + xi;
-                    childrens3[z].name = childrens3[z].name + xi;
+                childrens4 = childrens3[z].children;
+                for (var a in childrens4) {
+                    childrens4[a].id = childrens4[a].id + xi;
+                    childrens4[a].name = childrens4[a].name + xi;
+                }
             }
         }
     }
