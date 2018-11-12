@@ -139,13 +139,13 @@ Route::get('/person/posts',function(){
 
 /*-----------------------3ra Entrega---------------------------------*/
 // URLS Cocunubo
-Route::get('/resource/create/sala', 'ResourceController@createSala')->name('resource.createSala');
-Route::get('/resource/create/instrumento', 'ResourceController@createInstrumento')->name('resource.createInstrumento');
-Route::put('/resource/create/sala', 'ResourceController@storeSala');
-Route::put('/resource/create/instrumento', 'ResourceController@storeInstrumento');
+Route::get('/resource/create/room', 'ResourceController@createRoom')->name('resource.createRoom');
+Route::get('/resource/create/instrument', 'ResourceController@createInstrument')->name('resource.createInstrument');
+Route::put('/resource/create/room', 'ResourceController@storeRoom');
+Route::put('/resource/create/instrument', 'ResourceController@storeInstrument');
 Route::get('/resource/edit/{ID}', 'ResourceController@editResource');
-Route::get('/resource/edit', 'ResourceController@editViewSala')->name('resource.editSala');
-Route::get('/resource/edit', 'ResourceController@editViewInstrumento')->name('resource.editInstrumento');
+Route::get('/resource/edit', 'ResourceController@editViewRoom')->name('resource.editRoom');
+Route::get('/resource/edit', 'ResourceController@editViewInstrument')->name('resource.editInstrument');
 Route::post('/resource/edit', 'ResourceController@update');
 Route::delete('/resource/delete/{ID}', 'ResourceController@destroy')->name('resource.delete');
 

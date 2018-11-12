@@ -33,10 +33,10 @@ class ResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createSala()
+    public function createRoom()
     {
         $types = Classroom_type::all();
-        return view('TestViewsCocu.createSala',compact('types'));
+        return view('TestViewsCocu.createRoom',compact('types'));
     }
 
     /**
@@ -44,9 +44,9 @@ class ResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createInstrumento()
+    public function createInstrument()
     {
-        return view('TestViewsCocu.createInstrumento');
+        return view('TestViewsCocu.createInstrument');
     }
 
     /**
@@ -55,7 +55,7 @@ class ResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeSala(Request $request)
+    public function storeRoom(Request $request)
     {
         $type = 'CLASSROOM';
         $tClass = Classroom_type::where('name',$request->tSalon)->first();
@@ -93,7 +93,7 @@ class ResourceController extends Controller
             }
         }
         $types = Classroom_type::all();
-        return view('TestViewsCocu.createSala',compact("types"));
+        return view('TestViewsCocu.createRoom',compact("types"));
     }
 
     /**
@@ -102,7 +102,7 @@ class ResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeInstrumento(Request $request)
+    public function storeInstrument(Request $request)
     {
         $type = 'INSTRUMENT';
         $r = Resource::create([
@@ -136,7 +136,7 @@ class ResourceController extends Controller
                 ]);
             }
         }
-        return view('TestViewsCocu.createInstrumento');
+        return view('TestViewsCocu.createInstrument');
     }
 
     /**
@@ -178,9 +178,9 @@ class ResourceController extends Controller
     {
         $resource = Resource::where('id',$request->ID)->first();
         if (strcmp($resource->type,'CLASSROOM') == 0) {
-            return $this->editViewSala($resource);
+            return $this->editViewRoom($resource);
         }
-        return $this->editViewInstrumento($resource);
+        return $this->editViewInstrument($resource);
     }
 
     /**
@@ -189,7 +189,7 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function editViewSala(Resource $resource)
+    public function editViewRoom(Resource $resource)
     {
         $id = $resource->id;
         $name = $resource->name;
@@ -200,7 +200,7 @@ class ResourceController extends Controller
         $images = $resource->files;
         $characteristic = $resource->characteristics;
         $description = $resource->description;
-        return view('TestViewsCocu.editSala', compact('id','name', 'tSalon', 'types',
+        return view('TestViewsCocu.editRoom', compact('id','name', 'tSalon', 'types',
             'state', 'images', 'characteristic', 'description') );
     }
 
@@ -210,7 +210,7 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function editViewInstrumento(Resource $resource)
+    public function editViewInstrument(Resource $resource)
     {
         $id = $resource->id;
         $name = $resource->name;
@@ -218,7 +218,7 @@ class ResourceController extends Controller
         $images = $resource->files;
         $characteristic = $resource->characteristics;
         $description = $resource->description;
-        return view('TestViewsCocu.editInstrumento', compact('id','name', 'state',
+        return view('TestViewsCocu.editInstrument', compact('id','name', 'state',
             'images', 'characteristic', 'description') );
     }
 

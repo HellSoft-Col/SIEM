@@ -2,8 +2,8 @@
 Añadir
 <br>
 <form  >
-    <input type="radio" name="Sala"  value="{{url('/resource/create/sala')}}" > Sala
-    <input type="radio" name="Instrumento" checked="checked" value="{{url('/resource/create/instrumento')}}"> Instrumento
+    <input type="radio" name="Sala"  value="{{url('/resource/create/room')}}" > Sala
+    <input type="radio" name="Instrumento" checked="checked" value="{{url('/resource/create/instrument')}}"> Instrumento
 </form>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>
@@ -11,7 +11,7 @@ Añadir
         window.location = $(this).val();
     });
 </script>
-<form method="POST" action="{{url('/resource/create/instrumento')}}">
+<form method="POST" action="{{url('/resource/create/instrument')}}">
     @csrf
     {{ method_field('PUT') }}
     <label>Galería</label><br>
