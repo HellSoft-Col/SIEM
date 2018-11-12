@@ -12,6 +12,7 @@ use App\Models\User;
 use Calendar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use \Validator;
 use Log;
 
 class ResourceController extends Controller
@@ -58,8 +59,26 @@ class ResourceController extends Controller
      */
     public function storeRoom(Request $request)
     {
+        $data = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'images' => 'required',
+            'aditionalCharacteristic' => 'required'
+        ]);
         $type = 'CLASSROOM';
-        $tClass = ResourceType::where('name', $request->rtype)->first();
+        $i = 2;
+        $characteristics = [];
+        $quantity = [];
+        if (isset($request['aditionalCharacteristic'])){
+            array_push($characteristics, $request['aditionalCharacteristic']);
+            array_push($quantity, $request['quantity']);
+        }
+        while (isset($request['aditionalCharacteristic'.$i])) {
+            array_push($characteristics, $request['aditionalCharacteristic'.$i]);
+            array_push($quantity, $request['quantity'.$i]);
+            $i ++;
+        }
+        $tClass = ResourceType::where('id', $request->rtype)->first();
         $r = Resource::create([
             'name' => $request->name,
             'description' => $request->description,
@@ -67,34 +86,34 @@ class ResourceController extends Controller
             'state' => 'AVAILABLE',
             'resource_type_id' => $tClass->id
         ]);
-        //PENDIENTE CARACTERISTICAS  -> descripcion
-        $chars = isset($request['chars']) ? $request['chars'] : array();
-        foreach ($chars as $value) {
-            $charsDb = Characteristic::where('name',$value)->first();
-            if ($charsDb == null){
+        $i = 0;
+        foreach ($characteristics as $char) {
+            if (is_numeric($char)){
+                $charsDb = Characteristic::where('id',$char)->first();
+            }else{
                 $charsDb = Characteristic::create([
-                    'name' => $value
+                    'name' => $char,
+                    'type' => $type
                 ]);
             }
             CharacteristicResource::create([
                 'resource_id' => $r->id,
                 'characteristic_id' => $charsDb->id,
-                'quantity' => $request->quantity
+                'quantity' => $quantity[$i]
+            ]);
+            $i += 1;
+        }
+        $photos = $request->images;
+        foreach ($photos as $photo)  {
+            $url = Storage::disk('local')->put('/Reserves/Classrooms/'.$r->name. 'Folder', $photo);
+            File::create([
+                'path' => $url,
+                'resource_id' => $r->id
             ]);
         }
-
-        if($request->images != null){
-            $photos = $request->images;
-            foreach ($photos as $photo)  {
-                $url = Storage::disk('local')->put($r->name. 'Folder', $photo);
-                File::create([
-                    'path' => $url,
-                    'resource_id' => $r->id
-                ]);
-            }
-        }
-        $types = ResourceType::all();
-        return view('SpecificViews.Admin.Resource.create_classroom', compact("types"));
+        $types = ResourceType::where('type', 'CLASSROOM')->get();
+        $rcharacteristics = Characteristic::where('type', 'CLASSROOM')->get();
+        return view('SpecificViews.Admin.Resource.create_classroom', compact("types","rcharacteristics"));
     }
 
     /**
@@ -105,39 +124,61 @@ class ResourceController extends Controller
      */
     public function storeInstrument(Request $request)
     {
+        $data = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'images' => 'required',
+            'aditionalCharacteristic' => 'required'
+        ]);
+        $types = ResourceType::where('type', 'INSTRUMENT')->get();
+        $rcharacteristics = Characteristic::where('type', 'INSTRUMENT')->get();
         $type = 'INSTRUMENT';
+        $i = 2;
+        $characteristics = [];
+        $quantity = [];
+        if (isset($request['aditionalCharacteristic'])){
+            array_push($characteristics, $request['aditionalCharacteristic']);
+            array_push($quantity, $request['quantity']);
+        }
+        while (isset($request['aditionalCharacteristic'.$i])) {
+            array_push($characteristics, $request['aditionalCharacteristic'.$i]);
+            array_push($quantity, $request['quantity'.$i]);
+            $i ++;
+        }
+        $tClass = ResourceType::where('id', $request->rtype)->first();
         $r = Resource::create([
             'name' => $request->name,
             'description' => $request->description,
             'type' => $type,
             'state' => 'AVAILABLE',
+            'resource_type_id' => $tClass->id
         ]);
-        //PENDIENTE CARACTERISTICAS
-        $chars = isset($request['chars']) ? $request['chars'] : array();
-        foreach ($chars as $value) {
-            $charsDb = Characteristic::where('name',$value)->first();
-            if ($charsDb == null){
+        $i = 0;
+        foreach ($characteristics as $char) {
+            if (is_numeric($char)){
+                $charsDb = Characteristic::where('id',$char)->first();
+            }else{
                 $charsDb = Characteristic::create([
-                    'name' => $value
+                    'name' => $char,
+                    'type' => $type
                 ]);
             }
             CharacteristicResource::create([
                 'resource_id' => $r->id,
                 'characteristic_id' => $charsDb->id,
-                'quantity' => $request->quantity
+                'quantity' => $quantity[$i]
+            ]);
+            $i += 1;
+        }
+        $photos = $request->images;
+        foreach ($photos as $photo)  {
+            $url = Storage::disk('local')->put('/Reserves/Instruments/'.$r->name. 'Folder', $photo);
+            File::create([
+                'path' => $url,
+                'resource_id' => $r->id
             ]);
         }
-        if($request->images != null){
-            $photos = $request->images;
-            foreach ($photos as $photo)  {
-                $url = Storage::disk('local')->put($r->name. 'Folder', $photo);
-                File::create([
-                    'path' => $url,
-                    'resource_id' => $r->id
-                ]);
-            }
-        }
-        return view('TestViewsCocu.createInstrument');
+        return view('SpecificViews.Admin.Resource.create_instrument',compact('types', 'rcharacteristics'));
     }
 
     /**
