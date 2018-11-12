@@ -2,14 +2,10 @@
 @section('includes')
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
-            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
     <link rel="stylesheet" href="{{ asset('/css/resourceStyle/content.css') }}">
 @endsection
-@section('options')
-    <a class="dropdown-item" href="{{url('/feed')}}">Publicaciones</a>
-    <a class="dropdown-item" href="{{url('/events')}}">Eventos</a>
-@endsection
+
 @section('content')
     <div class="container" style="margin-top: 50px;">
         <!-- Poner if para el admin para que muestre el div de ese row-->

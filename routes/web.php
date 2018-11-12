@@ -126,13 +126,16 @@ Route::get('/person/posts', function () {
 /*-----------------------3ra Entrega---------------------------------*/
 
 
-Route::get('/admin/resource/create/sala', 'ResourceController@createSala')->name('resource.createSala')->middleware('admin');
-Route::get('/admin/resource/create/instrumento', 'ResourceController@createInstrumento')->name('resource.createInstrumento')->middleware('admin');
+Route::get('/admin/resource/create/classroom', 'ResourceController@createSala')->name('resource.createSala')->middleware('admin');
+Route::get('/admin/resource/create/instrument', 'ResourceController@createInstrumento')->name('resource.createInstrumento')->middleware('admin');
+
 Route::put('/admin/resource/create/sala', 'ResourceController@storeSala')->middleware('admin');
 Route::put('/admin/resource/create/instrumento', 'ResourceController@storeInstrumento')->middleware('admin');
+
 Route::get('/admin/resource/edit/{ID}', 'ResourceController@editResource')->middleware('admin');
 Route::get('/admin/resource/edit', 'ResourceController@editViewSala')->name('resource.editSala')->middleware('admin');
 Route::get('/admin/resource/edit', 'ResourceController@editViewInstrumento')->name('resource.editInstrumento')->middleware('admin');
+
 Route::post('/admin/resource/edit', 'ResourceController@update')->middleware('admin');
 Route::delete('/admin/resource/delete/{ID}', 'ResourceController@destroy')->name('resource.delete')->middleware('admin');
 

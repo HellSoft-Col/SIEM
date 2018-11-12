@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Characteristic;
 use App\Models\CharacteristicResource;
-use App\Models\Classroom_type;
 use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
+use App\Models\ResourceType;
 use App\Models\User;
 use Calendar;
 use Illuminate\Http\Request;
@@ -34,8 +34,9 @@ class ResourceController extends Controller
      */
     public function createSala()
     {
-        $types = Classroom_type::all();
-        return view('TestViewsCocu.createSala',compact('types'));
+        /* Poner solo tipos de recurso de tipo classroom , cocu de mierda >:V */
+        $types = ResourceType::all();
+        return view('SpecificViews.Admin.Resource.create', compact('types'));
     }
 
     /**
