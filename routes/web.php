@@ -128,8 +128,10 @@ Route::get('/person/posts', function () {
 
 Route::get('/admin/resource/create/classroom', 'ResourceController@createRoom')->name('resource.createRoom');
 Route::get('/admin/resource/create/instrument', 'ResourceController@createInstrument')->name('resource.createInstrument');
+
 Route::put('/admin/resource/create/classroom', 'ResourceController@storeRoom');
 Route::put('/admin/resource/create/instrument', 'ResourceController@storeInstrument');
+
 Route::get('/admin/resource/edit/{ID}', 'ResourceController@editResource');
 Route::get('/admin/resource/edit', 'ResourceController@editViewRoom')->name('resource.editRoom');
 Route::get('/admin/resource/edit', 'ResourceController@editViewInstrument')->name('resource.editInstrument');

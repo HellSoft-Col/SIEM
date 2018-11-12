@@ -15,7 +15,7 @@ class Resource extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'description', 'type','state','resource_type_id'
+        'name', 'description', 'type', 'state', 'resource_type_id'
     ];
 
     function reservations(){

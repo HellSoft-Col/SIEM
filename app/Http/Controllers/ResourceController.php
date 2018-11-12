@@ -12,9 +12,8 @@ use App\Models\User;
 use Calendar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Log;
-use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Storage;
+use Log;
 
 class ResourceController extends Controller
 {
@@ -35,9 +34,9 @@ class ResourceController extends Controller
      */
     public function createRoom()
     {
-        $types = ResourceType::where('type' , 'CLASSROOM')->get();
-        $rcharacteristics = Characteristic::where('type' , 'CLASSROOM')->get();
-        return view('SpecificViews.Admin.Resource.create_classroom', compact('types','rcharacteristics'));
+        $types = ResourceType::where('type', 'CLASSROOM')->get();
+        $rcharacteristics = Characteristic::where('type', 'CLASSROOM')->get();
+        return view('SpecificViews.Admin.Resource.create_classroom', compact('types', 'rcharacteristics'));
     }
 
     /**
@@ -47,9 +46,9 @@ class ResourceController extends Controller
      */
     public function createInstrument()
     {
-        $types = ResourceType::where('type' , 'INSTRUMENT')->get();
-        $rcharacteristics = Characteristic::where('type' , 'INSTRUMENT')->get();
-        return view('TestViewsCocu.createInstrument',compact('types','rcharacteristics'));
+        $types = ResourceType::where('type', 'INSTRUMENT')->get();
+        $rcharacteristics = Characteristic::where('type', 'INSTRUMENT')->get();
+        return view('SpecificViews.Admin.Resource.create_instrument', compact('types', 'rcharacteristics'));
     }
 
     /**
@@ -238,7 +237,7 @@ class ResourceController extends Controller
         $resource->name = $request->name;
         $resource->state = $request->state;
         $resource->description = $request->description;
-        if ($request->has('rtype')){
+        if ($request->has('rtype')) {
             $type = ResourceType::where('name', $request->rtype)->first();
             $resource->classroom_type_id = $type->id;
         }

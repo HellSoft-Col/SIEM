@@ -45,12 +45,13 @@ Añadir
     <label>Característica</label><br>
     <select name="characteristic">
         @foreach($characteristic as $char)
-            <option>{{$char['name']}}</option><button onclick="">X</button>
+            <option>{{$char['name']}}</option>
+            <button onclick="">X</button>
         @endforeach
     </select><br>
     <label>Otra, ¿Cuál?</label><br>
     <input type="text" name="other"><br>
     <label>Descripción</label><br>
-    <textarea name="description" rows="10" cols="30" >{{$description}}</textarea><br>
+    <textarea name="description" rows="10" cols="30">{{$description}}</textarea><br>
     <button type="submit">Guardar</button>
 </form>

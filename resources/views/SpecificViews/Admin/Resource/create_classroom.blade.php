@@ -4,6 +4,7 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.1/css/tempusdominus-bootstrap-4.min.css"/>
     <link rel="stylesheet" href="{{ asset('/css/resourceStyle/content.css') }}">
+    <link rel="stylesheet" href="{{ asset('/css/resourceStyle/create/style.css') }}">
 @endsection
 @section('content')
 
@@ -15,27 +16,30 @@
             </div>
             <div class="card-body">
 
-                <form class="text-center" id="type_resource">
+                <form>
                     <div class="row">
-
                         <div class="col-sm">
-                            <label>Tipo : </label>
                             <div class="form-check-inline">
                                 <label class="form-check-label" for="radio1">
                                     <input type="radio" class="form-check-input" id="radio1" name="optradio"
-                                           value="{{url('/admin/resource/create/classroom')}}"
-                                           checked> Sala
+                                           value="{{url('/admin/resource/create/classroom')}}" checked>Salas
                                 </label>
                             </div>
                             <div class="form-check-inline">
                                 <label class="form-check-label" for="radio2">
                                     <input type="radio" class="form-check-input" id="radio2" name="optradio"
-                                           value="{{url('/admin/resource/create/instrument')}}"> Instrumento
+                                           value="{{url('/admin/resource/create/instrument')}}">Instrumento
                                 </label>
                             </div>
                         </div>
                     </div>
                 </form>
+
+                <script>
+                    $('input[type="radio"]').on('click', function () {
+                        window.location = $(this).val();
+                    });
+                </script>
                 <br>
                 <form id="search_resource" class="form" role="form" method="POST"
                       action="{{ url('/admin/resource/create/classroom') }}" enctype="multipart/form-data">
@@ -53,10 +57,9 @@
                     </div>
 
                     <div class="form-group row">
-                        <label class="col-lg-2 col-form-label form-control-label" for="rtype">Tipo de recurso</label>
+                        <label class="col-lg-2 col-form-label form-control-label" for="rtype">Detalle de recurso</label>
                         <div class="col-lg-9">
-                            <select onchange="onChangeEvent()" id="rtype" class="form-control" size="0"
-                                    name="rcategory">
+                            <select onchange="onChangeEvent()" id="rtype" class="form-control" size="0" name="rtype">
                                 <option value="0">Seleccione algo</option>
                                 @forelse($types as $type)
                                     <option value="{{ $type->id }}">{{$type->name}}</option>
@@ -83,7 +86,7 @@
                         <div class="col-lg-9">
                             <div class="input-group">
                                 <input class="form-control-file {{ $errors->has('img') ? ' is-invalid' : '' }}"
-                                       type="file" id="img" name="images[]">
+                                       type="file" id="img" name="images[]" multiple>
                             </div>
                         </div>
                     </div>
@@ -121,13 +124,15 @@
                                     <div class="form-group col">
                                         <div class="d-flex align-items-center mx-auto">
                                             <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                                               href="#" style="margin-right: 10px;" onclick="addCaracteristic()">+</a>
+                                               style="margin-right: 10px; color: white;"
+                                               onclick="addCaracteristic()">+</a>
 
                                             <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                                               href="#" style="margin-right: 10px;" onclick="delCaracteristic(this)">-</a>
+                                               style="margin-right: 10px; color: white;"
+                                               onclick="delCaracteristic(this)">-</a>
 
                                             <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                                               href="#" onclick="delCaracteristic(this)">Otra</a>
+                                               style="color: white;" onclick="addNewCaracteristic(this)">Otra</a>
                                         </div>
                                     </div>
 
@@ -145,7 +150,7 @@
     </div>
 
 
-    <div id="char_nueva" class="row d-flex flex-row justify-content-center" style="visibility: hidden" >
+    <div id="char_nueva" class="row d-flex flex-row justify-content-center hidden">
         <div class="col-sm-2">
             <div class="form-group">
                 <input id="quantity" name="quantity" class="form-control" placeholder="cantidad"
@@ -163,14 +168,14 @@
         <div class="row d-flex justify-content-end">
             <div class="form-group col">
                 <div class="d-flex align-items-center mx-auto">
-                    <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                       href="#" style="margin-right: 10px;" onclick="addCaracteristic()">+</a>
+                    <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger but_color"
+                       style="margin-right: 10px; color: white;" onclick="addCaracteristic()">+</a>
 
-                    <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                       href="#" style="margin-right: 10px;" onclick="delCaracteristic(this)">-</a>
+                    <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger but_color"
+                       style="margin-right: 10px; color: white;" onclick="delCaracteristic2(this)">-</a>
 
-                    <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
-                       href="#" onclick="addNewCaracteristic()">Otra</a>
+                    <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger but_color" style="color: white;"
+                       onclick="addNewCaracteristic()">Otra</a>
                 </div>
             </div>
 
