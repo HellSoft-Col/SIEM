@@ -32,9 +32,14 @@ class ReservationController extends Controller
      */
     public function create(Request $request)
     {
-        $resource_id = $request->resource;
+        $resource_id = $request->_resource;
+        if (Auth::user()->role != 'USER') {
+            $user_id = $request->_user;
+        } else {
+            $user_id = Auth::user();
+        }
         $message = "";
-        return view('GeneralViews.Reserves.create', compact('resource_id', 'message'));
+        return view('GeneralViews.Reserves.create', compact('resource_id', 'message', 'user_id'));
     }
 
     /**
@@ -46,10 +51,11 @@ class ReservationController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->role != 'USER') {
-            $user = User::where('id', $request->user_id);
+            $user = User::where('id', $request->user_id)->first();
         } else {
             $user = Auth::user();
         }
+
         $resource = Resource::find($request->resource_id);
         $end_time = date('Y-m-d H:i:s', strtotime($request->end_time));
         $start_time = date('Y-m-d H:i:s', strtotime($request->start_time));
@@ -93,7 +99,8 @@ class ReservationController extends Controller
             $this->sendErrorEmail($email);
         }
         $resource_id = $resource->id;
-        return view('GeneralViews.Reserves.create', compact('resource_id', 'message'));
+        $user_id = $request->user_id;
+        return view('GeneralViews.Reserves.create', compact('resource_id', 'message', 'user_id'));
     }
     /**
      * Send a confirm e-mail to the user.
@@ -674,7 +681,6 @@ class ReservationController extends Controller
      */
     public function loadResourcesAdminMonitorInstrument(User $user)
     {
-
         $resources = Resource::where('type', 'INSTRUMENT')->get();
         return view('GeneralViews.ResourcesViews.Availability.view_instrument', ['resources' => $resources, 'user' => $user]);
     }
