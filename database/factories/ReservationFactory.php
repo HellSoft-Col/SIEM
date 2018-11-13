@@ -10,7 +10,7 @@ $factory->define(App\Models\Reservation::class, function (Faker $faker) {
     $startDate = $faker->dateTimeBetween('next Monday', 'next Monday +7 days');
     $endDate = $faker->dateTimeBetween($startDate, $startDate->format('Y-m-d H:i:s'));
     return [
-        'state' => $faker->randomElement(['ACTIVE', 'FINALIZED', 'ACTIVE']),
+        'state' => $faker->randomElement(['ACTIVE', 'FINALIZED', 'ACTIVE', 'RUNNING']),
         'start_time' => $faker->dateTimeThisYear($startDate = 'now', $interval = '+ 5 days', $timezone = null),
         'end_time' => $faker->dateTimeThisYear($startDate = '+5 days', $interval = '+ 1 days', $timezone = null),
         'user_id' => $faker->randomElement($usersIds),

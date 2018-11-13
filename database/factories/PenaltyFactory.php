@@ -1,9 +1,8 @@
 <?php
 
-use Faker\Generator as Faker;
-use App\Models\Reservation;
 use App\Models\Penalty;
-use Illuminate\Support\Carbon;
+use App\Models\Reservation;
+use Faker\Generator as Faker;
 
 
 $factory->define(Penalty::class, function (Faker $faker) {
@@ -16,6 +15,5 @@ $factory->define(Penalty::class, function (Faker $faker) {
         'penalty_end' => $faker->dateTimeThisYear($endDate = 'now',$timezone = null),
         'reason' => $faker->sentence($nbWords = 6, $variableNbWords = true) ,
         'date_time' =>$faker->dateTimeThisYear($startDate = 'now', $timezone = null),
-
     ];
 });

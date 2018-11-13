@@ -114,9 +114,14 @@ Route::put('/reservation/edit/{reservation}', 'ReservationController@update')->m
 //Route::get('/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('auth');
 
 
-Route::get('/moderator/resource/hand-over',function(){
-    return view('/SpecificViews/Moderator/hand-over');
-})->middleware('moderator');
+Route::get('/moderator/resource/hand-over', 'ReservationController@handOver')->middleware('moderator');
+
+/* Changing reservations to running */
+Route::post('/moderator/resource/hand-over/{reservation}', 'ReservationController@HandOverReservation')->where('reservation', '[0-9]+')
+    ->middleware('moderator');
+/* Changing reservations to finalize */
+Route::post('/moderator/resource/hand-back/{reservation}', 'ReservationController@finalizeReservation')->where('reservation', '[0-9]+')
+    ->middleware('moderator');
 
 Route::get('/person/posts', function () {
     return view('/GeneralViews/Persons/posts');
@@ -146,7 +151,8 @@ Route::post('/person/reservation/deleteAdminMonitor', 'ReservationController@can
 Route::get('/person/penalties/{ID}/actives', 'PenaltyController@activePenalties');
 Route::get('/person/penalties/{ID}/history', 'PenaltyController@loadHistoryPenalties');
 Route::get('/person/penalties/history/{startTime}/{endTime}/{ID}', 'PenaltyController@personHistoryPenalties');
-Route::get('/person/penalty/conclude', 'PenaltyController@endPenalties')->middleware('moderatorAdmin');
+
+Route::post('/person/penalty/conclude', 'PenaltyController@endPenalties')->middleware('moderatorAdmin');;
 
 Route::get('/resource/view/{ID}', 'ResourceController@view')->name('resource.view');
 Route::get('/resource/view/{ID}/reservations', 'ResourceController@reservationsByResource')->name('resource.reservations')->middleware('moderatorAdmin');

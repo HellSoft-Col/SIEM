@@ -87,6 +87,7 @@ class ResourceController extends Controller
             'state' => 'AVAILABLE',
             'resource_type_id' => $tClass->id
         ]);
+
         $i = 0;
         foreach ($characteristics as $char) {
             if (is_numeric($char)){
