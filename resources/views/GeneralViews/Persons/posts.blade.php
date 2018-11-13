@@ -8,7 +8,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
     <style>
-        /* Make the image fully responsive */
         .carousel-inner img {
             width: 100%;
             height: 100%;

@@ -636,15 +636,89 @@ class ReservationController extends Controller
     }
 
     /**
+     * Obtener las reservas activas para el dia actual
+     *
+     * @param
+     * @return Reservation
+     *
+     */
+
+    private function getActualActiveReservationsInstrument()
+    {
+        $actualtime = date('Y-m-d');
+        $reservations = Reservation::ActiveReservationsResource('INSTRUMENT');
+        $actual_res = [];
+
+        foreach ($reservations as $reservation) {
+
+            if (date('Y-m-d', strtotime($reservation->start_time)) == $actualtime) {
+                $actual_res[] = $reservation;
+            }
+        }
+
+        return $actual_res;
+    }
+
+    /**
+     * Obtener las reservas no devueltas
+     *
+     * @param
+     * @return Reservation
+     *
+     */
+    private function getActualRunningReservationsInstrument()
+    {
+        return Reservation::RunningReservationsResource('INSTRUMENT');
+    }
+
+    /**
+     * Obtener las reservas activas para el dia actual
+     *
+     * @param
+     * @return Reservation
+     *
+     */
+
+    private function getActualActiveReservationsClassroom()
+    {
+        $actualtime = date('Y-m-d');
+        $reservations = Reservation::ActiveReservationsResource('CLASSROOM');
+        $actual_res = [];
+
+        foreach ($reservations as $reservation) {
+
+            if (date('Y-m-d', strtotime($reservation->start_time)) == $actualtime) {
+                $actual_res[] = $reservation;
+            }
+        }
+
+        return $actual_res;
+    }
+
+    /**
+     * Obtener las reservas no devueltas
+     *
+     * @param
+     * @return Reservation
+     *
+     */
+    private function getActualRunningReservationsClassroom()
+    {
+        return Reservation::RunningReservationsResource('CLASSROOM');
+    }
+
+    /**
      * Finalizar una reserva dada por id
      *
      * @param $reservation_id
      * @return
      */
-    public function finalizeReservation(Reservation $reservation)
+    public function finalizeReservation(Request $request)
     {
+        $reservation = Reservation::find($request->reservation_id);
         $reservation->state = 'FINALIZED';
         $reservation->save();
+        return redirect(url()->previous());
     }
 
     /**
@@ -654,24 +728,38 @@ class ReservationController extends Controller
      * @param $reservation_id
      * @return
      */
-    public function HandOverReservation(Reservation $reservation)
+    public function HandOverReservation(Request $request)
     {
-
+        $reservation = Reservation::find($request->reservation_id);
         $reservation->state = 'RUNNING';
         $reservation->save();
+        return redirect(url()->previous());
     }
 
     /**
      * Load Hand-Over view
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function handOver()
+    public function handOverInstrument()
     {
-        $running_reservations = $this->getActualRunningReservations();
-        $actual_reservations = $this->getActualActiveReservations();
+        $running_reservations = $this->getActualRunningReservationsInstrument();
+        $actual_reservations = $this->getActualActiveReservationsInstrument();
 
-        return view('/SpecificViews/Moderator/hand-over', compact('running_reservations', 'actual_reservations'));
+        return view('SpecificViews.Moderator.hand-over_instrument', compact('running_reservations', 'actual_reservations'));
     }
+
+    /**
+     * Load Hand-Over view
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function handOverClassroom()
+    {
+        $running_reservations = $this->getActualRunningReservationsClassroom();
+        $actual_reservations = $this->getActualActiveReservationsClassroom();
+
+        return view('SpecificViews.Moderator.hand-over_classroom', compact('running_reservations', 'actual_reservations'));
+    }
+
     /**
      * Mostrar ventana de seleccion de recursos
      * @param $user

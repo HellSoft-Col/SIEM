@@ -22,7 +22,7 @@
                         </div>
                         <div class="div-table-col">
                             <div class="media-body">
-                                <a href="{{url('/moderator/resource/hand-over')}}">
+                                <a href="{{url('/moderator/resource/hand-over/instrument')}}">
                                     <h5 class="media-heading">Entregar recurso</h5>
                                 </a>
                             </div>

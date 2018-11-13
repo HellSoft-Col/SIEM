@@ -110,13 +110,15 @@ Route::put('/reservation/edit/{reservation}', 'ReservationController@update')->m
 //Route::get('/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('auth');
 
 
-Route::get('/moderator/resource/hand-over', 'ReservationController@handOver')->middleware('moderator');
+Route::get('/moderator/resource/hand-over/instrument', 'ReservationController@handOverInstrument')->middleware('moderator');
+Route::get('/moderator/resource/hand-over/classroom', 'ReservationController@handOverClassroom')->middleware('moderator');
 
 /* Changing reservations to running */
-Route::post('/moderator/resource/hand-over/{reservation}', 'ReservationController@HandOverReservation')->where('reservation', '[0-9]+')
+Route::post('/moderator/resource/hand-over', 'ReservationController@HandOverReservation')
     ->middleware('moderator');
+
 /* Changing reservations to finalize */
-Route::post('/moderator/resource/hand-back/{reservation}', 'ReservationController@finalizeReservation')->where('reservation', '[0-9]+')
+Route::post('/moderator/resource/hand-back', 'ReservationController@finalizeReservation')
     ->middleware('moderator');
 
 Route::get('/person/posts/{user}', 'UserController@getUserPosts')

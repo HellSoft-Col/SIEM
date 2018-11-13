@@ -29,9 +29,33 @@ class Reservation extends Model
         return Reservation::where('state', 'ACTIVE')->get();
     }
 
+    static function ActiveReservationsResource($resource_type)
+    {
+        $reservations = Reservation::where('state', 'ACTIVE')->get();
+        $results = [];
+        foreach ($reservations as $reservation) {
+            if ($reservation->resource->type == $resource_type) {
+                $results[] = $reservation;
+            }
+        }
+        return $results;
+    }
+
     static function RunningReservations()
     {
         return Reservation::where('state', 'RUNNING')->get();
+    }
+
+    static function RunningReservationsResource($resource_type)
+    {
+        $reservations = Reservation::where('state', 'RUNNING')->get();
+        $results = [];
+        foreach ($reservations as $reservation) {
+            if ($reservation->resource->type == $resource_type) {
+                $results[] = $reservation;
+            }
+        }
+        return $results;
     }
 }
 
