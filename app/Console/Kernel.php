@@ -2,9 +2,11 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ValidateIncomingReservations;
 use App\Console\Commands\ValidateReservationsInTime;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+
 
 class Kernel extends ConsoleKernel
 {
@@ -27,7 +29,8 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command(ValidateReservationsInTime::class)->hourly();
+        $schedule->command(ValidateReservationsInTime::class)->hourlyAt(17);
+        $schedule->command(ValidateIncomingReservations::class)->hourlyAt(17);
     }
 
     /**
