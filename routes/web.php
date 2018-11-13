@@ -87,10 +87,6 @@ Route::post('/person/reservation/delete', 'ReservationController@cancelReservati
 
 /* -----------------------------------------------------------------*/
 
-Route::get('/auth/resource/create', 'ResourceController@create')
-    ->name('resource.create')
-    ->middleware('admin');
-
 Route::get('/resource/search', 'ResourceController@gosearch')
     ->middleware('auth');
 
