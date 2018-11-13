@@ -26,23 +26,6 @@ product_view .modal-dialog {
     margin-top: 80px;
 }
 
-.flexcontainer {
-    display: flex;
-    justify-content: flex-start; /* adjustment */
-    position: relative; /* new */
-    width: 500px;
-    height: 200px;
-}
-
-.itemcenter {
-    flex: 0 1 auto;
-    width: 180px;
-    height: 150px;
-    position: absolute; /* new */
-    left: 60%;
-    transform: translateX(-50%);
-}
-
 .message-create {
     margin-top: 20px;
     font-size: 20px;
@@ -70,12 +53,31 @@ li {
     background-color: #f1f1f1;
     color: black;
 }
-
 .round {
     border-radius: 50%;
 }
-
 i {
     color: black;
 }
+
+tbody {
+    display:block;
+    height:300px;
+    overflow:auto;
+}
+thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+thead {
+    width: calc( 100% - 1em )
+}
+
+
+
+
+
+
+
 

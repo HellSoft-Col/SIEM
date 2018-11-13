@@ -716,6 +716,9 @@ class ReservationController extends Controller
     public function finalizeReservation(Request $request)
     {
         $reservation = Reservation::find($request->reservation_id);
+        if(is_null($reservation)){
+            return redirect(url()->previous());
+        }
         $reservation->state = 'FINALIZED';
         $reservation->save();
         return redirect(url()->previous());
@@ -731,6 +734,9 @@ class ReservationController extends Controller
     public function HandOverReservation(Request $request)
     {
         $reservation = Reservation::find($request->reservation_id);
+        if(is_null($reservation)){
+            return redirect(url()->previous());
+        }
         $reservation->state = 'RUNNING';
         $reservation->save();
         return redirect(url()->previous());

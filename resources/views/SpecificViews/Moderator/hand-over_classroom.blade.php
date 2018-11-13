@@ -2,10 +2,7 @@
 @section('includes')
     <link rel="stylesheet" href="{{ asset('/css/reserve/content.css') }}">
 @endsection
-@section('options')
-    <a class="dropdown-item" href="{{url('/feed')}}">Publicaciones</a>
-    <a class="dropdown-item" href="{{url('/events')}}">Eventos</a>
-@endsection
+
 @section('content')
     <div class="container">
         <div class="col-lg-11">
@@ -52,31 +49,40 @@
                 </div>
                 <br>
                 <table class="table table-bordered text-center" id="myTable">
-                    <tbody>
                     <thead class="thead-dark">
-                    <tr>
+                    <tr >
                         <th>Sala-Salón</th>
                         <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Hora Inicio</th>
-                        <th>Hora Fin</th>
+                        <th>Fecha-Hora Inicio</th>
+                        <th>Fecha-Hora Fin</th>
                     </tr>
                     </thead>
-                    <tr class="clickable-row">
-                        <th>Example 2</th>
-                    </tr>
+                    <tbody>
+                    @foreach($actual_reservations as $reservation)
+                        <tr class="clickable-row">
+                            <th hidden>{{$reservation->id}}</th>
+                            <th>{{$reservation->resource->name}}</th>
+                            <th>{{$reservation->user->name}}</th>
+                            <th>{{$reservation->start_time}}</th>
+                            <th>{{$reservation->end_time}}</th>
+                        </tr>
+                    @endforeach
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-center">
-                    <button class="btn-dark btn-lg d-flex justify-content-center">Entregar</button>
-                </div>
+                <form role="form" method="POST" action="{{ url('/moderator/resource/hand-over') }}">
+                    @csrf
+                    <input id="reservation_id_over" name="reservation_id" value="0" type="number" hidden>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn-dark btn-lg d-flex justify-content-center">Entregar</button>
+                    </div>
+                </form>
             </div>
             <div class="col">
                 <h3 class="d-flex justify-content-center">Devolver recurso</h3>
                 <br>
 
                 <table class="table table-bordered text-center" id="myTable1">
-                    <tbody>
+
                     <thead class="thead-dark">
                     <tr>
                         <th>Recurso</th>
@@ -86,7 +92,7 @@
                         <th>Temporizador de tiempo</th>
                     </tr>
                     </thead>
-
+                    <tbody>
                     @forelse($running_reservations as $reservation)
                         <tr class="clickable-row">
                             <th hidden>{{ $reservation->id }}</th>
@@ -171,6 +177,7 @@
                     $(function () {
                         $('#myTable').on('click', '.clickable-row', function (event) {
                             $(this).addClass('bg-info').siblings().removeClass('bg-info');
+                            $('#reservation_id_over').attr("value", this.cells[0].innerHTML);
                         });
                         $('#myTable1').on('click', '.clickable-row', function (event) {
                             $(this).addClass('bg-info').siblings().removeClass('bg-info');
