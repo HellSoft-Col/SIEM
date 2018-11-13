@@ -250,5 +250,14 @@ class UserController extends Controller
 
         return $acum;
     }
+
+
+    public function getUserPosts(User $user)
+    {
+
+        $posts = $user->publications;
+        return view('GeneralViews.Persons.posts', ['user_posts' => $posts, 'user' => $user]);
+
+    }
 }
 

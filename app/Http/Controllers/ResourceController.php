@@ -289,7 +289,7 @@ class ResourceController extends Controller
         if (isset($request->images)){
             $photos = $request->images;
             foreach ($photos as $photo)  {
-                $url = Storage::disk('local')->put('/Reserves/Classrooms/'.$resource->name. 'Folder', $photo);
+                $url = Storage::disk('public')->put('/Reserves/Classrooms/' . $resource->name . 'Folder', $photo);
                 File::create([
                     'path' => $url,
                     'resource_id' => $resource->id

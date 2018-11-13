@@ -123,9 +123,9 @@ Route::post('/moderator/resource/hand-over/{reservation}', 'ReservationControlle
 Route::post('/moderator/resource/hand-back/{reservation}', 'ReservationController@finalizeReservation')->where('reservation', '[0-9]+')
     ->middleware('moderator');
 
-Route::get('/person/posts', function () {
-    return view('/GeneralViews/Persons/posts');
-});
+Route::get('/person/posts/{user}', 'UserController@getUserPosts')
+    ->where('user', '[0-9]+')
+    ->middleware('moderatorAdmin');
 
 
 /*-----------------------3ra Entrega---------------------------------*/

@@ -1,3 +1,8 @@
+product_view .modal-dialog {
+    max-width: 800px;
+    width: 100%;
+}
+
 .title-margin {
     margin-top: 10px;
     margin-bottom: 30px;
