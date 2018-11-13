@@ -19,7 +19,7 @@
             <div class="col">
                 <div class="d-flex flex-row-reverse">
                         <a class="btn btn-dark js-scroll-trigger"
-                           href="{{url('/person/resource/search')}}">Añadir persona
+                           href="">Añadir persona
                         </a>
 
                 </div>

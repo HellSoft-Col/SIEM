@@ -18,10 +18,9 @@
 
                 <br>
                 <form id="search_resource" class="form" role="form" method="POST"
-                      action="{{ url('/admin/resource/create/classroom') }}" enctype="multipart/form-data">
+                      action="{{ url('/admin/resource/edit') }}" enctype="multipart/form-data">
                     @csrf
-                    {{ method_field('PUT') }}
-
+                    <input hidden name="id" value="{{$resource->id}}">
                     <div class="form-group row">
                         <label class="col-lg-2 col-form-label form-control-label" for="name">Nombre</label>
                         <div class="col-lg-9">
@@ -146,7 +145,6 @@
                             </div>
 
                         @empty
-                            {{ dd($resource) }}
                             <div id="char_1" name="char_1">
 
                                 <div id="char_1" class="row d-flex flex-row justify-content-center">
@@ -196,7 +194,7 @@
                             </div>
                         @endforelse
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">Crear</button>
+                    <button type="submit" class="btn btn-primary btn-block">Editar</button>
 
                 </form>
             </div>
@@ -204,6 +202,53 @@
 
     </div>
 
+    <div class="hidden" id="char_1" name="char_1">
+
+        <div id="char_1" class="row d-flex flex-row justify-content-center">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <input id="quantity" name="quantity" class="form-control"
+                           placeholder="cantidad"
+                           value="1">
+                </div>
+
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <select id="aditionalCharacteristic" class="form-control" size="0"
+                            name="aditionalCharacteristic">
+                        <option value="0" selected disabled hidden>Seleccione algo</option>
+                        @forelse($rcharacteristics as $rcaracteristic)
+                            <option
+                                value="{{ $rcaracteristic->id }}">{{$rcaracteristic->name}}</option>
+                        @empty
+                            <option value="0" selected disabled hidden>Seleccione algo</option>
+                        @endforelse
+
+                    </select>
+                </div>
+
+            </div>
+            <div class="row d-flex justify-content-end">
+                <div class="form-group col">
+                    <div class="d-flex align-items-center mx-auto">
+                        <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
+                           style="margin-right: 10px; color: white;"
+                           onclick="addCaracteristic()">+</a>
+
+                        <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
+                           style="margin-right: 10px; color: white;"
+                           onclick="delCaracteristic(this)">-</a>
+
+                        <a class="btn btn-dark d-flex align-items-cente js-scroll-trigger"
+                           style="color: white;" onclick="addNewCaracteristic(this)">Otra</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 
     <div id="char_nueva" class="row d-flex flex-row justify-content-center hidden">
         <div class="col-sm-2">

@@ -11,6 +11,7 @@ use App\Models\ResourceType;
 use App\Models\User;
 use Calendar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use \Validator;
 use Log;
@@ -243,13 +244,67 @@ class ResourceController extends Controller
         $resource->name = $request->name;
         $resource->state = $request->state;
         $resource->description = $request->description;
-        if ($request->has('rtype')) {
-            $type = ResourceType::where('name', $request->rtype)->first();
-            $resource->classroom_type_id = $type->id;
+        $type = ResourceType::where('id', $request->rtype)->first();
+        $resource->resource_type_id = $type->id;
+        $i1 = 101;
+        $i2 = 2;
+        $characteristics = [];
+        $quantity = [];
+        if (isset($request['aditionalCharacteristic'])){
+            array_push($characteristics, $request['aditionalCharacteristic']);
+            array_push($quantity, $request['quantity']);
         }
-        //pendiente caracteristicas
+        while (isset($request['aditionalCharacteristic'.$i1])) {
+            array_push($characteristics, $request['aditionalCharacteristic'.$i1]);
+            array_push($quantity, $request['quantity'.$i1]);
+            $i1 ++;
+        }
+        while (isset($request['aditionalCharacteristic'.$i2])) {
+            array_push($characteristics, $request['aditionalCharacteristic'.$i2]);
+            array_push($quantity, $request['quantity'.$i2]);
+            $i2 ++;
+        }
+        $i = 0;
+        foreach ($characteristics as $char) {
+            if (is_numeric($char)){
+                $charsDb = Characteristic::where('id',$char)->first();
+            }else{
+                $charsDb = Characteristic::create([
+                    'name' => $char,
+                    'type' => $resource->type
+                ]);
+            }
+            $charResource = CharacteristicResource::where('resource_id', $resource->id)
+                ->where('characteristic_id', $charsDb->id)->first();
+            if ($charResource == null){
+                CharacteristicResource::create([
+                    'resource_id' => $resource->id,
+                    'characteristic_id' => $charsDb->id,
+                    'quantity' => $quantity[$i]
+                ]);
+            }
+            $i += 1;
+        }
+        if (isset($request->images)){
+            $photos = $request->images;
+            foreach ($photos as $photo)  {
+                $url = Storage::disk('local')->put('/Reserves/Classrooms/'.$resource->name. 'Folder', $photo);
+                File::create([
+                    'path' => $url,
+                    'resource_id' => $resource->id
+                ]);
+            }
+        }
         $resource->save();
-        return view('home'); //Cambiar a busqueda de recursos
+        if ($resource->type == 'CLASSROOM'){
+            $rcharacteristics = Characteristic::where('type', 'CLASSROOM')->get();
+            $types = ResourceType::where('type', 'CLASSROOM')->get();
+        }else{
+            $rcharacteristics = Characteristic::where('type', 'INSTRUMENT')->get();
+            $types = ResourceType::where('type', 'INSTRUMENT')->get();
+        }
+        return view('SpecificViews.Admin.Resource.edit', compact('types', 'rcharacteristics', 'resource'));
+
     }
 
     /**
@@ -258,11 +313,11 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $resource = Resource::find($request->id);
+        $resource = Resource::find($id);
         $resource->delete();
-        return view('home');//cambiar
+        return redirect(back());//cambiar
     }
 
     /**

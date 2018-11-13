@@ -14,7 +14,7 @@
             <div class="col">
                 <div class="d-flex flex-row-reverse">
                     <a class="btn btn-dark js-scroll-trigger"
-                       href=" ">Añadir recurso
+                       href="/admin/resource/create/classroom">Añadir recurso
                     </a>
 
                 </div>
