@@ -7,7 +7,6 @@ use App\Models\Reservation;
 use App\Models\Resource;
 use App\Models\ResourceType;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -605,12 +604,13 @@ class ReservationController extends Controller
 
     private function getActualActiveReservations()
     {
-        $actualtime = Carbon::now();
+        $actualtime = date('Y-m-d');
         $reservations = Reservation::ActiveReservations();
         $actual_res = [];
 
         foreach ($reservations as $reservation) {
-            if ($reservation->start_time->format('Y-m-d') == $actualtime->format('Y-m-d')) {
+
+            if (date('Y-m-d', strtotime($reservation->start_time)) == $actualtime) {
                 $actual_res[] = $reservation;
             }
         }
@@ -636,9 +636,8 @@ class ReservationController extends Controller
      * @param $reservation_id
      * @return
      */
-    private function finalizeReservation($reservation_id)
+    public function finalizeReservation(Reservation $reservation)
     {
-        $reservation = Reservation::where('id', $reservation_id)->get();
         $reservation->state = 'FINALIZED';
         $reservation->save();
     }
@@ -650,14 +649,24 @@ class ReservationController extends Controller
      * @param $reservation_id
      * @return
      */
-    private function HandOverReservation($reservation_id)
+    public function HandOverReservation(Reservation $reservation)
     {
-        $reservation = Reservation::where('id', $reservation_id)->get();
+
         $reservation->state = 'RUNNING';
         $reservation->save();
     }
 
+    /**
+     * Load Hand-Over view
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function handOver()
+    {
+        $running_reservations = $this->getActualRunningReservations();
+        $actual_reservations = $this->getActualActiveReservations();
 
+        return view('/SpecificViews/Moderator/hand-over', compact('running_reservations', 'actual_reservations'));
+    }
     /**
      * Mostrar ventana de seleccion de recursos
      * @param $user

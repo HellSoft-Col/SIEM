@@ -65,7 +65,7 @@ class ResourceController extends Controller
             'state' => 'AVAILABLE',
             'classroom_type_id' => $tClass->id
         ]);
-        //PENDIENTE CARACTERISTICAS  -> descripcion
+        //PENDIENTE CARACTERISTICAS  -> descripcion+
         $chars = isset($request['chars']) ? $request['chars'] : array();
         foreach ($chars as $value) {
             $charsDb = Characteristic::where('name',$value)->first();
