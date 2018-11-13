@@ -6,21 +6,21 @@ use App\Models\Penalty;
 use App\Models\Reservation;
 use Illuminate\Console\Command;
 
-class ValidateReservationsInTime extends Command
+class ValidateIncomingReservations extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'validate:reservations';
+    protected $signature = 'validate:incoming';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Valida que las reservas corriendo esten correctos';
+    protected $description = 'Valida que las reservas entrantes no esten pasadas';
 
     /**
      * Create a new command instance.
@@ -41,12 +41,10 @@ class ValidateReservationsInTime extends Command
      */
     public function handle()
     {
-        $reservations = Reservation::RunningReservations();
-
+        $reservations = Reservation::ActiveReservations();
         foreach ($reservations as $res) {
             $this->info('---> ' . $res->state);
         }
-
         foreach ($reservations as $reservation) {
             if (!$this->matchBoolReservation($reservation)) {
                 $this->makePenalty($reservation);
@@ -69,8 +67,8 @@ class ValidateReservationsInTime extends Command
 
         $actual_time = date('Y-m-d H:i:s');;
         $acum = true;
-        if ($reservation->end_time != NULL) {
-            if (!($reservation->end_time >= $actual_time)) {
+        if ($reservation->start_time != NULL) {
+            if (!($reservation->start_time >= $actual_time)) {
                 $acum = $acum && false;
             }
         }
@@ -95,7 +93,7 @@ class ValidateReservationsInTime extends Command
             'reservation_id' => $reservation->id,
             'date_time' => $actTime,
             'penalty_end' => $new_date,
-            'reason' => 'No se reporto devolucion de recurso en el tiempo dado.',
+            'reason' => 'No se reporto entrega del recurso en el tiempo dado.',
         ]);
 
     }

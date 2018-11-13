@@ -38,18 +38,18 @@
                             </ul>
                             <hr>
                             <div class="row">
-                                <div class="col-lg-3">
+                                <div class="col-xs-12 ml-1">
                                     <a class="btn btn-dark btn-lg"
                                        href="{{url('/person/reservations/'.$user->id.'/active')}}">Ver reservas</a>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-xs-12 ml-3">
                                     <a class="btn btn-dark btn-lg"
                                        href="{{url('/person/penalties/'.$user->id.'/actives')}}">Ver multas</a>
                                 </div>
-                                <div class="col-lg-3">
-                                    <a class="btn btn-dark btn-lg" href="{{url('/person/posts')}}">Ver publicaciones</a>
+                                <div class="col-xs-12 ml-3">
+                                    <a class="btn btn-dark btn-lg" href="{{url('/person/posts/'.$user->id)}}">Ver publicaciones</a>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col ml-1">
                                     <a class="btn btn-dark btn-lg"
                                        href="{{url('/reservation/view/resources/classroom/'.$user->id)}}">Hacer
                                         Reserva</a>

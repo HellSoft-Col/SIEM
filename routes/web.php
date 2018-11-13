@@ -87,10 +87,6 @@ Route::post('/person/reservation/delete', 'ReservationController@cancelReservati
 
 /* -----------------------------------------------------------------*/
 
-Route::get('/auth/resource/create', 'ResourceController@create')
-    ->name('resource.create')
-    ->middleware('admin');
-
 Route::get('/resource/search', 'ResourceController@gosearch')
     ->middleware('auth');
 
@@ -114,18 +110,20 @@ Route::put('/reservation/edit/{reservation}', 'ReservationController@update')->m
 //Route::get('/reservation/create', 'ReservationController@create')->name('reservation.create')->middleware('auth');
 
 
-Route::get('/moderator/resource/hand-over', 'ReservationController@handOver')->middleware('moderator');
+Route::get('/moderator/resource/hand-over/instrument', 'ReservationController@handOverInstrument')->middleware('moderator');
+Route::get('/moderator/resource/hand-over/classroom', 'ReservationController@handOverClassroom')->middleware('moderator');
 
 /* Changing reservations to running */
-Route::post('/moderator/resource/hand-over/{reservation}', 'ReservationController@HandOverReservation')->where('reservation', '[0-9]+')
-    ->middleware('moderator');
-/* Changing reservations to finalize */
-Route::post('/moderator/resource/hand-back/{reservation}', 'ReservationController@finalizeReservation')->where('reservation', '[0-9]+')
+Route::post('/moderator/resource/hand-over', 'ReservationController@HandOverReservation')
     ->middleware('moderator');
 
-Route::get('/person/posts', function () {
-    return view('/GeneralViews/Persons/posts');
-});
+/* Changing reservations to finalize */
+Route::post('/moderator/resource/hand-back', 'ReservationController@finalizeReservation')
+    ->middleware('moderator');
+
+Route::get('/person/posts/{user}', 'UserController@getUserPosts')
+    ->where('user', '[0-9]+')
+    ->middleware('moderatorAdmin');
 
 
 /*-----------------------3ra Entrega---------------------------------*/
