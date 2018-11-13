@@ -39,7 +39,7 @@
                 window.location = $(this).val();
             });
         </script>
-        <form method="POST" action="{{url('/person/penalty/conclude')}}">
+        <form method="GET" action="{{url('/person/penalty/conclude')}}">
             {{csrf_field()}}
             <input hidden value="{{$user['id']}}" name="id">
             <div class="row">
@@ -82,7 +82,8 @@
                                                 finaliza: {{$penalty['penalty_end']}}</p>
                                         </div>
                                         <div class="col-auto d-flex flex-column">
-                                            <a class="btn btn-dark " href="">Ver recurso</a>
+                                            <a class="btn btn-dark "
+                                               href="{{url('/resource/view/'.$penalty['id_resource'])}}">Ver recurso</a>
                                         </div>
                                     </div>
                                 </div>

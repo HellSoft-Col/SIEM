@@ -23,7 +23,7 @@ class CreateFileTable extends Migration
             $table->enum('type',['EVENT','PUBLICATION','USER']);
             $table->foreign('event_id')->references('id')->on('event');
             $table->foreign('publication_id')->references('id')->on('publication');
-            $table->foreign('resource_id')->references('id')->on('resource');
+            $table->foreign('resource_id')->references('id')->on('resource')->onDelete('cascade');
             $table->timestamps();
         });
     }

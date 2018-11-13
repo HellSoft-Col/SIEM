@@ -124,23 +124,24 @@ Route::get('/person/posts', function () {
 
 
 /*-----------------------3ra Entrega---------------------------------*/
+// URLS Cocunubo
 
+Route::get('/admin/resource/create/classroom', 'ResourceController@createRoom')->name('resource.createRoom')->middleware('admin');
+Route::get('/admin/resource/create/instrument', 'ResourceController@createInstrument')->name('resource.createInstrument')->middleware('admin');
 
-Route::get('/admin/resource/create/sala', 'ResourceController@createSala')->name('resource.createSala')->middleware('admin');
-Route::get('/admin/resource/create/instrumento', 'ResourceController@createInstrumento')->name('resource.createInstrumento')->middleware('admin');
-Route::put('/admin/resource/create/sala', 'ResourceController@storeSala')->middleware('admin');
-Route::put('/admin/resource/create/instrumento', 'ResourceController@storeInstrumento')->middleware('admin');
-Route::get('/admin/resource/edit/{ID}', 'ResourceController@editResource')->middleware('admin');
-Route::get('/admin/resource/edit', 'ResourceController@editViewSala')->name('resource.editSala')->middleware('admin');
-Route::get('/admin/resource/edit', 'ResourceController@editViewInstrumento')->name('resource.editInstrumento')->middleware('admin');
+Route::put('/admin/resource/create/classroom', 'ResourceController@storeRoom')->middleware('admin');
+Route::put('/admin/resource/create/instrument', 'ResourceController@storeInstrument')->middleware('admin');
+
+Route::get('/admin/resource/edit/{resource}', 'ResourceController@editResource')->where('resource', '[0-9]+')->middleware('admin');
+
 Route::post('/admin/resource/edit', 'ResourceController@update')->middleware('admin');
 Route::delete('/admin/resource/delete/{ID}', 'ResourceController@destroy')->name('resource.delete')->middleware('admin');
 
-Route::get('/person/reservations/{ID}/active', 'ReservationController@personActiveReservations');
-Route::get('/person/reservations/{ID}/history', 'ReservationController@loadPersonHistoryReservations');
-Route::get('/person/reservation/history/{startTime}/{endTime}/{ID}', 'ReservationController@personHistoryReservations');
+Route::get('/person/reservations/{ID}/active', 'ReservationController@personActiveReservations')->middleware('moderatorAdmin');
+Route::get('/person/reservations/{ID}/history', 'ReservationController@loadPersonHistoryReservations')->middleware('moderatorAdmin');
+Route::get('/person/reservation/history/{startTime}/{endTime}/{ID}', 'ReservationController@personHistoryReservations')->middleware('moderatorAdmin');
 Route::post('/person/reservation/deleteAdminMonitor', 'ReservationController@cancelReservationsAdminMonitor')
-    ->name('person.cancelReservations');
+    ->name('person.cancelReservations')->middleware('moderatorAdmin');
 
 Route::get('/person/penalties/{ID}/actives', 'PenaltyController@activePenalties');
 Route::get('/person/penalties/{ID}/history', 'PenaltyController@loadHistoryPenalties');
@@ -156,5 +157,6 @@ Route::post('/resource/deleteReservations', 'ResourceController@cancelReservatio
 Route::get('/calendar/{resource}', 'CalendarController@show')->where('resource', '[0-9]+')->middleware('auth');
 Route::get('/reservation/view/resources/instrument/{user}', 'ReservationController@loadResourcesAdminMonitorInstrument')->where('user', '[0-9]+')->middleware('moderatorAdmin');
 Route::get('/reservation/view/resources/classroom/{user}', 'ReservationController@loadResourcesAdminMonitorClassroom')->where('user', '[0-9]+')->middleware('moderatorAdmin');
+
 
 

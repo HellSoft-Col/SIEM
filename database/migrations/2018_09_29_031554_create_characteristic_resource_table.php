@@ -17,7 +17,7 @@ class CreateCharacteristicResourceTable extends Migration
             $table->unsignedInteger('resource_id');
             $table->unsignedInteger('characteristic_id');
             $table->unsignedInteger('quantity')->default(1);
-            $table->foreign('resource_id')->references('id')->on('resource');
+            $table->foreign('resource_id')->references('id')->on('resource')->onDelete('cascade');
             $table->foreign('characteristic_id')->references('id')->on('characteristic');
             $table->primary(['resource_id','characteristic_id']);
 
