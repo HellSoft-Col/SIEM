@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
 use App\Models\ResourceType;
@@ -413,11 +412,11 @@ class ReservationController extends Controller
         foreach ($userItems as $uItem) {
             if($this->matchBool($uItem,$starTime,$endTime)) {
                 $resource = Resource::where('id', $uItem->resource_id)->first();
-                $image = File::where('resource_id', $uItem->id)->first();
+
                 $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
                 $item = [
                     "id_resource" => $resource->id,
-                    "imagePath" => $image->path,
+                    "imagePath" => $resource->files[0]->path,
                     "name" => $resource->name,
                     "salon" => $classroom->name,
                     "inicio" => $resource->start_time,
@@ -474,11 +473,11 @@ class ReservationController extends Controller
             ->where('state', 'FINALIZED')->get();
         foreach ($userItems as $uItem) {
             $resource = Resource::where('id', $uItem->resource_id)->first();
-            $image = File::where('resource_id', $uItem->id)->first();
+
             $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
             $item = [
                 "id_resource" => $resource->id,
-                "imagePath" => $image->path,
+                "imagePath" => $resource->files[0]->path,
                 "name" => $resource->name,
                 "salon" => $classroom->name,
                 "inicio" => $uItem->start_time,
@@ -509,11 +508,10 @@ class ReservationController extends Controller
         foreach ($userItems as $uItem) {
             if ($this->matchBool($uItem,$starTime,$endTime)) {
                 $resource = Resource::where('id', $uItem->resource_id)->first();
-                $image = File::where('resource_id', $uItem->id)->first();
                 $classroom = ResourceType::where('id', $resource->resource_type_id)->first();
                 $item = [
                     "id_resource" => $resource->id,
-                    "imagePath" => $image->path,
+                    "imagePath" => $resource->files[0]->path,
                     "name" => $resource->name,
                     "salon" => $classroom->name,
                     "inicio" => $resource->start_time,

@@ -8,7 +8,7 @@
             <a class="btn m-auto" href="{{url()->previous()}}"><i class="fa fa-arrow-circle-left fa-3x"></i></a>
             <div class=" col d-flex justify-content-end m-auto">
                 <a class="btn btn-dark d-flex align-items-center js-scroll-trigger"
-                   href="">Crear reserva
+                   href="{{ url('/reservation/view/resources/classroom/' . $user->id) }}">Crear reserva
                 </a>
             </div>
         </div>

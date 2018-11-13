@@ -15,7 +15,7 @@ class File extends Model
      * @var array
      */
     protected $fillable = [
-        'path','description','type',
+        'path', 'description', 'type', 'resource_id',
     ];
 
     function event(){

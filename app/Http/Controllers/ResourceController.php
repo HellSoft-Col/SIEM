@@ -11,10 +11,9 @@ use App\Models\ResourceType;
 use App\Models\User;
 use Calendar;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
-use \Validator;
 use Log;
+use Validator;
 
 class ResourceController extends Controller
 {
@@ -106,8 +105,9 @@ class ResourceController extends Controller
             $i += 1;
         }
         $photos = $request->images;
+
         foreach ($photos as $photo)  {
-            $url = Storage::disk('local')->put('/Reserves/Classrooms/'.$r->name. 'Folder', $photo);
+            $url = Storage::disk('public')->put('/Resources/Classrooms/' . $r->name . 'Folder', $photo);
             File::create([
                 'path' => $url,
                 'resource_id' => $r->id
@@ -174,7 +174,7 @@ class ResourceController extends Controller
         }
         $photos = $request->images;
         foreach ($photos as $photo)  {
-            $url = Storage::disk('local')->put('/Reserves/Instruments/'.$r->name. 'Folder', $photo);
+            $url = Storage::disk('public')->put('/Resources/Instruments/' . $r->name . 'Folder', $photo);
             File::create([
                 'path' => $url,
                 'resource_id' => $r->id
