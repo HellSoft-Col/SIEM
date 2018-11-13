@@ -68,8 +68,7 @@
                                 <div class="col-auto d-flex flex-column">
                                     <a class="btn btn-dark btn-sm m-1" href="{{url("/resource/view/{$resource->id}")}}">Ver recurso</a>
                                     <a class="btn btn-dark btn-sm m-1" href="{{url('/resource/view/'.$resource->id.'/reservations')}}">Gestionar reservas</a>
-                                    <button class="btn btn-dark btn-sm m-1" href="">Editar recurso</button>
-                                    <button class="btn btn-dark btn-sm m-1" href="">Eliminar recurso</button>
+                                    <a class="btn btn-dark btn-sm m-1" href="{{url('/admin/resource/edit/'.$resource->id)}}">Editar recurso</a>
                                 </div>
                                 @endif
                             </div>

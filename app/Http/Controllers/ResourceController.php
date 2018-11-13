@@ -4,15 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Characteristic;
 use App\Models\CharacteristicResource;
-use App\Models\Classroom_type;
 use App\Models\File;
 use App\Models\Reservation;
 use App\Models\Resource;
+use App\Models\ResourceType;
 use App\Models\User;
 use Calendar;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use \Validator;
 use Log;
 
 class ResourceController extends Controller
@@ -32,10 +33,11 @@ class ResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createSala()
+    public function createRoom()
     {
-        $types = Classroom_type::all();
-        return view('TestViewsCocu.createSala',compact('types'));
+        $types = ResourceType::where('type', 'CLASSROOM')->get();
+        $rcharacteristics = Characteristic::where('type', 'CLASSROOM')->get();
+        return view('SpecificViews.Admin.Resource.create_classroom', compact('types', 'rcharacteristics'));
     }
 
     /**
@@ -43,9 +45,11 @@ class ResourceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createInstrumento()
+    public function createInstrument()
     {
-        return view('TestViewsCocu.createInstrumento');
+        $types = ResourceType::where('type', 'INSTRUMENT')->get();
+        $rcharacteristics = Characteristic::where('type', 'INSTRUMENT')->get();
+        return view('SpecificViews.Admin.Resource.create_instrument', compact('types', 'rcharacteristics'));
     }
 
     /**
@@ -54,45 +58,64 @@ class ResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeSala(Request $request)
+    public function storeRoom(Request $request)
     {
+        $data = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'images' => 'required',
+            'aditionalCharacteristic' => 'required'
+        ]);
         $type = 'CLASSROOM';
-        $tClass = Classroom_type::where('name',$request->tSalon)->first();
+        $i = 2;
+        $characteristics = [];
+        $quantity = [];
+        if (isset($request['aditionalCharacteristic'])){
+            array_push($characteristics, $request['aditionalCharacteristic']);
+            array_push($quantity, $request['quantity']);
+        }
+        while (isset($request['aditionalCharacteristic'.$i])) {
+            array_push($characteristics, $request['aditionalCharacteristic'.$i]);
+            array_push($quantity, $request['quantity'.$i]);
+            $i ++;
+        }
+        $tClass = ResourceType::where('id', $request->rtype)->first();
         $r = Resource::create([
             'name' => $request->name,
             'description' => $request->description,
             'type' => $type,
             'state' => 'AVAILABLE',
-            'classroom_type_id' => $tClass->id
+            'resource_type_id' => $tClass->id
         ]);
-        //PENDIENTE CARACTERISTICAS  -> descripcion+
-        $chars = isset($request['chars']) ? $request['chars'] : array();
-        foreach ($chars as $value) {
-            $charsDb = Characteristic::where('name',$value)->first();
-            if ($charsDb == null){
+
+        $i = 0;
+        foreach ($characteristics as $char) {
+            if (is_numeric($char)){
+                $charsDb = Characteristic::where('id',$char)->first();
+            }else{
                 $charsDb = Characteristic::create([
-                    'name' => $value
+                    'name' => $char,
+                    'type' => $type
                 ]);
             }
             CharacteristicResource::create([
                 'resource_id' => $r->id,
                 'characteristic_id' => $charsDb->id,
-                'quantity' => $request->quantity
+                'quantity' => $quantity[$i]
+            ]);
+            $i += 1;
+        }
+        $photos = $request->images;
+        foreach ($photos as $photo)  {
+            $url = Storage::disk('local')->put('/Reserves/Classrooms/'.$r->name. 'Folder', $photo);
+            File::create([
+                'path' => $url,
+                'resource_id' => $r->id
             ]);
         }
-
-        if($request->images != null){
-            $photos = $request->images;
-            foreach ($photos as $photo)  {
-                $url = Storage::disk('local')->put($r->name. 'Folder', $photo);
-                File::create([
-                    'path' => $url,
-                    'resource_id' => $r->id
-                ]);
-            }
-        }
-        $types = Classroom_type::all();
-        return view('TestViewsCocu.createSala',compact("types"));
+        $types = ResourceType::where('type', 'CLASSROOM')->get();
+        $rcharacteristics = Characteristic::where('type', 'CLASSROOM')->get();
+        return view('SpecificViews.Admin.Resource.create_classroom', compact("types","rcharacteristics"));
     }
 
     /**
@@ -101,41 +124,63 @@ class ResourceController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeInstrumento(Request $request)
+    public function storeInstrument(Request $request)
     {
+        $data = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'images' => 'required',
+            'aditionalCharacteristic' => 'required'
+        ]);
+        $types = ResourceType::where('type', 'INSTRUMENT')->get();
+        $rcharacteristics = Characteristic::where('type', 'INSTRUMENT')->get();
         $type = 'INSTRUMENT';
+        $i = 2;
+        $characteristics = [];
+        $quantity = [];
+        if (isset($request['aditionalCharacteristic'])){
+            array_push($characteristics, $request['aditionalCharacteristic']);
+            array_push($quantity, $request['quantity']);
+        }
+        while (isset($request['aditionalCharacteristic'.$i])) {
+            array_push($characteristics, $request['aditionalCharacteristic'.$i]);
+            array_push($quantity, $request['quantity'.$i]);
+            $i ++;
+        }
+        $tClass = ResourceType::where('id', $request->rtype)->first();
         $r = Resource::create([
             'name' => $request->name,
             'description' => $request->description,
             'type' => $type,
             'state' => 'AVAILABLE',
+            'resource_type_id' => $tClass->id
         ]);
-        //PENDIENTE CARACTERISTICAS
-        $chars = isset($request['chars']) ? $request['chars'] : array();
-        foreach ($chars as $value) {
-            $charsDb = Characteristic::where('name',$value)->first();
-            if ($charsDb == null){
+        $i = 0;
+        foreach ($characteristics as $char) {
+            if (is_numeric($char)){
+                $charsDb = Characteristic::where('id',$char)->first();
+            }else{
                 $charsDb = Characteristic::create([
-                    'name' => $value
+                    'name' => $char,
+                    'type' => $type
                 ]);
             }
             CharacteristicResource::create([
                 'resource_id' => $r->id,
                 'characteristic_id' => $charsDb->id,
-                'quantity' => $request->quantity
+                'quantity' => $quantity[$i]
+            ]);
+            $i += 1;
+        }
+        $photos = $request->images;
+        foreach ($photos as $photo)  {
+            $url = Storage::disk('local')->put('/Reserves/Instruments/'.$r->name. 'Folder', $photo);
+            File::create([
+                'path' => $url,
+                'resource_id' => $r->id
             ]);
         }
-        if($request->images != null){
-            $photos = $request->images;
-            foreach ($photos as $photo)  {
-                $url = Storage::disk('local')->put($r->name. 'Folder', $photo);
-                File::create([
-                    'path' => $url,
-                    'resource_id' => $r->id
-                ]);
-            }
-        }
-        return view('TestViewsCocu.createInstrumento');
+        return view('SpecificViews.Admin.Resource.create_instrument',compact('types', 'rcharacteristics'));
     }
 
     /**
@@ -173,52 +218,18 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function editResource(Request $request)
+    public function editResource(Resource $resource)
     {
-        $resource = Resource::where('id',$request->ID)->first();
-        if (strcmp($resource->type,'CLASSROOM') == 0) {
-            return $this->editViewSala($resource);
+        if ($resource->type == 'CLASSROOM') {
+            $types = ResourceType::where('type', 'CLASSROOM')->get();
+            $rcharacteristics = Characteristic::where('type', 'CLASSROOM')->get();
+            return view('SpecificViews.Admin.Resource.edit', compact('types', 'rcharacteristics', 'resource'));
+        } else {
+            $rcharacteristics = Characteristic::where('type', 'INSTRUMENT')->get();
+            $types = ResourceType::where('type', 'INSTRUMENT')->get();
+            return view('SpecificViews.Admin.Resource.edit', compact('types', 'rcharacteristics', 'resource'));
         }
-        return $this->editViewInstrumento($resource);
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function editViewSala(Resource $resource)
-    {
-        $id = $resource->id;
-        $name = $resource->name;
-        $type = Classroom_type::where('id',$resource->classroom_type_id)->first();
-        $tSalon = $type->name;
-        $types = Classroom_type::all();
-        $state = $resource->state;
-        $images = $resource->files;
-        $characteristic = $resource->characteristics;
-        $description = $resource->description;
-        return view('TestViewsCocu.editSala', compact('id','name', 'tSalon', 'types',
-            'state', 'images', 'characteristic', 'description') );
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Resource  $resource
-     * @return \Illuminate\Http\Response
-     */
-    public function editViewInstrumento(Resource $resource)
-    {
-        $id = $resource->id;
-        $name = $resource->name;
-        $state = $resource->state;
-        $images = $resource->files;
-        $characteristic = $resource->characteristics;
-        $description = $resource->description;
-        return view('TestViewsCocu.editInstrumento', compact('id','name', 'state',
-            'images', 'characteristic', 'description') );
     }
 
     /**
@@ -234,13 +245,67 @@ class ResourceController extends Controller
         $resource->name = $request->name;
         $resource->state = $request->state;
         $resource->description = $request->description;
-        if ($request->has('tSalon')){
-            $type = Classroom_type::where('name',$request->tSalon)->first();
-            $resource->classroom_type_id = $type->id;
+        $type = ResourceType::where('id', $request->rtype)->first();
+        $resource->resource_type_id = $type->id;
+        $i1 = 101;
+        $i2 = 2;
+        $characteristics = [];
+        $quantity = [];
+        if (isset($request['aditionalCharacteristic'])){
+            array_push($characteristics, $request['aditionalCharacteristic']);
+            array_push($quantity, $request['quantity']);
         }
-        //pendiente caracteristicas
+        while (isset($request['aditionalCharacteristic'.$i1])) {
+            array_push($characteristics, $request['aditionalCharacteristic'.$i1]);
+            array_push($quantity, $request['quantity'.$i1]);
+            $i1 ++;
+        }
+        while (isset($request['aditionalCharacteristic'.$i2])) {
+            array_push($characteristics, $request['aditionalCharacteristic'.$i2]);
+            array_push($quantity, $request['quantity'.$i2]);
+            $i2 ++;
+        }
+        $i = 0;
+        foreach ($characteristics as $char) {
+            if (is_numeric($char)){
+                $charsDb = Characteristic::where('id',$char)->first();
+            }else{
+                $charsDb = Characteristic::create([
+                    'name' => $char,
+                    'type' => $resource->type
+                ]);
+            }
+            $charResource = CharacteristicResource::where('resource_id', $resource->id)
+                ->where('characteristic_id', $charsDb->id)->first();
+            if ($charResource == null){
+                CharacteristicResource::create([
+                    'resource_id' => $resource->id,
+                    'characteristic_id' => $charsDb->id,
+                    'quantity' => $quantity[$i]
+                ]);
+            }
+            $i += 1;
+        }
+        if (isset($request->images)){
+            $photos = $request->images;
+            foreach ($photos as $photo)  {
+                $url = Storage::disk('local')->put('/Reserves/Classrooms/'.$resource->name. 'Folder', $photo);
+                File::create([
+                    'path' => $url,
+                    'resource_id' => $resource->id
+                ]);
+            }
+        }
         $resource->save();
-        return view('home'); //Cambiar a busqueda de recursos
+        if ($resource->type == 'CLASSROOM'){
+            $rcharacteristics = Characteristic::where('type', 'CLASSROOM')->get();
+            $types = ResourceType::where('type', 'CLASSROOM')->get();
+        }else{
+            $rcharacteristics = Characteristic::where('type', 'INSTRUMENT')->get();
+            $types = ResourceType::where('type', 'INSTRUMENT')->get();
+        }
+        return view('SpecificViews.Admin.Resource.edit', compact('types', 'rcharacteristics', 'resource'));
+
     }
 
     /**
@@ -249,11 +314,11 @@ class ResourceController extends Controller
      * @param  \App\Models\Resource  $resource
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $resource = Resource::find($request->id);
+        $resource = Resource::find($id);
         $resource->delete();
-        return view('home');//cambiar
+        return redirect(back());//cambiar
     }
 
     /**
@@ -263,23 +328,13 @@ class ResourceController extends Controller
      */
     public function gosearch()
     {
-        $rtypes = DB::table('resource_type')
-            ->where('resource_type.type', '=', 'CLASSROOM')
-            ->get(['resource_type.name']);
-        $rtypes_instrument = DB::table('resource_type')
-            ->where('resource_type.type', '=', 'INSTRUMENT')
-            ->get(['resource_type.name']);
+        $rtypes = ResourceType::where('type', 'CLASSROOM')->get();
+        $rtypes_instrument = ResourceType::where('type', 'INSTRUMENT')->get();
 
-        $rcaracteristics = DB::table('characteristic')
-            ->where('characteristic.type', '=', 'CLASSROOM')
-            ->distinct()->get(['characteristic.name']);
+        $rcaracteristics = Characteristic::where('type', 'CLASSROOM')->get();
+        $rcaracteristics_instrument = Characteristic::where('type', 'INSTRUMENT')->get();
 
-        $rcaracteristics_instrument = DB::table('characteristic')
-            ->where('characteristic.type', '=', 'INSTRUMENT')
-            ->distinct()->get(['characteristic.name']);
-
-        return view('GeneralViews.ResourcesViews.search',
-            compact('rtypes', 'rcaracteristics', 'rtypes_instrument', 'rcaracteristics_instrument'));
+        return view('GeneralViews.ResourcesViews.search', compact('rtypes', 'rcaracteristics', 'rtypes_instrument', 'rcaracteristics_instrument'));
     }
 
     /**
