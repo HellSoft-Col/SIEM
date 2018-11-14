@@ -44,23 +44,28 @@
                     </div>
                 </div>
                 <br>
-                <table class="table table-bordered text-center" id="myTable">
-                    <tbody>
-                    <thead class="thead-dark">
-                    <tr >
-                        <th>Sala-Salón</th>
-                        <th>Nombre</th>
-                        <th>Fecha</th>
-                        <th>Hora Inicio</th>
-                        <th>Hora Fin</th>
-                    </tr>
-                    </thead>
-                    <tr class="clickable-row">
-                        <th>Example 2</th>
-                    </tr>
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-center">
+                    <table class="table table-bordered text-center" id="myTable">
+
+                        <thead class="thead-dark">
+                        <tr >
+                            <th>Sala-Salón</th>
+                            <th>Nombre</th>
+                            <th>Fecha-Hora Inicio</th>
+                            <th>Fecha-Hora Fin</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($actual_reservations as $actual)
+                            <tr class="clickable-row">
+                                <th>{{$actual->resource->name}}</th>
+                                <th>{{$actual->user->name}}</th>
+                                <th>{{$actual->start_time}}</th>
+                                <th>{{$actual->end_time}}</th>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                    </table>
+                <div class="d-flex justify-content-center mt-5">
                     <button class="btn-dark btn-lg d-flex justify-content-center">Entregar</button>
                 </div>
             </div>
@@ -76,9 +81,11 @@
                         <th>Estado</th>
                     </tr>
                     </thead>
+                    @foreach($running_reservations as $running)
                     <tr class="clickable-row">
                         <th>Example 2</th>
                     </tr>
+                    @endforeach
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center">
