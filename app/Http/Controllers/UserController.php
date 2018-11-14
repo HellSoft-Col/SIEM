@@ -101,7 +101,7 @@ class UserController extends Controller
         if ( $request->hasFile('img')){
             $url = Storage::disk('public')->put(Auth::user()->username . 'Folder', $request->file('img'));
             $file = File::create([
-                'path' => $url,
+                'path' => 'storage/' . $url,
                 'description' => Auth::user()->username . " Profile photo",
                 'type' => 'USER',
             ]);

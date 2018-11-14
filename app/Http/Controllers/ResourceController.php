@@ -109,7 +109,7 @@ class ResourceController extends Controller
         foreach ($photos as $photo)  {
             $url = Storage::disk('public')->put('/Resources/Classrooms/' . $r->name . 'Folder', $photo);
             File::create([
-                'path' => $url,
+                'path' => 'storage/' . $url,
                 'resource_id' => $r->id
             ]);
         }
@@ -176,7 +176,7 @@ class ResourceController extends Controller
         foreach ($photos as $photo)  {
             $url = Storage::disk('public')->put('/Resources/Instruments/' . $r->name . 'Folder', $photo);
             File::create([
-                'path' => $url,
+                'path' => 'storage' . $url,
                 'resource_id' => $r->id
             ]);
         }
@@ -289,9 +289,14 @@ class ResourceController extends Controller
         if (isset($request->images)){
             $photos = $request->images;
             foreach ($photos as $photo)  {
-                $url = Storage::disk('public')->put('/Reserves/Classrooms/' . $resource->name . 'Folder', $photo);
+                if ($resource->type == 'CLASSROOM') {
+                    $url = Storage::disk('public')->put('/Resources/Classrooms/' . $resource->name . 'Folder', $photo);
+                } else {
+                    $url = Storage::disk('public')->put('/Resources/Instruments/' . $resource->name . 'Folder', $photo);
+                }
+
                 File::create([
-                    'path' => $url,
+                    'path' => 'storage/' . $url,
                     'resource_id' => $resource->id
                 ]);
             }
