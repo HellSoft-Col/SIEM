@@ -1,0 +1,435 @@
+-- MySQL dump 10.16  Distrib 10.1.34-MariaDB, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: carlos
+-- ------------------------------------------------------
+-- Server version	10.1.34-MariaDB-0ubuntu0.18.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `carreer`
+--
+
+DROP TABLE IF EXISTS `carreer`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `carreer` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` enum('UNDERGRADUATE','POSTGRADUATE') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'UNDERGRADUATE',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `carreer`
+--
+
+LOCK TABLES `carreer` WRITE;
+/*!40000 ALTER TABLE `carreer` DISABLE KEYS */;
+INSERT INTO `carreer` VALUES (1,'Ingeniería de sistemas','UNDERGRADUATE',NULL,NULL),(2,'Ingeniería industrial','UNDERGRADUATE',NULL,NULL),(3,'Estudios músicales','UNDERGRADUATE',NULL,NULL),(4,'Artes escénicas','UNDERGRADUATE',NULL,NULL),(5,'Artes visuales','UNDERGRADUATE',NULL,NULL),(6,'Derecho','UNDERGRADUATE',NULL,NULL),(7,'Psicología','UNDERGRADUATE',NULL,NULL),(8,'Comunicación social','UNDERGRADUATE',NULL,NULL),(9,'Filosofía','UNDERGRADUATE',NULL,NULL),(10,'Teología','UNDERGRADUATE',NULL,NULL);
+/*!40000 ALTER TABLE `carreer` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `characteristic`
+--
+
+DROP TABLE IF EXISTS `characteristic`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `characteristic` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` enum('CLASSROOM','INSTRUMENT') COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `characteristic`
+--
+
+LOCK TABLES `characteristic` WRITE;
+/*!40000 ALTER TABLE `characteristic` DISABLE KEYS */;
+INSERT INTO `characteristic` VALUES (1,'Piano',NULL,'CLASSROOM',NULL,NULL),(2,'Micrófono',NULL,'CLASSROOM',NULL,NULL),(3,'Torna mesa',NULL,'CLASSROOM',NULL,NULL),(4,'Proyector',NULL,'CLASSROOM',NULL,NULL),(5,'Silla',NULL,'CLASSROOM',NULL,NULL),(6,'Consola',NULL,'CLASSROOM',NULL,NULL),(7,'Banco',NULL,'CLASSROOM',NULL,NULL),(8,'Amplificador',NULL,'CLASSROOM',NULL,NULL),(9,'Batería',NULL,'CLASSROOM',NULL,NULL),(11,'Encordado',NULL,'INSTRUMENT',NULL,NULL),(12,'Boquilla',NULL,'INSTRUMENT',NULL,NULL),(13,'Baquetas',NULL,'INSTRUMENT',NULL,NULL),(14,'Lengueta',NULL,'INSTRUMENT',NULL,NULL);
+/*!40000 ALTER TABLE `characteristic` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `characteristic_resource`
+--
+
+DROP TABLE IF EXISTS `characteristic_resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `characteristic_resource` (
+  `resource_id` int(10) unsigned NOT NULL,
+  `characteristic_id` int(10) unsigned NOT NULL,
+  `quantity` int(10) unsigned NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`resource_id`,`characteristic_id`),
+  KEY `characteristic_resource_characteristic_id_foreign` (`characteristic_id`),
+  CONSTRAINT `characteristic_resource_characteristic_id_foreign` FOREIGN KEY (`characteristic_id`) REFERENCES `characteristic` (`id`),
+  CONSTRAINT `characteristic_resource_resource_id_foreign` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `characteristic_resource`
+--
+
+LOCK TABLES `characteristic_resource` WRITE;
+/*!40000 ALTER TABLE `characteristic_resource` DISABLE KEYS */;
+INSERT INTO `characteristic_resource` VALUES (1,8,1,NULL,NULL),(1,11,1,NULL,NULL),(2,11,2,NULL,NULL),(4,12,1,NULL,NULL),(6,1,1,NULL,NULL),(6,7,1,NULL,NULL),(7,2,5,NULL,NULL),(7,4,1,NULL,NULL),(7,5,6,NULL,NULL),(8,8,1,NULL,NULL),(8,9,1,NULL,NULL),(9,13,1,NULL,NULL),(11,12,1,NULL,NULL),(14,6,3,NULL,NULL),(15,3,1,NULL,NULL),(16,6,3,NULL,NULL),(17,3,1,NULL,NULL),(17,7,4,NULL,NULL),(17,9,1,NULL,NULL);
+/*!40000 ALTER TABLE `characteristic_resource` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `event`
+--
+
+DROP TABLE IF EXISTS `event`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `event` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `date_time_end` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `artist` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `place` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `event_user_id_foreign` (`user_id`),
+  CONSTRAINT `event_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `event`
+--
+
+LOCK TABLES `event` WRITE;
+/*!40000 ALTER TABLE `event` DISABLE KEYS */;
+INSERT INTO `event` VALUES (1,'2018-11-09 22:45:27','2018-11-15 00:30:25','Director invitado Cesar Villamil','Banda sínfonica javeriana','Parroquia San Ambrosio y Auditorio Fabio Lozano','Banda sínfonica javeriana',9,'2018-11-02 01:54:21','2018-11-02 01:54:21'),(2,'2018-12-06 21:10:47','2018-11-22 10:37:43','Alice hastily; \'but I\'m not the same, the next witness. It quite makes my forehead ache!\' Alice.','','5510 Laurine Springs Suite 543','Deserunt saepe.',3,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(3,'2018-11-11 00:57:43','2018-11-11 00:57:43','Directores: Ana Álvarez y Luis Vicaria','Orquesta Sinfónica Javeriana','Iglesia San Ignacio','Concierto Oratorio de Navidad',9,'2018-11-11 00:57:43','2018-11-11 00:57:43'),(4,'2018-11-25 05:44:30','2018-11-25 17:45:01','I chose,\' the Duchess was VERY ugly; and secondly, because she was out of a well?\' \'Take some more.','','7030 Clyde Lodge Suite 321','Doloribus nobis.',6,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(5,'2018-11-23 22:10:22','2018-11-23 22:10:22','Presentación de escenas de diferentes temáticas.','Carrera de Artes Escenicas','Aula múltiple y Hall de exposiciones.','9na Temporada de ensambles',9,'2018-11-23 22:10:22','2018-11-23 22:10:22'),(6,'2018-12-03 07:10:38','2018-11-21 17:41:32','Ma\'am, is this New Zealand or Australia?\' (and she tried the effect of lying down on their hands.','','103 Narciso Terrace','Tenetur et adipisci.',4,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(7,'2018-11-14 04:06:26','2018-11-09 14:42:46','Presentación del coro de la biblioteca central.','Coro Semillero y el Coro de profesores y administrativos','Biblioteca General','Concierto de música latinoamericana en la Biblioteca General',9,'2018-11-09 14:42:46','2018-11-09 14:42:46'),(8,'2018-11-22 14:46:17','2018-11-20 23:45:03','Dodo, \'the best way you can;--but I must go by the pope, was soon left alone. \'I wish the.','','60425 Dannie Passage','Laborum tempore eos.',6,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(9,'2019-01-03 03:09:05','2018-11-25 18:42:48','Alice. \'What sort of way to fly up into the loveliest garden you ever saw. How she longed to.','','44012 Balistreri Park Suite 954','Voluptatem non.',4,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(10,'2018-12-02 02:32:04','2018-11-20 20:53:20','Besides, SHE\'S she, and I\'m sure I can\'t remember,\' said the Footman, and began to repeat it, but.','','4071 Jerrell Valleys','Dicta perspiciatis eligendi.',3,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(11,'2018-12-09 19:57:09','2018-11-19 21:26:53','Alice, whose thoughts were still running on the floor: in another moment, when she had expected.','','485 Sanford Centers','Saepe enim.',3,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(12,'2018-12-08 06:11:27','2018-11-20 08:43:36','Alice. \'Oh, don\'t talk about her repeating \'YOU ARE OLD, FATHER WILLIAM,\' to the little golden key.','','3604 Charley Forge','Nesciunt iusto quo.',9,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(13,'2018-11-27 08:28:57','2018-11-23 15:47:31','INSIDE, you might knock, and I had it written up somewhere.\' Down, down, down. Would the fall.','','7024 Bogisich Falls Suite 063','Officiis molestias.',3,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(14,'2018-12-10 03:47:33','2018-11-22 02:17:17','Duchess to play croquet.\' The Frog-Footman repeated, in the distance, and she felt that it is!\' As.','','456 Considine River','Ab et commodi.',6,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(15,'2018-12-24 11:19:02','2018-11-21 00:31:59','Rome, and Rome--no, THAT\'S all wrong, I\'m certain! I must have a prize herself, you know,\' the.','','4475 Kautzer Throughway Apt. 443','Laudantium esse.',7,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(16,'2018-12-25 19:05:14','2018-11-23 02:26:29','Gryphon, lying fast asleep in the schoolroom, and though this was the fan she was beginning very.','','79738 Millie Forest Apt. 070','Quibusdam voluptas.',7,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(17,'2018-12-06 05:05:55','2018-11-21 18:54:11','Who for such dainties would not join the dance. Would not, could not answer without a moment\'s.','','1666 Gisselle Mill Apt. 459','Tempora ipsam.',4,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(18,'2018-12-04 02:10:08','2018-11-23 05:07:22','King, looking round the thistle again; then the Rabbit\'s little white kid gloves in one hand, and.','','309 Botsford Plaza Suite 458','Non deserunt.',3,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(19,'2018-12-03 19:56:30','2018-11-23 03:52:01','Said he thanked the whiting kindly, but he would deny it too: but the tops of the teacups as the.','','356 Rosalinda Club','Odio in eveniet.',3,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(20,'2018-12-18 18:52:06','2018-11-26 01:52:28','Gryphon. \'Turn a somersault in the house of the court was in confusion, getting the Dormouse.','','595 Sporer Pass','Ipsam et.',5,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(21,'2018-12-04 21:06:36','2018-11-24 15:24:29','I to get through the neighbouring pool--she could hear the Rabbit in a very small cake, on which.','','9737 Yvonne Divide Apt. 462','Sunt voluptas.',7,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(22,'2018-11-30 19:37:54','2018-11-20 05:59:29','Alice had been found and handed them round as prizes. There was a good deal frightened at the.','','813 Torp Trail','Deleniti qui.',7,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(23,'2018-12-18 05:20:42','2018-11-24 07:21:25','Cat. \'I said pig,\' replied Alice; \'and I wish you would have appeared to them to sell,\' the Hatter.','','54041 Dean Ridge','Occaecati ducimus aperiam.',2,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(24,'2018-12-25 02:00:38','2018-11-22 04:12:31','Hatter; \'so I should think you\'ll feel it a very fine day!\' said a sleepy voice behind her.','','71433 Evans Shore Suite 090','Qui accusantium debitis.',6,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(25,'2018-12-02 00:05:07','2018-11-25 06:36:34','NOT, being made entirely of cardboard.) \'All right, so far,\' thought Alice, \'or perhaps they won\'t.','','99849 Coy Way','Saepe nobis ut.',7,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(26,'2018-12-20 09:36:38','2018-11-19 23:05:37','I\'ll stay down here with me! There are no mice in the newspapers, at the Lizard as she spoke.','','811 Durgan Overpass Apt. 710','Corrupti modi repudiandae.',4,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(27,'2018-12-27 21:09:17','2018-11-20 06:28:17','Gryphon replied very gravely. \'What else had you to offer it,\' said Alice. \'Well, I should think.','','15669 Kathleen Knolls','Qui molestiae quia.',6,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(28,'2018-12-04 00:28:08','2018-11-20 16:30:41','Gryphon, and all sorts of things--I can\'t remember half of anger, and tried to beat them off, and.','','2849 VonRueden Mountain Apt. 288','Odio ut.',5,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(29,'2018-12-04 08:58:45','2018-11-25 23:15:42','Alice began to repeat it, but her head to hide a smile: some of the garden: the roses growing on.','','3806 Padberg Locks','Rerum soluta laudantium.',7,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(30,'2018-12-06 18:36:25','2018-11-19 18:11:18','Besides, SHE\'S she, and I\'m sure I have none, Why, I wouldn\'t be so kind,\' Alice replied, so.','','52046 Madie Corner','Consectetur cumque aut.',6,'2018-11-14 01:54:21','2018-11-14 01:54:21');
+/*!40000 ALTER TABLE `event` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `file`
+--
+
+DROP TABLE IF EXISTS `file`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `file` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `event_id` int(10) unsigned DEFAULT NULL,
+  `publication_id` int(10) unsigned DEFAULT NULL,
+  `resource_id` int(10) unsigned DEFAULT NULL,
+  `type` enum('EVENT','PUBLICATION','USER') COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `file_event_id_foreign` (`event_id`),
+  KEY `file_publication_id_foreign` (`publication_id`),
+  KEY `file_resource_id_foreign` (`resource_id`),
+  CONSTRAINT `file_event_id_foreign` FOREIGN KEY (`event_id`) REFERENCES `event` (`id`),
+  CONSTRAINT `file_publication_id_foreign` FOREIGN KEY (`publication_id`) REFERENCES `publication` (`id`),
+  CONSTRAINT `file_resource_id_foreign` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `file`
+--
+
+LOCK TABLES `file` WRITE;
+/*!40000 ALTER TABLE `file` DISABLE KEYS */;
+INSERT INTO `file` VALUES (1,'/dummy/boy.svg','Foto perfil.',NULL,NULL,NULL,'USER',NULL,NULL),(2,'andrescocunuboFolder/NAmG86a4wD3W2mmtM78xRbBy9OMj2PjLjan4QKnL.jpeg','andrescocunubo Profile photo',NULL,NULL,NULL,'USER','2018-11-13 23:29:35','2018-11-13 23:29:35'),(3,'santiagochaustreFolder/WeuyGhTXBr0UJimVeuJivKCXS3jd7rX1KWUiMcDP.jpeg','santiagochaustre Profile photo',NULL,NULL,NULL,'USER','2018-11-13 23:31:17','2018-11-13 23:31:17'),(4,'ailinrojasFolder/Cs9Kah0XrGc2aiknKLiNTMyiuyPSrpAvgKXe9WSr.jpeg','ailinrojas Profile photo',NULL,NULL,NULL,'USER','2018-11-13 23:32:55','2018-11-13 23:32:55'),(5,'carlosbaronFolder/svR0I7IWZTIFeVdOZ4TO9p883RLlMGhPmR5F2oeO.jpeg','carlosbaron Profile photo',NULL,NULL,NULL,'USER','2018-11-13 23:33:56','2018-11-13 23:33:56'),(6,'alejandrocastroFolder/nT4DTatUcFjwU8qhnMSq1PLwNO8DxP7kCy2av3Ji.jpeg','alejandrocastro Profile photo',NULL,NULL,NULL,'USER','2018-11-13 23:34:51','2018-11-13 23:34:51'),(7,'pabloarizaFolder/1HmanlTp3SIMt525Nq5vkSMfTSQMp0fUDXAKdrW2.jpeg','pabloariza Profile photo',NULL,NULL,NULL,'USER','2018-11-13 23:36:07','2018-11-13 23:36:07'),(8,'siemHellsoft2018Folder/Z1vRhayKDCgIyPud9E8uqV4q7kqLpQNR4MCeWgnp.jpeg','siemHellsoft2018 Profile photo',NULL,NULL,NULL,'USER','2018-11-13 23:42:52','2018-11-13 23:42:52'),(9,'dummy/posts/post2.jpg','generic photo',NULL,1,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(10,'dummy/posts/jazz.jpg','generic photo',NULL,2,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(11,'dummy/posts/post3.jpg','generic photo',NULL,3,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(12,'dummy/posts/audicion.jpg','generic photo',NULL,4,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(13,'dummy/posts/post1.jpg','generic photo',NULL,5,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(14,'dummy/posts/balada.jpg','generic photo',NULL,6,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(15,'dummy/posts/post_violin.jpg','generic photo',NULL,7,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(16,'dummy/posts/piano.jpg','generic photo',NULL,8,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(17,'dummy/posts/post3.jpg','generic photo',NULL,9,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(18,'dummy/posts/post4.jpg','generic photo',NULL,10,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(19,'dummy/posts/post_violin.jpg','generic photo',NULL,11,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(20,'dummy/posts/post3.jpg','generic photo',NULL,12,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(21,'dummy/posts/post_violin.jpg','generic photo',NULL,13,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(22,'dummy/posts/post1.jpg','generic photo',NULL,14,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(23,'dummy/posts/post2.jpg','generic photo',NULL,15,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(24,'dummy/posts/post3.jpg','generic photo',NULL,16,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(25,'dummy/posts/post1.jpg','generic photo',NULL,17,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(26,'dummy/posts/sala.jpg','generic photo',NULL,18,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(27,'dummy/posts/post3.jpg','generic photo',NULL,19,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(28,'dummy/posts/post2.jpg','generic photo',NULL,20,NULL,'PUBLICATION','2018-11-14 01:54:21','2018-11-14 01:54:21'),(29,'dummy/events/bandasinfo.jpg','generic photo',1,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(30,'dummy/events/event_piano.jpg','generic photo',2,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(31,'dummy/events/oratorio.png','generic photo',3,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(32,'dummy/events/event_percusion.jpg','generic photo',4,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(33,'dummy/events/enEscena.jpg','generic photo',5,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(34,'dummy/events/event_oboe.jpg','generic photo',6,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(35,'dummy/events/musicalatina.jpg','generic photo',7,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(36,'dummy/events/event_percusion.jpg','generic photo',8,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(37,'dummy/events/event_oboe.jpg','generic photo',9,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(38,'dummy/events/event_oboe.jpg','generic photo',10,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(39,'dummy/events/event_oboe.jpg','generic photo',11,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(40,'dummy/events/event_oboe.jpg','generic photo',12,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(41,'dummy/events/event_piano.jpg','generic photo',13,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(42,'dummy/events/event_estelares.jpg','generic photo',14,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(43,'dummy/events/event_piano.jpg','generic photo',15,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(44,'dummy/events/event_percusion.jpg','generic photo',16,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(45,'dummy/events/event_piano.jpg','generic photo',17,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(46,'dummy/events/event_conferencia.png','generic photo',18,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(47,'dummy/events/event_piano.jpg','generic photo',19,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(48,'dummy/events/event_estelares.jpg','generic photo',20,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(49,'dummy/events/event_piano.jpg','generic photo',21,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(50,'dummy/events/event_estelares.jpg','generic photo',22,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(51,'dummy/events/event_oboe.jpg','generic photo',23,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(52,'dummy/events/event_oboe.jpg','generic photo',24,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(53,'dummy/events/event_estelares.jpg','generic photo',25,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(54,'dummy/events/event_percusion.jpg','generic photo',26,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(55,'dummy/events/event_previsiones.png','generic photo',27,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(56,'dummy/events/event_piano.jpg','generic photo',28,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(57,'dummy/events/event_previsiones.png','generic photo',29,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(58,'dummy/events/event_oboe.jpg','generic photo',30,NULL,NULL,'EVENT','2018-11-14 01:54:21','2018-11-14 01:54:21'),(76,'dummy/resources/GibsonLesPaul.jpg','Foto guitarra eléctrica',NULL,NULL,1,'USER',NULL,NULL),(77,'dummy/resources/Yamaha.jpg',NULL,NULL,NULL,2,'USER',NULL,NULL),(78,'dummy/resources/TecladoYamaha.jpg',NULL,NULL,NULL,3,'USER',NULL,NULL),(79,'dummy/resources/FlautaYamaha.jpg',NULL,NULL,NULL,4,'USER',NULL,NULL),(80,'dummy/resources/TamborYamaha.jpg',NULL,NULL,NULL,5,'USER',NULL,NULL),(81,'dummy/resources/sala001.jpg',NULL,NULL,NULL,6,'USER',NULL,NULL),(82,'dummy/resources/Ensamble.jpg',NULL,NULL,NULL,7,'USER',NULL,NULL),(83,'dummy/resources/EstudioPercusion.jpg',NULL,NULL,NULL,8,'USER',NULL,NULL),(84,'dummy/resources/EstudioBateria.jpg',NULL,NULL,NULL,9,'USER',NULL,NULL),(85,'dummy/resources/TeoriaPractica.jpg',NULL,NULL,NULL,10,'USER',NULL,NULL),(86,'dummy/resources/FagotArnolds.jpg',NULL,NULL,NULL,11,'USER',NULL,NULL),(87,'dummy/resources/ThereminEtherwave.jpg',NULL,NULL,NULL,12,'USER',NULL,NULL),(88,'dummy/resources/ClarineteYamaha.jpg',NULL,NULL,NULL,13,'USER',NULL,NULL),(89,'dummy/resources/EstudioTeclado.jpg',NULL,NULL,NULL,14,'USER',NULL,NULL),(90,'dummy/resources/SalonCamara.jpg',NULL,NULL,NULL,15,'USER',NULL,NULL),(91,'dummy/TeoriaPracticaFolder/TeoriaPractica.jpg',NULL,NULL,NULL,16,'USER',NULL,NULL),(92,'dummy/resources/EstudioBateria2.jpg',NULL,NULL,NULL,17,'USER',NULL,NULL),(93,'dummy/resources/TeoriaPractica.jpg',NULL,NULL,NULL,16,'USER',NULL,NULL);
+/*!40000 ALTER TABLE `file` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `migrations`
+--
+
+LOCK TABLES `migrations` WRITE;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` VALUES (1,'2014_10_11_201034_create_carreer_table',1),(2,'2014_10_12_000000_create_users_table',1),(3,'2014_10_12_100000_create_password_resets_table',1),(4,'2018_09_27_135345_create_resource_type_table',1),(5,'2018_09_27_135346_create_resource_table',1),(6,'2018_09_27_135548_create_event_table',1),(7,'2018_09_27_135600_create_publication_table',1),(8,'2018_09_27_135647_create_reservation_table',1),(9,'2018_09_27_135727_create_penalty_table',1),(10,'2018_09_27_140229_create_file_table',1),(11,'2018_09_27_140704_create_characteristic_table',1),(12,'2018_09_29_031554_create_characteristic_resource_table',1),(13,'2018_10_16_045255_add_file_to_users',1);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `password_resets`
+--
+
+DROP TABLE IF EXISTS `password_resets`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  KEY `password_resets_email_index` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+LOCK TABLES `password_resets` WRITE;
+/*!40000 ALTER TABLE `password_resets` DISABLE KEYS */;
+/*!40000 ALTER TABLE `password_resets` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `penalty`
+--
+
+DROP TABLE IF EXISTS `penalty`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `penalty` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `active` tinyint(1) NOT NULL,
+  `reservation_id` int(10) unsigned NOT NULL,
+  `penalty_end` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `reason` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `date_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `penalty_reservation_id_unique` (`reservation_id`),
+  CONSTRAINT `penalty_reservation_id_foreign` FOREIGN KEY (`reservation_id`) REFERENCES `reservation` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `penalty`
+--
+
+LOCK TABLES `penalty` WRITE;
+/*!40000 ALTER TABLE `penalty` DISABLE KEYS */;
+INSERT INTO `penalty` VALUES (1,1,19,'2018-12-05 16:15:00','Llegó 10min tarde para recibir el recurso solicitado.','2018-11-05 16:15:00','2018-11-10 01:45:13','2018-11-10 03:00:00'),(2,1,5,'2018-12-01 07:30:00','Entrega 30 min tarde de la sala reservada.','2018-11-01 07:30:00','2018-11-14 00:28:12','2018-11-14 03:00:00');
+/*!40000 ALTER TABLE `penalty` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `publication`
+--
+
+DROP TABLE IF EXISTS `publication`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `publication` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `header` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `date_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` int(10) unsigned NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `publication_user_id_foreign` (`user_id`),
+  CONSTRAINT `publication_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `publication`
+--
+
+LOCK TABLES `publication` WRITE;
+/*!40000 ALTER TABLE `publication` DISABLE KEYS */;
+INSERT INTO `publication` VALUES (1,'REPUDIANDAE MAGNI ASPERNATUR.','2018-06-27 17:22:44','Duchess: you\'d better finish the story for yourself.\' \'No, please go on!\' Alice said to herself.',6,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(2,'Mi concierto de música jazz','2018-11-02 17:28:44','Presentación de concierto de jazz parcial final del curso de apreciación del jazz.',3,'2018-11-02 17:28:44','2018-11-02 17:28:44'),(3,'VEL ULLAM.','2018-04-22 12:16:12','Mouse to Alice with one eye, How the Owl had the door and found that her shoulders were nowhere to.',2,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(4,'Audición a la orquesta javeriana','2018-11-10 19:19:19','Audición para entrar a la orquesta javeriana con música clásica.',6,'2018-11-10 19:19:19','2018-11-10 19:19:19'),(5,'DEBITIS NIHIL AUTEM.','2018-02-24 22:50:32','Alice very meekly: \'I\'m growing.\' \'You\'ve no right to grow to my right size again; and the second.',2,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(6,'Concierto de baladas.','2018-11-05 12:05:25','Presentación de covers de baladas más escuchadas en los 90.',5,'2018-11-05 12:05:25','2018-11-05 12:05:25'),(7,'QUI AUTEM SED.','2018-09-08 03:18:46','ONE respectable person!\' Soon her eye fell upon a Gryphon, lying fast asleep in the house if it.',4,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(8,'Concierto de piano.','2018-11-01 15:14:07','Musical de la obra de teatro \"Romeo y Julieta\".',6,'2018-11-01 15:14:07','2018-11-01 15:14:07'),(9,'ODIT ARCHITECTO.','2018-05-29 21:09:38','O Mouse!\' (Alice thought this a good opportunity for making her escape; so she went hunting about.',5,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(10,'IN ASSUMENDA OMNIS.','2017-12-17 13:49:51','I shall think nothing of tumbling down stairs! How brave they\'ll all think me at all.\' \'In that.',5,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(11,'TEMPORE CORRUPTI.','2017-11-30 11:54:11','Mouse, getting up and picking the daisies, when suddenly a White Rabbit hurried by--the frightened.',9,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(12,'LAUDANTIUM NATUS DOLORES.','2018-07-17 08:31:08','Alice. \'I\'ve tried every way, and the procession came opposite to Alice, that she had looked under.',4,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(13,'NUMQUAM IUSTO.','2018-05-04 06:51:08','Bill, the Lizard) could not tell whether they were mine before. If I or she fell very slowly, for.',4,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(14,'OMNIS UT VOLUPTATEM.','2018-11-11 11:45:04','So she went slowly after it: \'I never thought about it,\' said the Mock Turtle sighed deeply, and.',5,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(15,'EUM ILLO.','2018-03-21 22:21:08','I hadn\'t drunk quite so much!\' said Alice, and she crossed her hands on her hand, and Alice was.',2,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(16,'MODI MOLESTIAE.','2018-06-10 15:35:07','Hatter: \'but you could draw treacle out of sight; and an Eaglet, and several other curious.',2,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(17,'VELIT ULLAM.','2018-07-08 02:43:57','Please, Ma\'am, is this New Zealand or Australia?\' (and she tried her best to climb up one of them.',7,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(18,'AB EA ASPERIORES.','2018-11-02 18:49:20','And so she went on. \'I do,\' Alice said to herself, as she added, to herself, \'Which way? Which.',3,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(19,'NOBIS EST.','2018-07-20 21:52:02','ONE respectable person!\' Soon her eye fell on a bough of a bottle. They all sat down and cried.',4,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(20,'CONSEQUUNTUR QUOD.','2018-07-05 16:11:20','Rabbit angrily. \'Here! Come and help me out of its mouth and began to say it any longer than.',6,'2018-11-14 01:54:21','2018-11-14 01:54:21');
+/*!40000 ALTER TABLE `publication` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `reservation`
+--
+
+DROP TABLE IF EXISTS `reservation`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `reservation` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `state` enum('ACTIVE','CANCELED','FINALIZED','RUNNING') COLLATE utf8_unicode_ci NOT NULL,
+  `start_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `end_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `user_id` int(10) unsigned NOT NULL,
+  `resource_id` int(10) unsigned NOT NULL,
+  `moulted` tinyint(1) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `reservation_resource_id_foreign` (`resource_id`),
+  KEY `reservation_user_id_foreign` (`user_id`),
+  CONSTRAINT `reservation_resource_id_foreign` FOREIGN KEY (`resource_id`) REFERENCES `resource` (`id`),
+  CONSTRAINT `reservation_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `reservation`
+--
+
+LOCK TABLES `reservation` WRITE;
+/*!40000 ALTER TABLE `reservation` DISABLE KEYS */;
+INSERT INTO `reservation` VALUES (1,'ACTIVE','2018-11-14 11:00:00','2018-11-14 13:00:00',2,10,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(2,'ACTIVE','2018-11-15 07:00:00','2018-11-15 09:00:00',3,8,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(3,'ACTIVE','2018-11-16 18:00:00','2018-11-18 20:00:00',4,10,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(4,'ACTIVE','2018-11-17 14:00:00','2018-11-17 16:00:00',6,10,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(5,'FINALIZED','2018-11-01 07:00:00','2018-11-01 09:00:00',2,10,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(6,'FINALIZED','2018-11-01 07:00:00','2018-11-01 09:00:00',3,8,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(7,'FINALIZED','2018-11-02 16:00:00','2018-11-02 18:00:00',4,10,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(8,'FINALIZED','2018-11-03 16:00:00','2018-11-03 18:00:00',6,8,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(9,'FINALIZED','2018-11-04 07:00:00','2018-11-04 09:00:00',7,10,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(10,'ACTIVE','2018-11-14 11:00:00','2018-11-15 13:00:00',2,1,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(11,'ACTIVE','2018-11-15 07:00:00','2018-11-16 09:00:00',3,4,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(12,'ACTIVE','2018-11-16 18:00:00','2018-11-17 20:00:00',4,1,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(13,'ACTIVE','2018-11-18 14:00:00','2018-11-19 16:00:00',6,1,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(14,'FINALIZED','2018-11-01 07:00:00','2018-11-02 09:00:00',2,1,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(15,'FINALIZED','2018-11-01 07:00:00','2018-11-02 09:00:00',3,4,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(16,'FINALIZED','2018-11-02 16:00:00','2018-11-03 18:00:00',4,1,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(17,'FINALIZED','2018-11-03 16:00:00','2018-11-04 18:00:00',6,4,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(18,'FINALIZED','2018-11-04 07:00:00','2018-11-05 09:00:00',7,1,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(19,'FINALIZED','2018-11-05 16:00:00','2018-11-07 18:00:00',6,3,0,'2018-11-14 01:54:21','2018-11-14 01:54:21'),(20,'FINALIZED','2018-11-06 07:00:00','2018-11-06 09:00:00',7,9,0,'2018-11-14 01:54:21','2018-11-14 01:54:21');
+/*!40000 ALTER TABLE `reservation` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `resource`
+--
+
+DROP TABLE IF EXISTS `resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `resource` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` enum('CLASSROOM','INSTRUMENT') COLLATE utf8_unicode_ci NOT NULL,
+  `state` enum('AVAILABLE','IN_RESERVATION','DAMAGED','IN_MAINTENANCE') COLLATE utf8_unicode_ci NOT NULL,
+  `resource_type_id` int(10) unsigned DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `resource_resource_type_id_foreign` (`resource_type_id`),
+  CONSTRAINT `resource_resource_type_id_foreign` FOREIGN KEY (`resource_type_id`) REFERENCES `resource_type` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resource`
+--
+
+LOCK TABLES `resource` WRITE;
+/*!40000 ALTER TABLE `resource` DISABLE KEYS */;
+INSERT INTO `resource` VALUES (1,'Guitarra Eléctrica','Gibson Les Paul','INSTRUMENT','AVAILABLE',10,NULL,NULL),(2,'Guitarra','Yamaha','INSTRUMENT','AVAILABLE',7,NULL,NULL),(3,'Teclado','Yamaha','INSTRUMENT','AVAILABLE',10,NULL,NULL),(4,'Flauta','Yamaha','INSTRUMENT','AVAILABLE',9,NULL,NULL),(5,'Tambor','Yamaha','INSTRUMENT','AVAILABLE',8,NULL,NULL),(6,'Sala 001','Salón ubicado en el piso 2 de la facultad de artes','CLASSROOM','AVAILABLE',2,NULL,NULL),(7,'Ensamble','Salón ubicado en el piso -1 de la faculta de artes','CLASSROOM','AVAILABLE',6,NULL,NULL),(8,'Estudio Percursión','Salón ubicado en el piso 3 de la facultad de artes','CLASSROOM','AVAILABLE',4,NULL,NULL),(9,'Estudio Batería','Salón ubicado en el piso 3 de la facultad de artes','CLASSROOM','AVAILABLE',1,NULL,NULL),(10,'Teoría Práctica','Salón ubicado en el piso 5 de la facultad de artes','CLASSROOM','AVAILABLE',3,NULL,NULL),(11,'Fagot','Arnolds & Son\'s','INSTRUMENT','AVAILABLE',9,NULL,NULL),(12,'Theremín','Etherwave','INSTRUMENT','AVAILABLE',10,NULL,NULL),(13,'Clarinete','Yamaha','INSTRUMENT','AVAILABLE',9,NULL,NULL),(14,'Estudio de teclado','Sala ubicado en el 4 de la facultad de música.','CLASSROOM','AVAILABLE',2,NULL,NULL),(15,'Música de cámara','Sala ubicado en el 1 de la facultad de música.','CLASSROOM','AVAILABLE',5,NULL,NULL),(16,'Teoría Práctica','Sala ubicado en el -2 de la facultad de música.','CLASSROOM','AVAILABLE',2,NULL,NULL),(17,'Estudio Batería','Sala ubicado en el -1 de la facultad de música.','CLASSROOM','AVAILABLE',5,NULL,NULL);
+/*!40000 ALTER TABLE `resource` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `resource_type`
+--
+
+DROP TABLE IF EXISTS `resource_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `resource_type` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `type` enum('CLASSROOM','INSTRUMENT') COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resource_type`
+--
+
+LOCK TABLES `resource_type` WRITE;
+/*!40000 ALTER TABLE `resource_type` DISABLE KEYS */;
+INSERT INTO `resource_type` VALUES (1,'Sala de ensayo','CLASSROOM',NULL,NULL),(2,'Estudio individual','CLASSROOM',NULL,NULL),(3,'Sala de conciertos','CLASSROOM',NULL,NULL),(4,'Sala múltiple','CLASSROOM',NULL,NULL),(5,'Salón de clases','CLASSROOM',NULL,NULL),(6,'Auditorio','CLASSROOM',NULL,NULL),(7,'Cuerda','INSTRUMENT',NULL,NULL),(8,'Percusión','INSTRUMENT',NULL,NULL),(9,'Viento','INSTRUMENT',NULL,NULL),(10,'Eléctrico','INSTRUMENT',NULL,NULL);
+/*!40000 ALTER TABLE `resource_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
+--
+
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `university_id` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `username` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `semester` int(11) DEFAULT NULL,
+  `identification` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `carreer_id` int(10) unsigned DEFAULT NULL,
+  `role` enum('ADMIN','USER','MODERATOR') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'USER',
+  `type` enum('STUDENT','TEACHER') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'STUDENT',
+  `email_verified_at` timestamp NULL DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `file_id` int(10) unsigned DEFAULT '1',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_username_unique` (`username`),
+  UNIQUE KEY `users_email_unique` (`email`),
+  UNIQUE KEY `users_university_id_unique` (`university_id`),
+  UNIQUE KEY `users_identification_unique` (`identification`),
+  KEY `users_carreer_id_foreign` (`carreer_id`),
+  KEY `users_file_id_foreign` (`file_id`),
+  CONSTRAINT `users_carreer_id_foreign` FOREIGN KEY (`carreer_id`) REFERENCES `carreer` (`id`),
+  CONSTRAINT `users_file_id_foreign` FOREIGN KEY (`file_id`) REFERENCES `file` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (2,'20143463','Andrés Cocunubo','andrescocunubo',8,'1022434965','andrescocunubo@javeriana.edu.co',1,'USER','TEACHER',NULL,'$2y$10$NmDDI/LU9nhCtaDfcD1uJOQmRO/sYQoet4OynkX.QbVHrTmxu3IYm','wK9zo4tmz2Yz0nfthX8Yk71uY1l5KC2dMrYvqGA7hrMujRv7DKqTxqtiU8j4','2018-11-13 23:24:42','2018-11-13 23:29:35',2),(3,'20146723','Santiago Chaustre','santiagochaustre',10,'1022456328','santiagochaustre@javeriana.edu.co',2,'USER','STUDENT',NULL,'$2y$10$ELhPdfBypI.8cOWNSrVxC.8iVW3FRduyQGuJGUeW86hpLdyUK14.O','tsLupNngok3YdKh8V3O9Igdwm0SC5o9Z1FbzufZFCLX6z5flxgiyzcfeFLup','2018-11-13 23:30:50','2018-11-13 23:31:17',3),(4,'2013782','Ailín Rojas','ailinrojas',5,'1622346925','ailinrojas@javeriana.edu.co',6,'USER','STUDENT',NULL,'$2y$10$YOYl47/c.IgJ1PooptUM6ek68TxOs34IKvpvBtnYaKo16SRScwcpS','266XkUDPaIOPeRJCpgFpr0gGOA51F2chJeeXRsX04spnE5lWULn19buSm2Gb','2018-11-13 23:32:31','2018-11-13 23:32:55',4),(5,'201267853','Carlos Barón','carlosbaron',10,'1876264892','carlosbaron@javeriana.edu.co',9,'MODERATOR','TEACHER',NULL,'$2y$10$SAU.x3xaga9NvtiqaWErEeSyJlMPEPazi3skCqIQ1G6VFx8PRe/CS','jjUjbxb2N5Rc0CzVraL3pwDg4qtmDrVt7yEf1fe16iHSmwqwDElVA8OAlLUL','2018-11-13 23:33:37','2018-11-13 23:33:56',5),(6,'20157294','Alejandro Castro','alejandrocastro',8,'326182916712','alejandrocastro@javeriana.edu.co',10,'USER','STUDENT',NULL,'$2y$10$7P055K7ZZTZZUZysSr4bxOyZloX8oKreboOAfm5J4B/HmSAewzRxi','fga40NUgj4mniJrnLBXb3wYhX1RUmEcWJ9MoZmAQTlchROVGeTNXfGecHkQM','2018-11-13 23:34:31','2018-11-13 23:34:51',6),(7,'201673895','Pablo Ariza','pabloariza',3,'1022673925','pabloariza@javeriana.edu.co',7,'USER','STUDENT',NULL,'$2y$10$wPUrnvMU4DHckyyerR/Fv.Mazu0fV5hkVb3oyrz.L7j75b0AiBuhO','zdC13d1sWbgL0MCDZefSp11mVkhkwJ0liykDjxPziosgOEu6OK3c07Y4Elr5','2018-11-13 23:35:35','2018-11-13 23:36:07',7),(9,NULL,'Hellsoft SA','siemHellsoft2018',NULL,NULL,'siemHellsoft2018@gmail.com',NULL,'ADMIN','TEACHER',NULL,'$2y$10$FY8lX77.fPqzp/lRcjh4LeHqyVqmfevBEr6I/cxCL8oPCmbmY65Pe','9mizBhL1MwEwAbu56bTZhljeGRpZANCStCUHPSuTLPKbApGqMWpTKFUYgSbu','2018-11-13 23:41:51','2018-11-13 23:42:52',8);
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2018-11-14  1:26:02
