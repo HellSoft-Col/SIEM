@@ -50,7 +50,7 @@
                 <br>
                 <table class="table table-bordered text-center" id="myTable">
                     <thead class="thead-dark">
-                    <tr >
+                    <tr>
                         <th>Sala-Salón</th>
                         <th>Nombre</th>
                         <th>Fecha-Hora Inicio</th>

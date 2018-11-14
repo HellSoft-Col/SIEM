@@ -44,27 +44,27 @@
                     </div>
                 </div>
                 <br>
-                    <table class="table table-bordered text-center" id="myTable">
+                <table class="table table-bordered text-center" id="myTable">
 
-                        <thead class="thead-dark">
-                        <tr >
-                            <th>Sala-Salón</th>
-                            <th>Nombre</th>
-                            <th>Fecha-Hora Inicio</th>
-                            <th>Fecha-Hora Fin</th>
+                    <thead class="thead-dark">
+                    <tr>
+                        <th>Sala-Salón</th>
+                        <th>Nombre</th>
+                        <th>Fecha-Hora Inicio</th>
+                        <th>Fecha-Hora Fin</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($actual_reservations as $actual)
+                        <tr class="clickable-row">
+                            <th>{{$actual->resource->name}}</th>
+                            <th>{{$actual->user->name}}</th>
+                            <th>{{$actual->start_time}}</th>
+                            <th>{{$actual->end_time}}</th>
                         </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($actual_reservations as $actual)
-                            <tr class="clickable-row">
-                                <th>{{$actual->resource->name}}</th>
-                                <th>{{$actual->user->name}}</th>
-                                <th>{{$actual->start_time}}</th>
-                                <th>{{$actual->end_time}}</th>
-                            </tr>
-                            @endforeach
-                            </tbody>
-                    </table>
+                    @endforeach
+                    </tbody>
+                </table>
                 <div class="d-flex justify-content-center mt-5">
                     <button class="btn-dark btn-lg d-flex justify-content-center">Entregar</button>
                 </div>
@@ -82,21 +82,21 @@
                     </tr>
                     </thead>
                     @foreach($running_reservations as $running)
-                    <tr class="clickable-row">
-                        <th>Example 2</th>
-                    </tr>
-                    @endforeach
-                    </tbody>
+                        <tr class="clickable-row">
+                            <th>Example 2</th>
+                        </tr>
+                        @endforeach
+                        </tbody>
                 </table>
                 <div class="d-flex justify-content-center">
                     <button class="btn-dark btn-lg d-flex justify-content-center">Devolver</button>
                 </div>
                 <script type="text/javascript">
                     $(function () {
-                        $('#myTable').on('click', '.clickable-row', function(event) {
+                        $('#myTable').on('click', '.clickable-row', function (event) {
                             $(this).addClass('bg-info').siblings().removeClass('bg-info');
                         });
-                        $('#myTable1').on('click', '.clickable-row', function(event) {
+                        $('#myTable1').on('click', '.clickable-row', function (event) {
                             $(this).addClass('bg-info').siblings().removeClass('bg-info');
                         });
                     });

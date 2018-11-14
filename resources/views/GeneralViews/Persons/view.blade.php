@@ -47,7 +47,8 @@
                                        href="{{url('/person/penalties/'.$user->id.'/actives')}}">Ver multas</a>
                                 </div>
                                 <div class="col-xs-12 ml-3">
-                                    <a class="btn btn-dark btn-lg" href="{{url('/person/posts/'.$user->id)}}">Ver publicaciones</a>
+                                    <a class="btn btn-dark btn-lg" href="{{url('/person/posts/'.$user->id)}}">Ver
+                                        publicaciones</a>
                                 </div>
                                 <div class="col ml-1">
                                     <a class="btn btn-dark btn-lg"
