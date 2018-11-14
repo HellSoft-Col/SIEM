@@ -12,7 +12,7 @@ class ResourceSeeder extends Seeder
         factory(Resource::class,20)->create();
         $characteristics = \App\Models\Characteristic::all();
         $resources = Resource::all();
-        $names = ["dummy/resources/image_resource.jpg", "dummy/resources/logo_siem.png", "dummy/resources/piano.jpg", "dummy/resources/sala_test.jpg"] ;
+        $names = ["storage/dummy/resources/image_resource.jpg", "storage/dummy/resources/logo_siem.png", "storage/dummy/resources/piano.jpg", "storage/dummy/resources/sala_test.jpg"];
         foreach ($resources as $resource){
             foreach ($characteristics as $characteristic) {
                 $resource->characteristics()->attach($characteristic->id, ['quantity' => $faker->numberBetween(0, 10)]);
