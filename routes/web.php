@@ -143,6 +143,7 @@ Route::delete('/admin/resource/delete/{ID}', 'ResourceController@destroy')->name
 Route::get('/person/reservations/{ID}/active', 'ReservationController@personActiveReservations')->middleware('moderatorAdmin');
 Route::get('/person/reservations/{ID}/history', 'ReservationController@loadPersonHistoryReservations')->middleware('moderatorAdmin');
 Route::get('/person/reservation/history/{startTime}/{endTime}/{ID}', 'ReservationController@personHistoryReservations')->middleware('moderatorAdmin');
+
 Route::post('/person/reservation/deleteAdminMonitor', 'ReservationController@cancelReservationsAdminMonitor')
     ->name('person.cancelReservations')->middleware('moderatorAdmin');
 
