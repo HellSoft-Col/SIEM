@@ -20,7 +20,7 @@ class CreateResourceTable extends Migration
             $table->enum('type',['CLASSROOM','INSTRUMENT']);
             $table->enum('state',['AVAILABLE','IN_RESERVATION','DAMAGED','IN_MAINTENANCE']);
             $table->unsignedInteger('resource_type_id')->nullable();
-            $table->foreign('resource_type_id')->references('id')->on('resource_type');
+            $table->foreign('resource_type_id')->references('id')->on('resource_type')->onDelete('cascade');
 
             $table->timestamps();
         });

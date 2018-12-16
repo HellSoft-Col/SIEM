@@ -4,7 +4,6 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 
 
-
 class UsersSeeder extends Seeder
 {
     /**
@@ -15,7 +14,7 @@ class UsersSeeder extends Seeder
     public function run()
     {
         $file_data = [
-            'path' => 'boy.svg',
+            'path' => 'storage/boy.svg',
             'description' => 'generic icon',
             'type' => 'USER',
         ];

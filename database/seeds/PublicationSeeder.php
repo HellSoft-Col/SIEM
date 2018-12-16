@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Publication;
-use Illuminate\Database\Seeder;
 use Faker\Generator as Faker;
+use Illuminate\Database\Seeder;
 
 class PublicationSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class PublicationSeeder extends Seeder
     {
         factory(Publication::class, 20)->create();
         $ids = Publication::all()->pluck('id')->toArray();
-        $names = ["dummy/posts/post1.jpg", "dummy/posts/post2.jpg", "dummy/posts/post3.jpg", "dummy/posts/post4.jpg", "dummy/posts/post_violin.jpg", "dummy/posts/sala.jpg"] ;
+        $names = ["storage/dummy/posts/post1.jpg", "storage/dummy/posts/post2.jpg", "storage/dummy/posts/post3.jpg", "storage/dummy/posts/post4.jpg", "storage/dummy/posts/post_violin.jpg", "storage/dummy/posts/sala.jpg"];
 
         foreach ($ids as $id) {
             $file_data = [

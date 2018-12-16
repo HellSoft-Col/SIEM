@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Models\Event;
 use Faker\Generator as Faker;
+use Illuminate\Database\Seeder;
 
 class EventSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class EventSeeder extends Seeder
     {
         factory(Event::class,30)->create();
 
-        $names = ["dummy/events/event_conferencia.png","dummy/events/event_estelares.jpg","dummy/events/event_oboe.jpg","dummy/events/event_oboe_fagot.jpg","dummy/events/event_percusion.jpg","dummy/events/event_piano.jpg","dummy/events/event_previsiones.png"] ;
+        $names = ["storage/dummy/events/event_conferencia.png", "storage/dummy/events/event_estelares.jpg", "storage/dummy/events/event_oboe.jpg", "storage/dummy/events/event_oboe_fagot.jpg", "storage/dummy/events/event_percusion.jpg", "storage/dummy/events/event_piano.jpg", "storage/dummy/events/event_previsiones.png"];
         $ids = Event::all()->pluck('id')->toArray();
 
         foreach ($ids as $event){

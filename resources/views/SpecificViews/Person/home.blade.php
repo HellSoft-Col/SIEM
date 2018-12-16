@@ -7,7 +7,7 @@
     <a class="dropdown-item" href="{{url('/event')}}">Eventos</a>
 @endsection
 @section('content')
-    <div class="container">
+    <div class="container" style="margin-top: 0;">
 
         <div class="row space">
             <div class="col-lg-12 space">
@@ -20,16 +20,15 @@
                      style="visibility: visible; animation-duration: 1000ms; animation-delay: 300ms; animation-name: fadeInUp;">
                     <div class="div-table-row">
                         <div class="div-table-col">
-                            <a href="{{url('/person/resource/search')}}">
+                            <a href="{{url('/resource/search')}}">
                                 <img src="{{asset('/svg/icons/create_reserve.svg')}}" height="55">
                             </a>
                         </div>
                         <div class="div-table-col">
                             <div class="media-body">
-                                <a href="{{url('/person/resource/search')}}">
+                                <a href="{{url('/resource/search')}}">
                                     <h5 class="media-heading ">Realizar reserva</h5>
                                 </a>
-                                <!-- ngRepeat: otroenlace in enlace.otrosEnlaces -->
                             </div>
                         </div>
                     </div>
@@ -49,7 +48,6 @@
                                 <a href="{{url('/person/reservation/active') }}">
                                     <h5 class="media-heading ng">Mis reservas</h5>
                                 </a>
-                                <!-- ngRepeat: otroenlace in enlace.otrosEnlaces -->
                             </div>
                         </div>
                     </div>
@@ -73,7 +71,6 @@
                                 <a href="#">
                                     <h5 class="media-heading ">Mis publicaciones</h5>
                                 </a>
-                                <!-- ngRepeat: otroenlace in enlace.otrosEnlaces -->
                             </div>
                         </div>
                     </div>
@@ -93,7 +90,6 @@
                                 <a href="#">
                                     <h5 class="media-heading ">Mis multas</h5>
                                 </a>
-                                <!-- ngRepeat: otroenlace in enlace.otrosEnlaces -->
                             </div>
                         </div>
                     </div>

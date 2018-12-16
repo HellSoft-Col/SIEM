@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateCharacteristicTable extends Migration
 {
@@ -16,8 +16,8 @@ class CreateCharacteristicTable extends Migration
         Schema::create('characteristic', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
-            $table->enum('type',['CLASSROOM','INSTRUMENT']);
+            $table->string('description')->nullable();
+            $table->enum('type', ['CLASSROOM', 'INSTRUMENT']);
             $table->timestamps();
         });
     }

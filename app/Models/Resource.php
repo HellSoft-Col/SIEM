@@ -9,6 +9,14 @@ class Resource extends Model
     //
     protected $table = 'resource';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name', 'description', 'type', 'state', 'resource_type_id'
+    ];
 
     function reservations(){
         return $this->hasMany(Reservation::class);
@@ -43,24 +51,19 @@ class Resource extends Model
         return $this->hasMany(File::class);
     }
 
-    function isAvailableBetween($start_time, $end_time)
+    function isAvailableBetween($start_time, $end_time, $user)
     {
         $r = true;
         $aux_reservations = $this->reservations()->where('state', 'ACTIVE')->get();
         foreach ($aux_reservations as $reservation) {
-            if (!(($start_time <= $reservation->start_time && $end_time <= $reservation->start_time) ||
-                ($start_time >= $reservation->end_time && $end_time <= $reservation->end_time))) {
-                $r = false;
+            if ($reservation->user->id !== $user->id) {
+                if (!(($start_time <= $reservation->start_time && $end_time <= $reservation->start_time) ||
+                    ($start_time >= $reservation->end_time && $end_time >= $reservation->end_time))) {
+                    $r = false;
+                }
             }
         }
         return $r;
-
-        /*if ($this->reservations()
-                ->where('start_time', '>=', $start_time)->where('start_time', '<=', $end_time)
-                ->where('end_time', '>=', $start_time)->where('end_time', '<=', $end_time)
-                ->where('state', 'ACTIVE')->count() > 0) {
-            return false;
-        }*/
     }
 
     function reservationsIn($month)
